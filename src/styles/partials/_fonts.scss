@@ -1,0 +1,25 @@
+@use "./vars" as *;
+
+//Avenir New - Regular
+@font-face {
+  font-family: $font-fam;
+  src: 
+  url(../../assets/fonts/AvenirNextLTPro-Regular.woff2) format('woff2'),
+  url(../../assets/fonts/AvenirNextLTPro-Regular.woff) format('woff'),
+  url(../../assets/fonts/AvenirNextLTPro-Regular.otf) format('otf'),
+  url(../../assets/fonts/AvenirNextLTPro-Regular.ttf) format('ttf');
+  font-weight: $font-reg;
+  font-style: normal;
+}
+
+//Avenir New - Bold
+@font-face {
+  font-family: $font-fam;
+  src: 
+  // url(../../assets/fonts/AvenirNextLTPro-Bold.woff2) format('woff2'),
+  // url(../../assets/fonts/AvenirNextLTPro-Bold.woff) format('woff'),
+  url(../../assets/fonts/AvenirNextLTPro-Bold.otf) format('otf'),
+  url(../../assets/fonts/AvenirNextLTPro-Bold.ttf) format('ttf');
+  font-weight: $font-bold;
+  font-style: normal;
+}

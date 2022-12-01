@@ -1,0 +1,104 @@
+//Font Styles
+$font-fam: "Avenir Next";
+$backup-fonts: Arial, Helvetica, sans-serif;
+$font-reg: 400;
+$font-bold: 700;
+
+//Font Sizes - Mobile
+$font-page-small: 1.5rem;
+$font-section-small: 0.75rem;
+$font-subheader-small: 0.813rem;
+$font-body-small: 0.813rem;
+$font-labels-small: 0.75rem;
+//Font Line Heights - Mobile
+$lh-page-small: 2rem;
+$lh-section-small: 1.25rem;
+$lh-subheader-small: 1.125rem;
+$lh-body-small: 1.125rem;
+$lh-labels-small: 1.25rem;
+
+//Font Sizes - Tablet/Desktop
+$font-page-big: 2.063rem;
+$font-section-big: 0.75rem;
+$font-subheader-big: 0.875rem;
+$font-body-big: 0.875rem;
+$font-labels-big: 0.75rem;
+//Font Line Heights - Tablet/Desktop
+$lh-page-big: 2.75rem;
+$lh-section-big: 1.25rem;
+$lh-subheader-big: 1.375rem;
+$lh-body-big: 1.375rem;
+$lh-labels-big: 1.25rem;
+
+//Colors
+$color-primary-text: #323232;
+$color-primary-active: #0095FF;
+$color-primary-label: #AFAFAF;
+$color-primary-background: #FFFFFF;
+$color-secondary-video: #000000;
+$color-secondary-cta: #0065AD;
+$color-secondary-outline: #E1E1E1;
+$color-secondary-formfield: #FAFAFA;
+$color-error-state: #D22D2D;
+
+//Breakpoints
+$tablet-breakpoint: 48rem;
+$desktop-breakpoint: 80rem;
+
+//Layout Grid
+$mobile-spacing: 1rem;
+$tablet-spacing: 2.25rem;
+$desktop-width: 63.75rem;
+
+//Padding - Mobile
+$padding-before-headlines-small: 1.5rem;
+$padding-after-headlines-small: 1rem;
+$padding-between-components-small: 1rem;
+
+//Padding - Tablet/Desktop
+$padding-before-headlines-big: 2.25rem;
+$padding-after-headlines-big: 1.5rem;
+$padding-between-components-big: 1.5rem;
+$padding-between-sections: 2rem;
+
+//Asset Dimensions
+//Logo
+$logo-width: 1.563rem;
+$logo-height: 7.5rem;
+//Icon
+$icon-horizontal-spacing: 0.5rem;
+$icon-vertical-spacing: 50%;
+//Call-to-action button
+$cta-button-height: 2.5rem;
+$cta-button-radius: 4px;
+$cta-width-small: 100%;
+$cta-width-big: 9.375rem;
+$cta-horizontal-padding-big: 2rem;
+//Video Player
+$scrubbing-icon-height: 1rem;
+$video-aspect-ratio: calc(1/0.5625);
+$overlay-opacity: 50%;
+//Form
+$form-height-small: 2.25rem;
+$form-height-big: 2.5rem;
+$form-width-min: 15rem;
+$form-width-max: 100%;
+$form-border-radius: 4px;
+$form-padding-small: 0.75rem;
+$form-padding-big: 1rem;
+$form-label-space: 0.25rem;
+$form-border-default: 0.063rem;
+$form-border-active: 0.125rem;
+//Divider
+$divider-stroke-width: 0.063rem;
+//Images
+$image-container-bound: 100%;
+$image-border-radius: 4px;
+$image-thumbnail-height: 6.25rem;
+$image-thumbnail-width: 7.75rem;
+$image-details-width: 9.75rem;
+//Avatar
+$avatar-border-radius: 50%;
+$avatar-size-small: 2.25rem;
+$avatar-size-big: 2.5rem;
+$avatar-color-placeholder: $color-secondary-outline;
