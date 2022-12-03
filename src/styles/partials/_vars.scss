@@ -35,11 +35,7 @@ $color-text: #363732;
 $color-active: #5C80BC;
 $color-background: #E8985E;
 $color-accent: #A9714B;
-// $color-secondary-video: #000000;
-// $color-secondary-cta: #0065AD;
-// $color-secondary-outline: #E1E1E1;
-// $color-secondary-formfield: #FAFAFA;
-// $color-error-state: #D22D2D;
+$color-invert-text: #F4F4F8;
 
 //Breakpoints
 $tablet-breakpoint: 48rem;
@@ -101,4 +97,4 @@ $image-details-width: 9.75rem;
 $avatar-border-radius: 50%;
 $avatar-size-small: 2.25rem;
 $avatar-size-big: 2.5rem;
-$avatar-color-placeholder: $color-secondary-outline;
+// $avatar-color-placeholder: $color-secondary-outline;
