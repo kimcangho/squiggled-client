@@ -1,9 +1,21 @@
-function App() {
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import HomePage from './pages/HomePage/HomePage';
+import SessionPage from './pages/SessionPage/SessionPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
+
+const App = () => {
   return (
-    <>
-      <h1>Hello</h1>
-    </>
-  );
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/session/:id' element={<SessionPage />} />
+      {/* <Route path='/session' element={<ErrorPage />} /> */}
+      <Route path='*' element={<ErrorPage />} />
+    </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
