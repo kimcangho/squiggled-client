@@ -3,39 +3,18 @@ import { useEffect, useState } from "react";
 import "./VideoPlayer.scss";
 
 const VideoPlayer = () => {
-
   useEffect(() => {
-    navigator.getUserMedia(
-      {
+    navigator.mediaDevices
+      .getUserMedia({
         video: true,
         audio: true,
-      },
-      (stream) => {
+      })
+      .then((stream) => {
         let video = document.querySelector(".video__feed");
-        if (video) {
-          video.srcObject = stream;
-        }
-      },
-      (err) => console.error(err)
-    );
+        video.srcObject = stream;
+      })
+      .catch((err) => console.error(err));
   }, []);
-
-  // const startVideo = () => {
-  // 	setPlaying(true);
-  // 	navigator.getUserMedia(
-  // 		{
-  // 			video: true,
-  //       audio: true
-  // 		},
-  // 		(stream) => {
-  // 			let video = document.querySelector('.video__feed');
-  // 			if (video) {
-  // 				video.srcObject = stream;
-  // 			}
-  // 		},
-  // 		(err) => console.error(err)
-  // 	);
-  // };
 
   // const stopVideo = () => {
   // 	setPlaying(false);
@@ -47,11 +26,7 @@ const VideoPlayer = () => {
 
   return (
     <article className="video">
-      <video
-        muted
-        autoPlay
-        className="video__feed"
-      ></video>
+      <video muted autoPlay className="video__feed"></video>
 
       {/* <div className="app__input">
 				{playing ? (

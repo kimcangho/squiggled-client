@@ -7,10 +7,11 @@ import { v4 as uuidv4 } from "uuid";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import burgerMenuIcon from "../../assets/images/icons/menu-line.svg";
-import closeIcon from '../../assets/images/icons/close-line.svg';
+import closeIcon from "../../assets/images/icons/close-line.svg";
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
+import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
 //Components
 import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
@@ -19,6 +20,7 @@ const HomePage = () => {
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [photoCaptured, setPhotoCaptured] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,6 +45,7 @@ const HomePage = () => {
   //Capture Image
   const handleCaptureImage = () => {
     console.log("Capture photo placeholder");
+    setPhotoCaptured((photoCaptured) => !photoCaptured);
   };
 
   return (
@@ -71,7 +74,7 @@ const HomePage = () => {
       </header>
 
       <VideoPlayer />
-      <Canvas />
+      {photoCaptured && <Canvas />}
 
       <footer className="home__footer">
         {/* Mute/Unmute Button */}
@@ -107,12 +110,21 @@ const HomePage = () => {
           </div>
         )}
         {/* Capture Image Button */}
-        <img
-          className="home__capture"
-          src={cameraIcon}
-          alt="Camera Icon"
-          onClick={handleCaptureImage}
-        />
+        {photoCaptured ? (
+          <img
+            className="home__capture"
+            src={closeCircleIcon}
+            alt="Camera Icon"
+            onClick={handleCaptureImage}
+          />
+        ) : (
+          <img
+            className="home__capture"
+            src={cameraIcon}
+            alt="Camera Icon"
+            onClick={handleCaptureImage}
+          />
+        )}
       </footer>
     </section>
   );
