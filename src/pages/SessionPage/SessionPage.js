@@ -1,9 +1,12 @@
 import React from 'react'
 import './SessionPage.scss'
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 
 const SessionPage = () => {
   return (
-    <div>SessionPage</div>
+    <section>
+        <VideoPlayer />
+    </section>
   )
 }
 
