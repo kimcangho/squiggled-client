@@ -4,12 +4,12 @@ import Peer from "simple-peer"; //Import Simple-Peer
 
 const SocketContext = createContext(); //Instantiate context
 
-const socket = io("http://localhost:8000"); //Instantiate socket with passed in server
+const socket = io("http://localhost:8000/"); //Instantiate socket with passed in server
 
 //Functional component with children props
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null); //Video/Audio stream state
-  const [myMessage, setMyMessage] = useState("");
+  const [me, setMe] = useState("");
   const [call, setCall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
@@ -22,7 +22,7 @@ const ContextProvider = ({ children }) => {
   //Get permission to use user's camera and microphone
   useEffect(() => {
     //Use built-in navigator
-    navigator.mediaCapabilities
+    navigator.mediaDevices
       .getUserMedia({ video: true, audio: true }) //Access A/V and returns a promise
       .then((currentStream) => {
         setStream(currentStream); //Setting stream state not enough, need refs
@@ -34,7 +34,7 @@ const ContextProvider = ({ children }) => {
       });
 
     //listen for specific myMsg action to get emitted id from server and set to state
-    socket.on("myMsg", (id) => setMyMessage(id));
+    socket.on("me", (id) => setMe(id));
 
     //Socket on handler for calluser that sets destructured call data into state
     socket.on("calluser", ({ from, name: callerName, signal }) => {
@@ -85,7 +85,7 @@ const ContextProvider = ({ children }) => {
       socket.emit("calluser", {
         userToCall: id,
         signalData: data,
-        from: myMessage,
+        from: me,
         name,
       });
     });
@@ -125,7 +125,7 @@ const ContextProvider = ({ children }) => {
         name,
         setName,
         callEnded,
-        myMessage,
+        me,
         callUser,
         leaveCall,
         answerCall,

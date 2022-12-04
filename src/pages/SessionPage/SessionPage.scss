@@ -1,3 +1,21 @@
 @use '../../styles/globals';
 @use '../../styles/partials/vars' as *;
 @use '../../styles/partials/mixins' as *;
+
+.session {
+    &__create-session {
+        color: $color-invert-text;
+        background-color: $color-active;
+        cursor: grab;
+        padding: 0.5rem;
+        text-align: center;
+        border-radius: 20px;
+
+        position: fixed;
+        transform: translate(-50%, 0%);
+
+        width: 90%;
+        left: 50%;
+        bottom: 1rem;
+    }
+}
