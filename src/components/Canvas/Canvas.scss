@@ -1,3 +1,7 @@
 @use "../../styles/globals";
 @use "../../styles/partials/vars" as *;
 @use "../../styles/partials/mixins" as *;
+
+.canvas {
+    border: 1px solid $color-active;
+}

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import burgerMenuIcon from "../../assets/images/icons/menu-line.svg";
+import closeIcon from '../../assets/images/icons/close-line.svg';
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
@@ -17,13 +18,15 @@ import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 const HomePage = () => {
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleOpenMenu = () => {
-    console.log('Open menu confirmation');
-  }
-
+  //Toggle Menu
+  const toggleMenu = () => {
+    setMenuIsOpen((menuIsOpen) => !menuIsOpen);
+  };
+  //Handle Session
   const handleCreateSession = () => {
     const sessionId = uuidv4();
     setActiveCall(true);
@@ -33,17 +36,14 @@ const HomePage = () => {
     setActiveCall(false);
     navigate("/");
   };
-
-  const handleMute = () => {
-    setIsMuted(true);
+  //Toggle Sound
+  const toggleMute = () => {
+    setIsMuted((isMuted) => !isMuted);
   };
-  const handleUnmute = () => {
-    setIsMuted(false);
-  };
-
+  //Capture Image
   const handleCaptureImage = () => {
-    console.log('Capture photo placeholder');
-  }
+    console.log("Capture photo placeholder");
+  };
 
   return (
     <section className="home">
@@ -53,7 +53,21 @@ const HomePage = () => {
           <img className="home__logo" src={quailLogo} alt="Qual Quail Logo" />
         </Link>
         <h1 className="home__title">Qual</h1>
-        <img className="home__menu" src={burgerMenuIcon} alt="Hamburger Menu" onClick={handleOpenMenu} />
+        {menuIsOpen ? (
+          <img
+            className="home__menu"
+            src={closeIcon}
+            alt="Hamburger Menu"
+            onClick={toggleMenu}
+          />
+        ) : (
+          <img
+            className="home__menu"
+            src={burgerMenuIcon}
+            alt="Hamburger Menu"
+            onClick={toggleMenu}
+          />
+        )}
       </header>
 
       <VideoPlayer />
@@ -66,14 +80,14 @@ const HomePage = () => {
             className="home__mute"
             src={unmuteIcon}
             alt="Unmute Icon"
-            onClick={handleUnmute}
+            onClick={toggleMute}
           />
         ) : (
           <img
             className="home__mute"
             src={muteIcon}
             alt="Mute Icon"
-            onClick={handleMute}
+            onClick={toggleMute}
           />
         )}
         {/* Session Button */}
@@ -93,7 +107,12 @@ const HomePage = () => {
           </div>
         )}
         {/* Capture Image Button */}
-        <img className="home__capture" src={cameraIcon} alt="Camera Icon" onClick={handleCaptureImage} />
+        <img
+          className="home__capture"
+          src={cameraIcon}
+          alt="Camera Icon"
+          onClick={handleCaptureImage}
+        />
       </footer>
     </section>
   );
