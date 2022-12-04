@@ -3,9 +3,10 @@
 @use '../../styles/partials/mixins' as *;
 
 .session {
-    &__create-session {
+
+    &__end-session {
         color: $color-invert-text;
-        background-color: $color-active;
+        background-color: $color-error;
         cursor: grab;
         padding: 0.5rem;
         text-align: center;
