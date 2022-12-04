@@ -9,6 +9,7 @@ import burgerMenu from "../../assets/images/icons/menu-line.svg";
 
 
 const HomePage = () => {
+
   return (
     <section className="home">
       <header className="home__header">

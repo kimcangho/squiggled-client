@@ -64,7 +64,6 @@ const ContextProvider = ({ children }) => {
       userVideo.current.srcObject = currentStream;
     });
 
-    //peer.signal(data)
     //data encapsulates webRTC offer, answer or ice candidate
     //Call signal with call.signal
     //Call coming from initial socket calluser
@@ -107,10 +106,9 @@ const ContextProvider = ({ children }) => {
   const leaveCall = () => {
     setCallEnded(true);
     //destory specific connection route
-    connectionRef.current.destroy();
+    // connectionRef.current.destroy();
     //Reload page - Original code couldn't call another user afterward unless this was added
-    //May need to change to redirect back to home page
-    window.location.reload();
+    // window.location.reload();
   };
 
   //Return provider from context where everything passed through value object is globally accessible
