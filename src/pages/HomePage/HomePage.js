@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HomePage.scss";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -12,16 +12,25 @@ import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
+  const [activeCall, setActiveCall] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleNewSession = () => {
+  const handleCreateSession = () => {
     const sessionId = uuidv4();
     console.log(sessionId);
+    setActiveCall(true);
     navigate(`/session/${sessionId}`);
   };
 
+  const handleEndSession = () => {
+    setActiveCall(false);
+    navigate('/');
+  }
+
   return (
     <section className="home">
+      {/* Navigation */}
       <header className="home__header">
         <Link to="/">
           <img className="home__logo" src={quailLogo} alt="Qual Quail Logo" />
@@ -31,13 +40,18 @@ const HomePage = () => {
       </header>
 
       <VideoPlayer />
-
       <Canvas />
 
       {/* Create new room */}
-      <div className="home__create-session" onClick={handleNewSession}>
-        <h2 className="home__call-text">New Call</h2>
-      </div>
+      {activeCall ? (
+        <div className="home__session home__session--end" onClick={handleEndSession}>
+          <h2 className="home__call-text">End Call</h2>
+        </div>
+      ) : (
+        <div className="home__session home__session--create" onClick={handleCreateSession}>
+          <h2 className="home__call-text">New Call</h2>
+        </div>
+      )}
     </section>
   );
 };
