@@ -1,12 +1,8 @@
-// import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 
 import "./VideoPlayer.scss";
 
-// import { ContextProvider, SocketContext } from "../../SocketContext";
-
 const VideoPlayer = () => {
-  // const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     navigator.getUserMedia(

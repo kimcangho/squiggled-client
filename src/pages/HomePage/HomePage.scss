@@ -18,48 +18,78 @@
   &__logo {
     background-color: $color-background;
     border-radius: 100%;
-    width: 2rem;
-    padding: 0.25rem;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
     cursor: grab;
   }
 
   &__title {
     margin: 0;
-
     font-weight: 600;
     font-family: "Montserrat";
-    font-size: 1.25rem;
+    font-size: 2rem;
   }
 
   &__menu {
-    width: 2rem;
+    width: 3rem;
+    height: 3rem;
     background-color: $color-background;
     border-radius: 10px;
-    padding: 0.125rem;
-
+    padding: 0.5rem;
     cursor: grab;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    position: fixed;
+    transform: translate(-50%, 0%);
+    width: 100%;
+    left: 50%;
+    bottom: 1rem;
+    padding: 0 1rem;
   }
 
   &__session {
     color: $color-invert-text;
-
+    width: 100%;
     cursor: grab;
     padding: 0.5rem;
-    text-align: center;
     border-radius: 20px;
-
-    position: fixed;
-    transform: translate(-50%, 0%);
-
-    width: 90%;
-    left: 50%;
-    bottom: 1rem;
+    height: 2.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &--create {
       background-color: $color-active;
     }
     &--end {
-        background-color: $color-error;
-      }
+      background-color: $color-error;
+    }
+  }
+  &__call-text {
+    font-size: 1.25rem;
+  }
+  &__mute {
+    width: 3rem;
+    height: 3rem;
+    background-color: $color-background;
+    border-radius: 100%;
+    padding: 0.5rem;
+    cursor: grab;
+  }
+
+  &__capture {
+    width: 3rem;
+    height: 3rem;
+    background-color: $color-background;
+    border-radius: 100%;
+    padding: 0.5rem;
+    cursor: grab;
   }
 }
