@@ -52,17 +52,18 @@ const HomePage = () => {
     console.log("Capture photo placeholder");
     setPhotoCaptured((photoCaptured) => !photoCaptured);
   };
+
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
     //Prevent redirect
     event.preventDefault();
     //DOM Manipulation
-    const image = canvasRef.current.toDataURL('image/png');  //Convert canvas to URL
-    const blob = await (await fetch(image)).blob();   //Fetch canvas image from URL and convert to blob
-    const blobURL = URL.createObjectURL(blob);  //Create URL for Binary Large Object image
-    const link = document.createElement('a');   //Create unmounted anchor tag
-    link.href = blobURL;  //Set href of unmounted anchor tag
-    link.download = 'image.png';  //Define image download format
+    const image = canvasRef.current.toDataURL("image/png"); //Convert canvas to URL
+    const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
+    const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
+    const link = document.createElement("a"); //Create unmounted anchor tag
+    link.href = blobURL; //Set href of unmounted anchor tag
+    link.download = "image.png"; //Define image download format
     link.click(); //Trigger link with programmatic click
   };
 
@@ -130,14 +131,12 @@ const HomePage = () => {
         {/* Capture Image Button */}
         {photoCaptured ? (
           <div className="home__canvas-buttons">
-            <a href="" onClick={handleDownloadImage}>
-              <img
-                className="home__button"
-                src={downloadIcon}
-                alt="Download Icon"
-                
-              />
-            </a>
+            <img
+              className="home__button"
+              src={downloadIcon}
+              alt="Download Icon"
+              onClick={handleDownloadImage}
+            />
             <img
               className="home__button"
               src={closeCircleIcon}

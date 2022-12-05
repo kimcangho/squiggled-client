@@ -12,23 +12,11 @@ const VideoPlayer = () => {
         audio: true,
       })
       .then((stream) => {
-        // let video = document.querySelector(".video__feed");
-        // video.srcObject = stream;
-        // video.play();
-
         vidStream.current.srcObject = stream;
         vidStream.current.play();
       })
       .catch((err) => console.error(err));
   }, []);
-
-  // const stopVideo = () => {
-  // 	setPlaying(false);
-  // 	let video = document.querySelector('.video__feed');
-  //   console.log(video.srcObject.getTracks());
-  // 	video.srcObject.getTracks()[0].stop();
-  //   video.srcObject.getTracks()[1].stop();
-  // };
 
   return (
     <article className="video">
