@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./HomePage.scss";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -12,11 +12,16 @@ import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
+import downloadIcon from "../../assets/images/icons/download-line.svg";
 //Components
 import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
+  //useRef variables
+  const canvasRef = useRef(null);
+
+  //State Variables
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -47,25 +52,38 @@ const HomePage = () => {
     console.log("Capture photo placeholder");
     setPhotoCaptured((photoCaptured) => !photoCaptured);
   };
+  //Download Image from Canvas
+  const handleDownloadImage = async (event) => {
+    //Prevent redirect
+    event.preventDefault();
+    //DOM Manipulation
+    const image = canvasRef.current.toDataURL('image/png');  //Convert canvas to URL
+    const blob = await (await fetch(image)).blob();   //Fetch canvas image from URL and convert to blob
+    const blobURL = URL.createObjectURL(blob);  //Create URL for Binary Large Object image
+    const link = document.createElement('a');   //Create unmounted anchor tag
+    link.href = blobURL;  //Set href of unmounted anchor tag
+    link.download = 'image.png';  //Define image download format
+    link.click(); //Trigger link with programmatic click
+  };
 
   return (
     <section className="home">
       {/* Navigation */}
       <header className="home__header">
         <Link to="/">
-          <img className="home__logo" src={quailLogo} alt="Qual Quail Logo" />
+          <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
         </Link>
         <h1 className="home__title">Qual</h1>
         {menuIsOpen ? (
           <img
-            className="home__menu"
+            className="home__button home__button--square"
             src={closeIcon}
             alt="Hamburger Menu"
             onClick={toggleMenu}
           />
         ) : (
           <img
-            className="home__menu"
+            className="home__button home__button--square"
             src={burgerMenuIcon}
             alt="Hamburger Menu"
             onClick={toggleMenu}
@@ -74,20 +92,20 @@ const HomePage = () => {
       </header>
 
       <VideoPlayer />
-      {photoCaptured && <Canvas />}
+      {photoCaptured && <Canvas canvasRef={canvasRef} />}
 
       <footer className="home__footer">
         {/* Mute/Unmute Button */}
         {isMuted ? (
           <img
-            className="home__mute"
+            className="home__button"
             src={unmuteIcon}
             alt="Unmute Icon"
             onClick={toggleMute}
           />
         ) : (
           <img
-            className="home__mute"
+            className="home__button"
             src={muteIcon}
             alt="Mute Icon"
             onClick={toggleMute}
@@ -111,15 +129,25 @@ const HomePage = () => {
         )}
         {/* Capture Image Button */}
         {photoCaptured ? (
-          <img
-            className="home__capture"
-            src={closeCircleIcon}
-            alt="Camera Icon"
-            onClick={handleCaptureImage}
-          />
+          <div className="home__canvas-buttons">
+            <a href="" onClick={handleDownloadImage}>
+              <img
+                className="home__button"
+                src={downloadIcon}
+                alt="Download Icon"
+                
+              />
+            </a>
+            <img
+              className="home__button"
+              src={closeCircleIcon}
+              alt="Close Circle Icon"
+              onClick={handleCaptureImage}
+            />
+          </div>
         ) : (
           <img
-            className="home__capture"
+            className="home__button"
             src={cameraIcon}
             alt="Camera Icon"
             onClick={handleCaptureImage}

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import "./VideoPlayer.scss";
 
 const VideoPlayer = () => {
+  let vidStream = useRef(null);
+
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
@@ -10,8 +12,12 @@ const VideoPlayer = () => {
         audio: true,
       })
       .then((stream) => {
-        let video = document.querySelector(".video__feed");
-        video.srcObject = stream;
+        // let video = document.querySelector(".video__feed");
+        // video.srcObject = stream;
+        // video.play();
+
+        vidStream.current.srcObject = stream;
+        vidStream.current.play();
       })
       .catch((err) => console.error(err));
   }, []);
@@ -26,15 +32,8 @@ const VideoPlayer = () => {
 
   return (
     <article className="video">
-      <video muted autoPlay className="video__feed"></video>
-
-      {/* <div className="app__input">
-				{playing ? (
-					<button onClick={stopVideo}>Stop</button>
-				) : (
-					<button onClick={startVideo}>Start</button>
-				)}
-			</div> */}
+      <video ref={vidStream} muted className="video__feed"></video>
+      {/* <canvas className="video__canvas"></canvas> */}
     </article>
   );
 
