@@ -1,17 +1,14 @@
-import React from 'react'
-import './Canvas.scss';
+// import React, { useEffect } from "react";
+import "./Canvas.scss";
 
-const Canvas = ({canvasRef}) => {
+const Canvas = ({ canvasRef }) => {
+  //Set canvas context on mount
+  //   useEffect(() => {
+  //     setContext(canvasRef.current.getContext("2d"));
+  //     // context.fillRect(100, 100, 100, 100)    //Confirm canvas download
+  //   }, [canvasRef]);
 
-    const handleDownload = (event) => {
-        console.log(event.target);
-        console.log(event.target.toDataURL());
-    }
+  return <canvas ref={canvasRef} className="canvas"></canvas>;
+};
 
-
-  return (
-    <canvas ref={canvasRef} className='canvas' onClick={handleDownload}></canvas>
-  )
-}
-
-export default Canvas
+export default Canvas;

@@ -35,6 +35,15 @@
     font-size: 2rem;
   }
 
+  &__canvas {
+    border: 1px solid $color-active;
+    background-image: url('../../assets/images/logo/quail.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $color-active;
+}
+
   &__footer {
     display: flex;
     justify-content: space-between;

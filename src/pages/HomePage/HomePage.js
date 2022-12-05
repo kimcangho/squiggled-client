@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./HomePage.scss";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -14,18 +14,24 @@ import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 //Components
-import Canvas from "../../components/Canvas/Canvas";
+// import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
   //useRef variables
   const canvasRef = useRef(null);
+  const videoRef = useRef(null);
 
   //State Variables
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
+  const [context, setContext] = useState(null);
+
+  useEffect(() => {
+    setContext(canvasRef.current.getContext("2d"));
+  }, [canvasRef]);
 
   const navigate = useNavigate();
 
@@ -49,7 +55,20 @@ const HomePage = () => {
   };
   //Capture Image
   const handleCaptureImage = () => {
-    console.log("Capture photo placeholder");
+    console.log(context)
+    if (!photoCaptured) {
+      context.fillRect(100, 100, 100, 100);
+      // context.drawImage();
+    } else {
+      //Confirm canvas draw
+      context.clearRect(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      ); //Clear canvas
+    }
+    //Toggle visible image
     setPhotoCaptured((photoCaptured) => !photoCaptured);
   };
 
@@ -92,8 +111,10 @@ const HomePage = () => {
         )}
       </header>
 
-      <VideoPlayer />
-      {photoCaptured && <Canvas canvasRef={canvasRef} />}
+      <VideoPlayer videoRef={videoRef} isMuted={isMuted} />
+      {/* {photoCaptured && <Canvas canvasRef={canvasRef} />} */}
+      <canvas ref={canvasRef} className="home__canvas"></canvas>
+      {/* <Canvas canvasRef={canvasRef} /> */}
 
       <footer className="home__footer">
         {/* Mute/Unmute Button */}

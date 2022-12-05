@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 import "./VideoPlayer.scss";
 
-const VideoPlayer = () => {
-  let vidStream = useRef(null);
+const VideoPlayer = ({ videoRef, isMuted }) => {
+  // let vidStream = useRef(null);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -12,70 +12,20 @@ const VideoPlayer = () => {
         audio: true,
       })
       .then((stream) => {
-        vidStream.current.srcObject = stream;
-        vidStream.current.play();
+        // vidStream.current.srcObject = stream;
+        // vidStream.current.play();
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [videoRef]);
 
   return (
     <article className="video">
-      <video ref={vidStream} muted className="video__feed"></video>
+      <video ref={videoRef} muted={!isMuted} className="video__feed"></video>
       {/* <canvas className="video__canvas"></canvas> */}
     </article>
   );
-
-  // const [playing, setPlaying] = useState(false);
-
-  // const height = 320;
-  // const width = 320;
-
-  // const startVideo = () => {
-  //   setPlaying(true);
-  //   navigator.mediaDevices.getUserMedia(
-  //     { video: true, audio: true },
-  //     (stream) => {
-  //       let video = document.getElementById(".video__player");
-  //       if (video) {
-  //         video.srcObject = stream;
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // };
-
-  // const stopVideo = () => {
-  //   setPlaying(false);
-  //   let video = document.getElementById(".video__player");
-  //   video.srcObject.getTracks()[0].stop();
-  // };
-
-  // // useEffect(() => {
-  // //   navigator.getUserMedia({video: true, audio: true})
-  // //   .then(stream => {
-  // //     video.srcObject = stream;
-  // //     video.play();
-  // //   })
-  // // }, [])
-
-  // return (
-  //   <article className="video">
-  //     <video
-  //       height={height}
-  //       width={width}
-  //       muted
-  //       autoPlay
-  //       className="video__player"
-  //     ></video>
-  //     {playing ? (
-  //       <div onClick={stopVideo}>Stop</div>
-  //     ) : (
-  //       <div onClick={startVideo}>Start</div>
-  //     )}
-  //   </article>
-  // );
 
   //Previous code - not in use
   // const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } =
