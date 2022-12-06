@@ -1,7 +1,7 @@
 //Styling
 import "./HomePage.scss";
 //React Hooks
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
 import { v4 as uuidv4 } from "uuid";
@@ -19,13 +19,12 @@ import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
-  //useRef variable
-  const videoRef = useRef(null);
   //State Variables
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
+
   //Navigation variable
   const navigate = useNavigate();
 
@@ -52,10 +51,36 @@ const HomePage = () => {
   const toggleMute = () => {
     setIsMuted((isMuted) => !isMuted);
   };
-  //Capture Image - Under construction
+
+  //Capture Image - Asynchronous function under construction
+  //ISSUE: execute function AFTER <Canvas /> component is mounted
+  //TEMP FIX: Use setTimeout function for arbitrary delay (with loading screen?)
   const handleCaptureImage = () => {
+    //Arbitrary delay until component mounted
+    setTimeout(() => {
+      //DOM Manipulation to set canvas, context and video
+      const testCanvas = document.querySelector(".canvas");
+      const testContext = testCanvas.getContext("2d");
+      const testVideo = document.querySelector(".video__feed");
+      //Get canvas dimensions
+      testCanvas.width = testVideo.videoWidth; //videoWidth 2 times display size
+      testCanvas.height = testVideo.videoHeight; //videoHeight 2 times display size
+      testContext.drawImage(
+        testVideo,
+        0,
+        0,
+        testVideo.videoWidth,
+        testVideo.videoHeight
+      ); //Set screenshot in canvas
+      testContext.scale(2, 2); //Handle pixel density
+    }, 500);
+
     //Toggle visible image
-    setPhotoCaptured((photoCaptured) => !photoCaptured);
+    setPhotoCaptured(true);
+  };
+
+  const handleExitCapture = () => {
+    setPhotoCaptured(false);
   };
 
   //Download Image from Canvas
@@ -100,8 +125,13 @@ const HomePage = () => {
       </header>
 
       {/* Live Video Stream  */}
-      <VideoPlayer videoRef={videoRef} isMuted={isMuted} />
-      {photoCaptured && <Canvas />}
+      <VideoPlayer
+        // videoRef={videoRef}
+        isMuted={isMuted}
+        // canvasRef={canvasRef}
+        handleCaptureImage={handleCaptureImage}
+      />
+      {photoCaptured && <Canvas handleExitCapture={handleExitCapture} />}
 
       {/* Fixed Footer */}
       <footer className="home__footer">
@@ -152,7 +182,7 @@ const HomePage = () => {
               className="home__button"
               src={closeCircleIcon}
               alt="Close Circle Icon"
-              onClick={handleCaptureImage}
+              onClick={handleExitCapture}
             />
           </div>
         ) : (

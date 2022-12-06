@@ -3,18 +3,18 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useRef } from "react";
 
-const Canvas = () => {
+const Canvas = ({handleExitCapture}) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   //useRef variables
   let canvasRef = useRef(null);
   let contextRef = useRef(null);
 
-  //Set 
+  //Set
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     contextRef.current = context;
-  }, []);
+  }, [canvasRef]);
 
   //Start Drawing
   const startDrawing = ({ nativeEvent }) => {
@@ -45,6 +45,7 @@ const Canvas = () => {
         canvasRef.current.width,
         canvasRef.current.height
       );
+      handleExitCapture();
     }
   };
   //DOM manipulation - Listen in on window
