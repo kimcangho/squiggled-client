@@ -1,88 +1,63 @@
-import React, { useEffect, useState, useRef } from "react";
+//Styling
 import "./Canvas.scss";
-// import { useEffect } from "react";
+//React Hooks
+import React, { useEffect, useState, useRef } from "react";
 
 const Canvas = () => {
-
+  //State variable
   const [isDrawing, setIsDrawing] = useState(false);
+  //useRef variables
   let canvasRef = useRef(null);
   let contextRef = useRef(null);
-  
 
-  // if (canvasRef.current) {
-  //   contextRef = canvasRef.current.getContext("2d");
-  // }
-
+  //Set 
   useEffect(() => {
-    const context = canvasRef.current.getContext('2d');
+    const context = canvasRef.current.getContext("2d");
     contextRef.current = context;
-  
+  }, []);
 
-    
-  }, [])
-  
-
-  // if (contextRef) {
-  //   contextRef.clearRect(
-  //     0,
-  //     0,
-  //     contextRef.canvas.current.width, //canvas.width
-  //     contextRef.canvas.current.height //canvas.height
-  //   );
-  // }
-
-  const startDrawing = ({nativeEvent}) => {
-    const {offsetX, offsetY} = nativeEvent;
+  //Start Drawing
+  const startDrawing = ({ nativeEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
     contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY)
+    contextRef.current.moveTo(offsetX, offsetY);
     setIsDrawing(true);
-  }
-
+  };
+  //Finish Drawing
   const finishDrawing = () => {
     contextRef.current.closePath();
     setIsDrawing(false);
-  }
-
-  const drawing = ({nativeEvent}) => {
-    if(!isDrawing) return;
-    const {offsetX, offsetY} = nativeEvent;
-    contextRef.current.lineTo(offsetX, offsetY)
+  };
+  //While Drawing
+  const drawing = ({ nativeEvent }) => {
+    if (!isDrawing) return;
+    const { offsetX, offsetY } = nativeEvent;
+    contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
-  } 
-
-  //Clear
-  const clear = () => {
-    contextRef.current.clearRect(
-      0,
-      0,
-      canvasRef.current.width,
-      canvasRef.current.height
-    );
   };
 
-  //Key interactions
+  //Clear Canvas Handler
   const handleKeyDown = (event) => {
-    //Clear Canva 
     if (event.key === "Backspace") {
-      clear();
-    }
-    //Fill Canvas
-    if (event.key === " ") {
-      contextRef.current.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      contextRef.current.clearRect(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
     }
   };
-
-  window.onkeydown = handleKeyDown; 
+  //DOM manipulation - Listen in on window
+  window.onkeydown = handleKeyDown;
 
   return (
     <canvas
       ref={canvasRef}
       className="canvas"
-
       onMouseDown={startDrawing}
-      onMouseUp={finishDrawing}
       onMouseMove={drawing}
-
+      onMouseUp={finishDrawing}
+      onMouseLeave={finishDrawing}
     ></canvas>
   );
 };

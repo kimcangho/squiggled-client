@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+//Styling
 import "./HomePage.scss";
-
-import { Link, useNavigate } from "react-router-dom";
+//React Hooks
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+//External Libraries
 import { v4 as uuidv4 } from "uuid";
-
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import burgerMenuIcon from "../../assets/images/icons/menu-line.svg";
@@ -18,44 +19,40 @@ import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
-  //useRef variables
-  const canvasRef = useRef(null);
-  const contextRef = useRef(null);
+  //useRef variable
   const videoRef = useRef(null);
-
   //State Variables
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
-
-  // useEffect(() => {
-  //   if (canvasRef.current) {
-  //     contextRef = canvasRef.current.getContext("2d");
-  //   }
-  // }, []);
-
+  //Navigation variable
   const navigate = useNavigate();
 
-  //Toggle Menu
+  //Functions
+
+  //Toggle Menu - Under Construction for future active sessions display
   const toggleMenu = () => {
     setMenuIsOpen((menuIsOpen) => !menuIsOpen);
   };
-  //Handle Session
+
+  //Create Session
   const handleCreateSession = () => {
     const sessionId = uuidv4();
     setActiveCall(true);
     navigate(`/session/${sessionId}`);
   };
+  //End Session
   const handleEndSession = () => {
     setActiveCall(false);
     navigate("/");
   };
+
   //Toggle Sound
   const toggleMute = () => {
     setIsMuted((isMuted) => !isMuted);
   };
-  //Capture Image
+  //Capture Image - Under construction
   const handleCaptureImage = () => {
     //Toggle visible image
     setPhotoCaptured((photoCaptured) => !photoCaptured);
@@ -63,12 +60,9 @@ const HomePage = () => {
 
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
-    const canvas = document.querySelector('.canvas');
-    //Prevent redirect
-    event.preventDefault();
-    //DOM Manipulation
-    // const image = canvasRef.current.toDataURL("image/png"); //Convert canvas to URL
-    const image = canvas.toDataURL("image/png");
+    event.preventDefault(); //Prevent redirect
+    const canvas = document.querySelector(".canvas"); //DOM manipulation
+    const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
     const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
     const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
     const link = document.createElement("a"); //Create unmounted anchor tag
@@ -81,10 +75,13 @@ const HomePage = () => {
     <section className="home">
       {/* Navigation */}
       <header className="home__header">
-        <Link to="/">
-          <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
-        </Link>
+        {/* Logo */}
+        <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
+
+        {/* Title */}
         <h1 className="home__title">Qual</h1>
+
+        {/* Menu */}
         {menuIsOpen ? (
           <img
             className="home__button home__button--square"
@@ -102,9 +99,11 @@ const HomePage = () => {
         )}
       </header>
 
+      {/* Live Video Stream  */}
       <VideoPlayer videoRef={videoRef} isMuted={isMuted} />
       {photoCaptured && <Canvas />}
 
+      {/* Fixed Footer */}
       <footer className="home__footer">
         {/* Mute/Unmute Button */}
         {isMuted ? (
@@ -141,12 +140,14 @@ const HomePage = () => {
         {/* Capture Image Button */}
         {photoCaptured ? (
           <div className="home__canvas-buttons">
+            {/* Download Button */}
             <img
               className="home__button"
               src={downloadIcon}
               alt="Download Icon"
               onClick={handleDownloadImage}
             />
+            {/* Close Download Button */}
             <img
               className="home__button"
               src={closeCircleIcon}
@@ -155,6 +156,7 @@ const HomePage = () => {
             />
           </div>
         ) : (
+          // Capture Image Button
           <img
             className="home__button"
             src={cameraIcon}
