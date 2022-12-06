@@ -6,15 +6,12 @@
 .video {
 
   &__feed {
-    width: 100%;
-  }
+    width: 20rem;
 
-  &__canvas {
-    width: 100%;
-    height: 20rem;
-    border: 1px solid $color-error;
+    // @include tablet {
+    //   width: 30rem;
+    // }
   }
-
 }
 
 // .video {

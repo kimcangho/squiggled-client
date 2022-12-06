@@ -14,12 +14,13 @@ import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 //Components
-// import Canvas from "../../components/Canvas/Canvas";
+import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 
 const HomePage = () => {
   //useRef variables
   const canvasRef = useRef(null);
+  const contextRef = useRef(null);
   const videoRef = useRef(null);
 
   //State Variables
@@ -27,11 +28,12 @@ const HomePage = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
-  const [context, setContext] = useState(null);
 
-  useEffect(() => {
-    setContext(canvasRef.current.getContext("2d"));
-  }, [canvasRef]);
+  // useEffect(() => {
+  //   if (canvasRef.current) {
+  //     contextRef = canvasRef.current.getContext("2d");
+  //   }
+  // }, []);
 
   const navigate = useNavigate();
 
@@ -55,29 +57,18 @@ const HomePage = () => {
   };
   //Capture Image
   const handleCaptureImage = () => {
-    console.log(context)
-    if (!photoCaptured) {
-      context.fillRect(100, 100, 100, 100);
-      // context.drawImage();
-    } else {
-      //Confirm canvas draw
-      context.clearRect(
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      ); //Clear canvas
-    }
     //Toggle visible image
     setPhotoCaptured((photoCaptured) => !photoCaptured);
   };
 
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
+    const canvas = document.querySelector('.canvas');
     //Prevent redirect
     event.preventDefault();
     //DOM Manipulation
-    const image = canvasRef.current.toDataURL("image/png"); //Convert canvas to URL
+    // const image = canvasRef.current.toDataURL("image/png"); //Convert canvas to URL
+    const image = canvas.toDataURL("image/png");
     const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
     const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
     const link = document.createElement("a"); //Create unmounted anchor tag
@@ -112,9 +103,7 @@ const HomePage = () => {
       </header>
 
       <VideoPlayer videoRef={videoRef} isMuted={isMuted} />
-      {/* {photoCaptured && <Canvas canvasRef={canvasRef} />} */}
-      <canvas ref={canvasRef} className="home__canvas"></canvas>
-      {/* <Canvas canvasRef={canvasRef} /> */}
+      {photoCaptured && <Canvas />}
 
       <footer className="home__footer">
         {/* Mute/Unmute Button */}

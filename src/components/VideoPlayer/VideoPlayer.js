@@ -23,7 +23,6 @@ const VideoPlayer = ({ videoRef, isMuted }) => {
   return (
     <article className="video">
       <video ref={videoRef} muted={!isMuted} className="video__feed"></video>
-      {/* <canvas className="video__canvas"></canvas> */}
     </article>
   );
 
