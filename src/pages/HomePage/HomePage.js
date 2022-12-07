@@ -1,9 +1,10 @@
 //Styling
 import "./HomePage.scss";
 //React Hooks
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
+import io from 'socket.io-client';
 import { v4 as uuidv4 } from "uuid";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
@@ -25,8 +26,17 @@ const HomePage = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
 
+  //useRef variables
+  const socket = useRef();
+
   //Navigation variable
   const navigate = useNavigate();
+
+  //On component mount
+  useEffect(() => {
+    //Connect to server
+    socket.current = io.connect('http://localhost:8000/');
+  })
 
   //Functions
 
