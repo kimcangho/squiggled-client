@@ -38,7 +38,7 @@ const Canvas = ({handleExitCapture}) => {
 
   //Clear Canvas Handler
   const handleKeyDown = (event) => {
-    if (event.key === "Backspace") {
+    if (event.key === "Escape" || event.key === 'Backspace') {
       contextRef.current.clearRect(
         0,
         0,

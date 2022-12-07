@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 
 import "./VideoPlayer.scss";
 
-const VideoPlayer = ({ isMuted, handleCaptureImage, takeScreenshot }) => {
-  let videoRef= useRef(null);
+const VideoPlayer = ({ isMuted, handleCaptureImage }) => {
+  let videoRef = useRef(null);
 
   //Stream Video
   useEffect(() => {
@@ -21,18 +21,15 @@ const VideoPlayer = ({ isMuted, handleCaptureImage, takeScreenshot }) => {
 
   //Take Screenshot Keydown Handler - Overwrites take photo
   const handleKeyDownPhoto = (event) => {
-    if (event.key === ' ') {
+    if (event.key === " ") {
       handleCaptureImage();
-      takeScreenshot();
     }
   };
   //DOM manipulation - Listen in on window
   window.onkeydown = handleKeyDownPhoto;
 
   return (
-    <article className="video">
-      <video ref={videoRef} muted={!isMuted} className="video__feed"></video>
-    </article>
+    <video ref={videoRef} muted={!isMuted} className="video__feed"></video>
   );
 };
 

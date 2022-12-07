@@ -54,31 +54,26 @@ const HomePage = () => {
 
   //Capture Image - Asynchronous function under construction
   //ISSUE: execute function AFTER <Canvas /> component is mounted
-  //TEMP FIX: Use setTimeout function for arbitrary delay (with loading screen?)
+  //TEMP FIX: Use setTimeout function for arbitrary delay
   const handleCaptureImage = () => {
     //Arbitrary delay until component mounted
     setTimeout(() => {
       //DOM Manipulation to set canvas, context and video
-      const testCanvas = document.querySelector(".canvas");
-      const testContext = testCanvas.getContext("2d");
-      const testVideo = document.querySelector(".video__feed");
+      const canvas = document.querySelector(".canvas");
+      const context = canvas.getContext("2d");
+      const video = document.querySelector(".video__feed");
       //Get canvas dimensions
-      testCanvas.width = testVideo.videoWidth; //videoWidth 2 times display size
-      testCanvas.height = testVideo.videoHeight; //videoHeight 2 times display size
-      testContext.drawImage(
-        testVideo,
-        0,
-        0,
-        testVideo.videoWidth,
-        testVideo.videoHeight
-      ); //Set screenshot in canvas
-      testContext.scale(2, 2); //Handle pixel density
-    }, 500);
+      canvas.width = video.videoWidth; //videoWidth 2 times display size
+      canvas.height = video.videoHeight; //videoHeight 2 times display size
+      //Set screenshot in canvas
+      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      context.scale(2, 2);
+    }, 0);
 
-    //Toggle visible image
+    //Toggle photo edit mode
     setPhotoCaptured(true);
   };
-
+  //Exit photo edit mode
   const handleExitCapture = () => {
     setPhotoCaptured(false);
   };
@@ -124,14 +119,20 @@ const HomePage = () => {
         )}
       </header>
 
-      {/* Live Video Stream  */}
-      <VideoPlayer
-        // videoRef={videoRef}
-        isMuted={isMuted}
-        // canvasRef={canvasRef}
-        handleCaptureImage={handleCaptureImage}
-      />
-      {photoCaptured && <Canvas handleExitCapture={handleExitCapture} />}
+      {/* Video and Canvas Container */}
+      <main className="home__core-container">
+        {/* Live Video Stream  */}
+        <VideoPlayer
+          isMuted={isMuted}
+          handleCaptureImage={handleCaptureImage}
+        />
+        {/* Canvas */}
+        {photoCaptured ? (
+          <Canvas handleExitCapture={handleExitCapture} />
+        ) : (
+          <div className="home__canvas-placeholder" />
+        )}
+      </main>
 
       {/* Fixed Footer */}
       <footer className="home__footer">
