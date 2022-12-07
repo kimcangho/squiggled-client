@@ -26,6 +26,9 @@ const HomePage = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
 
+  const [myUserID, setMyUserID] = useState('');
+  const [usersArr, setUsersArr] = useState('');
+
   //useRef variables
   const socket = useRef();
 
@@ -36,6 +39,18 @@ const HomePage = () => {
   useEffect(() => {
     //Connect to server
     socket.current = io.connect('http://localhost:8000/');
+    //Set my user id
+    socket.current.on("yourID", (userId) => {
+      console.log(`Your user ID: ${userId}`);
+      setMyUserID(userId);
+    })
+    //Set array of users on call
+    socket.current.on('allUsers', (users) => {
+      console.log(`Users on call`);
+      console.log(users);
+      setUsersArr(users);
+    })
+
   }, [])
 
   //Functions
