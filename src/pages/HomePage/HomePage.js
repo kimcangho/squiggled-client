@@ -36,7 +36,7 @@ const HomePage = () => {
   useEffect(() => {
     //Connect to server
     socket.current = io.connect('http://localhost:8000/');
-  })
+  }, [])
 
   //Functions
 
