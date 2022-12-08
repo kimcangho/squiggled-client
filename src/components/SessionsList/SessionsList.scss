@@ -2,7 +2,7 @@
 @use "../../styles/partials/vars" as *;
 @use "../../styles/partials/mixins" as *;
 
-.sessions {
+.sessions-list {
   display: none;
   @include tablet {
     display: flex;
