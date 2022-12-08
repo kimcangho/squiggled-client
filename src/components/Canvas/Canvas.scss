@@ -5,15 +5,15 @@
 .canvas {
     width: 20rem;
     cursor: crosshair;
-    border-radius: 4px;
+    border-radius: 10px;
     transform: scaleX(-1);
 
-    &--placeholder {
-        background-color: $color-invert-text;
-        background-image: url("../../assets/images/icons/camera-fill.svg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;        
-    }
+    // &--placeholder {
+    //     background-color: $color-invert-text;
+    //     background-image: url("../../assets/images/icons/camera-fill.svg");
+    //     background-position: center;
+    //     background-repeat: no-repeat;
+    //     background-size: cover;        
+    // }
     
 }

@@ -19,6 +19,7 @@ import downloadIcon from "../../assets/images/icons/download-line.svg";
 //Components
 import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import SessionsList from "../../components/SessionsList/SessionsList";
 
 const HomePage = () => {
   //State Variables
@@ -221,9 +222,7 @@ const HomePage = () => {
             <div className="home__canvas-placeholder" />
           )}
         </div>
-        <div className="home__menu-container">
-          <h2>Active Sessions</h2>
-        </div>
+        <SessionsList />
       </main>
 
       {/* Fixed Footer */}

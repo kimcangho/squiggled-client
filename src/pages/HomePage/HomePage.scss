@@ -67,22 +67,11 @@
     background-image: url("../../assets/images/icons/camera-fill.svg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 75%;
     opacity: 20%;
     width: 20rem;
     height: 15rem;
-  }
-
-  &__menu-container {
-    display: none;
-    
-    @include tablet {
-      width: 20rem;
-      height: 32.25rem;
-      display: flex;
-      justify-content: center;
-      border: 1px solid $color-active;
-    }
+    border-radius: 10px;
   }
 
   &__footer {
