@@ -29,10 +29,17 @@ const HomePage = () => {
 
   const [videoStream, setVideoStream] = useState(false);
 
+  //Socket.io states
   const [myUserID, setMyUserID] = useState("");
   const [usersArr, setUsersArr] = useState("");
+  //Peer-to-peer states
+  const [receivingCall, setReceivingCall] = useState(false);
+  const [caller, setCaller] = useState("");
+  const [callerSignal, setCallerSignal] = useState();
+  const [callAccepted, setCallAccepted] = useState(false);
 
   //useRef variables
+  const partnerVideo = useRef();
   const socket = useRef();
 
   //Navigation variable
@@ -53,6 +60,32 @@ const HomePage = () => {
       console.log(users);
       setUsersArr(users);
     });
+    //Listen on being called from event hey
+    socket.current.on("hey", (data) => {
+      setReceivingCall(true); //Receiving call
+      setCaller(data.from); //Set caller trying to call us
+      setCallerSignal(data.signal); //Set caller's signal
+    });
+
+    const acceptCall = () => {
+      setCallAccepted(true);
+      
+      const peer = new Peer({
+        initiator: false,
+        trickle: false,
+        stream: videoStream,
+      });
+
+      peer.on("signal", (data) => {
+        socket.current.emit("acceptCall", { signal: data, to: caller });
+      });
+
+      peer.on('stream', stream => {
+        partnerVideo.current.srcObject = videoStream;
+      })
+
+      peer.signal(callerSignal);
+    };
   }, []);
 
   //peer-to-peer
@@ -63,11 +96,22 @@ const HomePage = () => {
       stream: videoStream,
     });
 
-    //Signal to peer - handshake
-    peer.on('signal', data => {
-      socket.current.emit('callUser', {userToCall: id })
-    })
-
+    //Signal to peer by emitting callUser event with object containing userId
+    peer.on("signal", (data) => {
+      socket.current.emit("callUser", { userToCall: id });
+    });
+    //Listen in on peer stream event
+    peer.on("stream", (stream) => {
+      //Check partnerVideo present
+      if (partnerVideo.current) {
+        partnerVideo.current.srcObject = stream;
+      }
+      //Call another user
+      socket.current.on("callAccepted", (signal) => {
+        setCallAccepted(true);
+        peer.signal(signal);
+      });
+    });
   };
 
   //Functions
