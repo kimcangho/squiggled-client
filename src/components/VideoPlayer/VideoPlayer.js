@@ -2,22 +2,26 @@ import { useEffect, useRef } from "react";
 
 import "./VideoPlayer.scss";
 
-const VideoPlayer = ({ videoStream, setVideoStream, isMuted, handleCaptureImage }) => {
+const VideoPlayer = ({
+  setVideoStream,
+  isMuted,
+  handleCaptureImage,
+}) => {
   let videoRef = useRef(null);
 
   //Stream Video
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
-        video: true,
-        audio: true
+        video: { facingMode: "user" },
+        audio: true,
       })
       .then((stream) => {
         setVideoStream(stream);
         videoRef.current.srcObject = stream;
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [setVideoStream]);
 
   //Take Screenshot Keydown Handler - Overwrites take photo
   const handleKeyDownPhoto = (event) => {

@@ -69,7 +69,7 @@ const HomePage = () => {
 
     const acceptCall = () => {
       setCallAccepted(true);
-      
+
       const peer = new Peer({
         initiator: false,
         trickle: false,
@@ -80,9 +80,9 @@ const HomePage = () => {
         socket.current.emit("acceptCall", { signal: data, to: caller });
       });
 
-      peer.on('stream', stream => {
+      peer.on("stream", (stream) => {
         partnerVideo.current.srcObject = videoStream;
-      })
+      });
 
       peer.signal(callerSignal);
     };
@@ -153,7 +153,7 @@ const HomePage = () => {
       canvas.height = video.videoHeight; //videoHeight 2 times display size
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-      context.scale(2, 2);
+      context.scale(2,2);
     }, 0);
 
     //Toggle photo edit mode
@@ -185,7 +185,7 @@ const HomePage = () => {
         <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
 
         {/* Title */}
-        <h1 className="home__title">Qual</h1>
+        {/* <h1 className="home__title">Qual</h1> */}
 
         {/* Menu */}
         {menuIsOpen ? (
@@ -206,19 +206,24 @@ const HomePage = () => {
       </header>
 
       {/* Video and Canvas Container */}
-      <main className="home__core-container">
-        {/* Live Video Stream  */}
-        <VideoPlayer
-          setVideoStream={setVideoStream}
-          isMuted={isMuted}
-          handleCaptureImage={handleCaptureImage}
-        />
-        {/* Canvas */}
-        {photoCaptured ? (
-          <Canvas handleExitCapture={handleExitCapture} />
-        ) : (
-          <div className="home__canvas-placeholder" />
-        )}
+      <main className="home__main-container">
+        <div className="home__core-container">
+          {/* Live Video Stream  */}
+          <VideoPlayer
+            setVideoStream={setVideoStream}
+            isMuted={isMuted}
+            handleCaptureImage={handleCaptureImage}
+          />
+          {/* Canvas */}
+          {photoCaptured ? (
+            <Canvas handleExitCapture={handleExitCapture} />
+          ) : (
+            <div className="home__canvas-placeholder" />
+          )}
+        </div>
+        <div className="home__menu-container">
+          <h2>Active Sessions</h2>
+        </div>
       </main>
 
       {/* Fixed Footer */}
