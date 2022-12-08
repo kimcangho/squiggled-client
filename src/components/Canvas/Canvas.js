@@ -3,7 +3,7 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useRef } from "react";
 
-const Canvas = ({handleExitCapture}) => {
+const Canvas = ({ handleExitCapture }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   //useRef variables
@@ -38,7 +38,7 @@ const Canvas = ({handleExitCapture}) => {
 
   //Clear Canvas Handler
   const handleKeyDown = (event) => {
-    if (event.key === "Escape" || event.key === 'Backspace') {
+    if (event.key === "Escape" || event.key === "Backspace") {
       contextRef.current.clearRect(
         0,
         0,

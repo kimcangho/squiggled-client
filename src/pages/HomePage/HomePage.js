@@ -4,7 +4,8 @@ import "./HomePage.scss";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
-import io from 'socket.io-client';
+import io from "socket.io-client";
+import Peer from "simple-peer";
 import { v4 as uuidv4 } from "uuid";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
@@ -26,8 +27,10 @@ const HomePage = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
 
-  const [myUserID, setMyUserID] = useState('');
-  const [usersArr, setUsersArr] = useState('');
+  const [videoStream, setVideoStream] = useState(false);
+
+  const [myUserID, setMyUserID] = useState("");
+  const [usersArr, setUsersArr] = useState("");
 
   //useRef variables
   const socket = useRef();
@@ -38,20 +41,34 @@ const HomePage = () => {
   //On component mount
   useEffect(() => {
     //Connect to server
-    socket.current = io.connect('http://localhost:8000/');
+    socket.current = io.connect("http://localhost:8000/");
     //Set my user id
     socket.current.on("yourID", (userId) => {
       console.log(`Your user ID: ${userId}`);
       setMyUserID(userId);
-    })
+    });
     //Set array of users on call
-    socket.current.on('allUsers', (users) => {
+    socket.current.on("allUsers", (users) => {
       console.log(`Users on call`);
       console.log(users);
       setUsersArr(users);
+    });
+  }, []);
+
+  //peer-to-peer
+  const callPeer = (id) => {
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream: videoStream,
+    });
+
+    //Signal to peer - handshake
+    peer.on('signal', data => {
+      socket.current.emit('callUser', {userToCall: id })
     })
 
-  }, [])
+  };
 
   //Functions
 
@@ -148,6 +165,7 @@ const HomePage = () => {
       <main className="home__core-container">
         {/* Live Video Stream  */}
         <VideoPlayer
+          setVideoStream={setVideoStream}
           isMuted={isMuted}
           handleCaptureImage={handleCaptureImage}
         />

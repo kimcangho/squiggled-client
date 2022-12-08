@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import "./VideoPlayer.scss";
 
-const VideoPlayer = ({ isMuted, handleCaptureImage }) => {
+const VideoPlayer = ({ videoStream, setVideoStream, isMuted, handleCaptureImage }) => {
   let videoRef = useRef(null);
 
   //Stream Video
@@ -10,14 +10,14 @@ const VideoPlayer = ({ isMuted, handleCaptureImage }) => {
     navigator.mediaDevices
       .getUserMedia({
         video: true,
-        audio: true,
+        audio: true
       })
       .then((stream) => {
+        setVideoStream(stream);
         videoRef.current.srcObject = stream;
-        videoRef.current.play();
       })
       .catch((err) => console.error(err));
-  }, [videoRef]);
+  }, []);
 
   //Take Screenshot Keydown Handler - Overwrites take photo
   const handleKeyDownPhoto = (event) => {
@@ -29,7 +29,12 @@ const VideoPlayer = ({ isMuted, handleCaptureImage }) => {
   window.onkeydown = handleKeyDownPhoto;
 
   return (
-    <video ref={videoRef} muted={!isMuted} className="video__feed"></video>
+    <video
+      autoPlay={true}
+      ref={videoRef}
+      muted={!isMuted}
+      className="video__feed"
+    ></video>
   );
 };
 
