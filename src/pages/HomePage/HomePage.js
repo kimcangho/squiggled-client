@@ -7,28 +7,20 @@ import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import Peer from "simple-peer";
 import { v4 as uuidv4 } from "uuid";
-//Assets
-import quailLogo from "../../assets/images/logo/quail.png";
-import joinIcon from "../../assets/images/icons/join-in.svg";
-import closeIcon from "../../assets/images/icons/close-line.svg";
-import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
-import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
-import cameraIcon from "../../assets/images/icons/camera-fill.svg";
-import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
-import downloadIcon from "../../assets/images/icons/download-line.svg";
-import drawIcon from "../../assets/images/icons/draw.svg";
 //Components
-import Canvas from "../../components/Canvas/Canvas";
+import Header from "../../components/Header/Header";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import Canvas from "../../components/Canvas/Canvas";
 import SessionsList from "../../components/SessionsList/SessionsList";
+import Footer from "../../components/Footer/Footer";
 
 const HomePage = () => {
   //State Variables
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
 
+  //Video Stream State
   const [videoStream, setVideoStream] = useState(false);
 
   //Socket.io states
@@ -47,7 +39,7 @@ const HomePage = () => {
   //Navigation variable
   const navigate = useNavigate();
 
-  //On component mount
+  //Connect to server on component mount
   useEffect(() => {
     //Connect to server
     socket.current = io.connect("http://localhost:8000/");
@@ -56,7 +48,7 @@ const HomePage = () => {
       console.log(`Your user ID: ${userId}`);
       setMyUserID(userId);
     });
-    //Set array of users on call
+    //Set array of users
     socket.current.on("allUsers", (users) => {
       console.log(`Users on call`);
       console.log(users);
@@ -90,7 +82,7 @@ const HomePage = () => {
     };
   }, []);
 
-  //peer-to-peer
+  //Call Peer
   const callPeer = (id) => {
     const peer = new Peer({
       initiator: true,
@@ -117,11 +109,6 @@ const HomePage = () => {
   };
 
   //Functions
-
-  //Toggle Menu - Under Construction for future active sessions display
-  const toggleSessions = () => {
-    setMenuIsOpen((menuIsOpen) => !menuIsOpen);
-  };
 
   //Create Session
   const handleCreateSession = () => {
@@ -163,65 +150,33 @@ const HomePage = () => {
   };
   //Exit photo edit mode
   const handleExitCapture = () => {
-    setPhotoCaptured(false);
-  };
-
-  //Download Image from Canvas
-  const handleDownloadImage = async (event) => {
-    event.preventDefault(); //Prevent redirect
-    const canvas = document.querySelector(".canvas"); //DOM manipulation
-    const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
-    const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
-    const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
-    const link = document.createElement("a"); //Create unmounted anchor tag
-    link.href = blobURL; //Set href of unmounted anchor tag
-    link.download = "image.png"; //Define image download format
-    link.click(); //Trigger link with programmatic click
+    if (photoCaptured) {
+      setPhotoCaptured(false);
+    }
   };
 
   return (
     <section className="home">
-      {/* Navigation */}
-      <header className="home__header">
-        {/* Logo */}
-        <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
 
-        {/* Title */}
-        {/* <h1 className="home__title">Qual</h1> */}
-        {/* Menu */}
-        {menuIsOpen ? (
-          <img
-            className="home__button home__button--square"
-            src={closeIcon}
-            alt="Close Sessions List"
-            onClick={toggleSessions}
-          />
-        ) : (
-          <img
-            className="home__button home__button--square"
-            src={joinIcon}
-            alt="Join Sessions List"
-            onClick={toggleSessions}
-          />
-        )}
-      </header>
+      <Header myUserID={myUserID} />
 
-      {/* Video and Canvas Container */}
       <main className="home__main-container">
         <div className="home__core-container">
-          {/* Live Video Stream  */}
           <VideoPlayer
             setVideoStream={setVideoStream}
             isMuted={isMuted}
             handleCaptureImage={handleCaptureImage}
           />
-          {/* Canvas */}
           {photoCaptured ? (
-            <Canvas handleExitCapture={handleExitCapture} />
+            <Canvas
+              handleExitCapture={handleExitCapture}
+              handleCaptureImage={handleCaptureImage}
+            />
           ) : (
             <div className="home__canvas-placeholder" />
           )}
         </div>
+
         <div className="home__sessions-container">
           <SessionsList users={usersArr} />
           {/* <div className="home__controls-bar">
@@ -261,80 +216,17 @@ const HomePage = () => {
         </div>
       </main>
 
-      {/* Fixed Footer */}
-      <footer className="home__footer">
-        <div className="home__canvas-buttons">
-          <img
-            className={`home__button ${
-              photoCaptured
-                ? "home__button--auto-selected"
-                : "home__button--inactive"
-            }`}
-            src={drawIcon}
-            alt="DrawIcon"
-          />
-          {/* Mute/Unmute Button */}
-          {isMuted ? (
-            <img
-              className="home__button"
-              src={unmuteIcon}
-              alt="Unmute Icon"
-              onClick={toggleMute}
-            />
-          ) : (
-            <img
-              className="home__button"
-              src={muteIcon}
-              alt="Mute Icon"
-              onClick={toggleMute}
-            />
-          )}
-        </div>
-
-        {/* Session Button */}
-        {activeCall ? (
-          <div
-            className="home__session home__session--end"
-            onClick={handleEndSession}
-          >
-            <h2 className="home__call-text">End Session</h2>
-          </div>
-        ) : (
-          <div
-            className="home__session home__session--create"
-            onClick={handleCreateSession}
-          >
-            <h2 className="home__call-text">New Session</h2>
-          </div>
-        )}
-        {/* Capture Image Button */}
-        {/* {photoCaptured ? ( */}
-        <div className="home__canvas-buttons">
-          {/* Download Button */}
-          <img
-            className={`home__button ${
-              !photoCaptured
-                && "home__button--inactive"
-            }`}
-            src={downloadIcon}
-            alt="Download Icon"
-            onClick={handleDownloadImage}
-          />
-          {/* Close Download Button */}
-          {/* <img
-              className="home__button"
-              src={closeCircleIcon}
-              alt="Close Circle Icon"
-              onClick={handleExitCapture}
-            /> */}
-          <img
-            className="home__button"
-            src={cameraIcon}
-            alt="Camera Icon"
-            onClick={handleCaptureImage}
-          />
-        </div>
-      </footer>
+      <Footer
+        photoCaptured={photoCaptured}
+        toggleMute={toggleMute}
+        isMuted={isMuted}
+        handleCreateSession={handleCreateSession}
+        handleEndSession={handleEndSession}
+        handleExitCapture={handleExitCapture}
+        setPhotoCaptured={setPhotoCaptured}
+        activeCall={activeCall}
+        handleCaptureImage={handleCaptureImage}
+      />
     </section>
   );
 };

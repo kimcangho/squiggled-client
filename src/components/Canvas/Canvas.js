@@ -3,7 +3,7 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useRef } from "react";
 
-const Canvas = ({ handleExitCapture }) => {
+const Canvas = ({ handleExitCapture, handleCaptureImage }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   //useRef variables
@@ -46,6 +46,9 @@ const Canvas = ({ handleExitCapture }) => {
         canvasRef.current.height
       );
       handleExitCapture();
+    }
+    if (event.key === " ") {
+      handleCaptureImage();
     }
   };
   //DOM manipulation - Listen in on window

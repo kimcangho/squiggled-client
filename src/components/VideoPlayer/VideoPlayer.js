@@ -19,14 +19,14 @@ const VideoPlayer = ({ setVideoStream, isMuted, handleCaptureImage }) => {
       .catch((err) => console.error(err));
   }, [setVideoStream]);
 
-  //Take Screenshot Keydown Handler - Overwrites take photo
-  const handleKeyDownPhoto = (event) => {
-    if (event.key === " ") {
-      handleCaptureImage();
-    }
-  };
-  //DOM manipulation - Listen in on window
-  window.onkeydown = handleKeyDownPhoto;
+  // //Take Screenshot Keydown Handler - Overwrites take photo
+  // const handleKeyDownPhoto = (event) => {
+  //   if (event.key === " ") {
+  //     handleCaptureImage();
+  //   }
+  // };
+  // //DOM manipulation - Listen in on window
+  // window.onkeydown = handleKeyDownPhoto;
 
   return (
     <video
