@@ -9,13 +9,14 @@ import Peer from "simple-peer";
 import { v4 as uuidv4 } from "uuid";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
-import burgerMenuIcon from "../../assets/images/icons/menu-line.svg";
+import joinIcon from "../../assets/images/icons/join-in.svg";
 import closeIcon from "../../assets/images/icons/close-line.svg";
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
+import drawIcon from "../../assets/images/icons/draw.svg";
 //Components
 import Canvas from "../../components/Canvas/Canvas";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
@@ -118,7 +119,7 @@ const HomePage = () => {
   //Functions
 
   //Toggle Menu - Under Construction for future active sessions display
-  const toggleMenu = () => {
+  const toggleSessions = () => {
     setMenuIsOpen((menuIsOpen) => !menuIsOpen);
   };
 
@@ -154,7 +155,7 @@ const HomePage = () => {
       canvas.height = video.videoHeight; //videoHeight 2 times display size
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-      context.scale(2,2);
+      context.scale(2, 2);
     }, 0);
 
     //Toggle photo edit mode
@@ -187,21 +188,20 @@ const HomePage = () => {
 
         {/* Title */}
         {/* <h1 className="home__title">Qual</h1> */}
-
         {/* Menu */}
         {menuIsOpen ? (
           <img
             className="home__button home__button--square"
             src={closeIcon}
-            alt="Hamburger Menu"
-            onClick={toggleMenu}
+            alt="Close Sessions List"
+            onClick={toggleSessions}
           />
         ) : (
           <img
             className="home__button home__button--square"
-            src={burgerMenuIcon}
-            alt="Hamburger Menu"
-            onClick={toggleMenu}
+            src={joinIcon}
+            alt="Join Sessions List"
+            onClick={toggleSessions}
           />
         )}
       </header>
@@ -222,27 +222,75 @@ const HomePage = () => {
             <div className="home__canvas-placeholder" />
           )}
         </div>
-        <SessionsList />
+        <div className="home__sessions-container">
+          <SessionsList users={usersArr} />
+          {/* <div className="home__controls-bar">
+
+            {isMuted ? (
+              <img
+                className="home__button"
+                src={unmuteIcon}
+                alt="Unmute Icon"
+                onClick={toggleMute}
+              />
+            ) : (
+              <img
+                className="home__button"
+                src={muteIcon}
+                alt="Mute Icon"
+                onClick={toggleMute}
+              />
+            )}
+
+            {activeCall ? (
+              <div
+                className="home__session home__session--end"
+                onClick={handleEndSession}
+              >
+                <h2 className="home__call-text">End Session</h2>
+              </div>
+            ) : (
+              <div
+                className="home__session home__session--create"
+                onClick={handleCreateSession}
+              >
+                <h2 className="home__call-text">New Session</h2>
+              </div>
+            )}
+          </div> */}
+        </div>
       </main>
 
       {/* Fixed Footer */}
       <footer className="home__footer">
-        {/* Mute/Unmute Button */}
-        {isMuted ? (
+        <div className="home__canvas-buttons">
           <img
-            className="home__button"
-            src={unmuteIcon}
-            alt="Unmute Icon"
-            onClick={toggleMute}
+            className={`home__button ${
+              photoCaptured
+                ? "home__button--auto-selected"
+                : "home__button--inactive"
+            }`}
+            src={drawIcon}
+            alt="DrawIcon"
           />
-        ) : (
-          <img
-            className="home__button"
-            src={muteIcon}
-            alt="Mute Icon"
-            onClick={toggleMute}
-          />
-        )}
+          {/* Mute/Unmute Button */}
+          {isMuted ? (
+            <img
+              className="home__button"
+              src={unmuteIcon}
+              alt="Unmute Icon"
+              onClick={toggleMute}
+            />
+          ) : (
+            <img
+              className="home__button"
+              src={muteIcon}
+              alt="Mute Icon"
+              onClick={toggleMute}
+            />
+          )}
+        </div>
+
         {/* Session Button */}
         {activeCall ? (
           <div
@@ -260,32 +308,32 @@ const HomePage = () => {
           </div>
         )}
         {/* Capture Image Button */}
-        {photoCaptured ? (
-          <div className="home__canvas-buttons">
-            {/* Download Button */}
-            <img
-              className="home__button"
-              src={downloadIcon}
-              alt="Download Icon"
-              onClick={handleDownloadImage}
-            />
-            {/* Close Download Button */}
-            <img
+        {/* {photoCaptured ? ( */}
+        <div className="home__canvas-buttons">
+          {/* Download Button */}
+          <img
+            className={`home__button ${
+              !photoCaptured
+                && "home__button--inactive"
+            }`}
+            src={downloadIcon}
+            alt="Download Icon"
+            onClick={handleDownloadImage}
+          />
+          {/* Close Download Button */}
+          {/* <img
               className="home__button"
               src={closeCircleIcon}
               alt="Close Circle Icon"
               onClick={handleExitCapture}
-            />
-          </div>
-        ) : (
-          // Capture Image Button
+            /> */}
           <img
             className="home__button"
             src={cameraIcon}
             alt="Camera Icon"
             onClick={handleCaptureImage}
           />
-        )}
+        </div>
       </footer>
     </section>
   );

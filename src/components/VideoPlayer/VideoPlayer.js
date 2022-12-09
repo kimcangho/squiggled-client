@@ -2,18 +2,14 @@ import { useEffect, useRef } from "react";
 
 import "./VideoPlayer.scss";
 
-const VideoPlayer = ({
-  setVideoStream,
-  isMuted,
-  handleCaptureImage,
-}) => {
+const VideoPlayer = ({ setVideoStream, isMuted, handleCaptureImage }) => {
   let videoRef = useRef(null);
 
   //Stream Video
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
-        video: { facingMode: "user" },
+        video: true,
         audio: true,
       })
       .then((stream) => {
