@@ -38,6 +38,10 @@ const Canvas = ({ handleExitCapture, handleCaptureImage }) => {
 
   //Clear Canvas Handler
   const handleKeyDown = (event) => {
+    console.log(event.key);
+    if (event.key === " ") {
+      handleCaptureImage();
+    }
     if (event.key === "Escape" || event.key === "Backspace") {
       contextRef.current.clearRect(
         0,
@@ -47,10 +51,8 @@ const Canvas = ({ handleExitCapture, handleCaptureImage }) => {
       );
       handleExitCapture();
     }
-    if (event.key === " ") {
-      handleCaptureImage();
-    }
   };
+
   //DOM manipulation - Listen in on window
   window.onkeydown = handleKeyDown;
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import Peer from "simple-peer";
 import { v4 as uuidv4 } from "uuid";
+
 //Components
 import Header from "../../components/Header/Header";
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
@@ -19,94 +20,66 @@ const HomePage = () => {
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
+  const [isHost, setIsHost] = useState(false); //Session broadcaster/host
 
   //Video Stream State
   const [videoStream, setVideoStream] = useState(false);
 
   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
-  const [usersArr, setUsersArr] = useState("");
+  const [usersArr, setUsersArr] = useState([]);
   //Peer-to-peer states
+  // const [receivingCall, setReceivingCall] = useState(false);
+  // const [caller, setCaller] = useState("");
+  // const [callerSignal, setCallerSignal] = useState();
+  // const [callAccepted, setCallAccepted] = useState(false);
+
+  const [me, setMe] = useState("");
+  const [stream, setStream] = useState(null);
   const [receivingCall, setReceivingCall] = useState(false);
   const [caller, setCaller] = useState("");
-  const [callerSignal, setCallerSignal] = useState();
+  const [callerSignal, setCallerSignal] = useState(null);
   const [callAccepted, setCallAccepted] = useState(false);
+  const [idToCall, setIdToCall] = useState("");
+  const [callEnded, setCallEnded] = useState(false);
+  const [name, setName] = useState("");
 
-  //useRef variables
+  //VideoPlayer Code
+  const videoRef = useRef(null);
   const partnerVideo = useRef();
   const socket = useRef();
-
-  //Navigation variable
-  const navigate = useNavigate();
 
   //Connect to server on component mount
   useEffect(() => {
     //Connect to server
-    socket.current = io.connect("http://localhost:8000/");
-    //Set my user id
-    socket.current.on("yourID", (userId) => {
-      console.log(`Your user ID: ${userId}`);
-      setMyUserID(userId);
-    });
-    //Set array of users
-    socket.current.on("allUsers", (users) => {
-      console.log(`Users on call`);
-      console.log(users);
-      setUsersArr(users);
-    });
-    //Listen on being called from event hey
-    socket.current.on("hey", (data) => {
-      setReceivingCall(true); //Receiving call
-      setCaller(data.from); //Set caller trying to call us
-      setCallerSignal(data.signal); //Set caller's signal
-    });
+    // socket.current = io.connect("http://localhost:8000/");
 
-    const acceptCall = () => {
-      setCallAccepted(true);
-
-      const peer = new Peer({
-        initiator: false,
-        trickle: false,
-        stream: videoStream,
-      });
-
-      peer.on("signal", (data) => {
-        socket.current.emit("acceptCall", { signal: data, to: caller });
-      });
-
-      peer.on("stream", (stream) => {
-        partnerVideo.current.srcObject = videoStream;
-      });
-
-      peer.signal(callerSignal);
-    };
+    //Get Video Stream
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
+      .then((stream) => {
+        setVideoStream(stream);
+        videoRef.current.srcObject = stream;
+      })
+      .catch((err) => console.error(err));
   }, []);
 
-  //Call Peer
-  const callPeer = (id) => {
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      stream: videoStream,
-    });
-
-    //Signal to peer by emitting callUser event with object containing userId
-    peer.on("signal", (data) => {
-      socket.current.emit("callUser", { userToCall: id });
-    });
-    //Listen in on peer stream event
-    peer.on("stream", (stream) => {
-      //Check partnerVideo present
-      if (partnerVideo.current) {
-        partnerVideo.current.srcObject = stream;
-      }
-      //Call another user
-      socket.current.on("callAccepted", (signal) => {
-        setCallAccepted(true);
-        peer.signal(signal);
-      });
-    });
+  // //Take Screenshot Keydown Handler - Overwrites take photo
+  const handleKeyDownPhoto = (event) => {
+    if (event.key === " ") {
+      handleCaptureImage();
+    }
   };
+  // //DOM manipulation - Listen in on window
+  window.onkeydown = handleKeyDownPhoto;
+
+  //Navigation variable
+  const navigate = useNavigate();
+
+  //Connect to server with socket.io
 
   //Functions
 
@@ -114,11 +87,16 @@ const HomePage = () => {
   const handleCreateSession = () => {
     const sessionId = uuidv4();
     setActiveCall(true);
+    setIsHost(true);
     navigate(`/session/${sessionId}`);
+    // socket.current.emit("test", { user: myUserID, session: sessionId });
   };
   //End Session
   const handleEndSession = () => {
     setActiveCall(false);
+    setIsHost(false);
+    console.log(`${myUserID} has left the building`);
+    console.log(socket.current);
     navigate("/");
   };
 
@@ -143,7 +121,7 @@ const HomePage = () => {
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
       context.scale(2, 2);
-    }, 0);
+    }, 10);
 
     //Toggle photo edit mode
     setPhotoCaptured(true);
@@ -157,16 +135,17 @@ const HomePage = () => {
 
   return (
     <section className="home">
-
-      <Header myUserID={myUserID} />
+      <Header myUserID={myUserID} usersArr={usersArr} />
 
       <main className="home__main-container">
         <div className="home__core-container">
-          <VideoPlayer
-            setVideoStream={setVideoStream}
-            isMuted={isMuted}
-            handleCaptureImage={handleCaptureImage}
-          />
+          <video
+            autoPlay
+            ref={videoRef}
+            muted={!isMuted}
+            className="video__feed"
+          ></video>
+
           {photoCaptured ? (
             <Canvas
               handleExitCapture={handleExitCapture}
@@ -178,45 +157,12 @@ const HomePage = () => {
         </div>
 
         <div className="home__sessions-container">
-          <SessionsList users={usersArr} />
-          {/* <div className="home__controls-bar">
-
-            {isMuted ? (
-              <img
-                className="home__button"
-                src={unmuteIcon}
-                alt="Unmute Icon"
-                onClick={toggleMute}
-              />
-            ) : (
-              <img
-                className="home__button"
-                src={muteIcon}
-                alt="Mute Icon"
-                onClick={toggleMute}
-              />
-            )}
-
-            {activeCall ? (
-              <div
-                className="home__session home__session--end"
-                onClick={handleEndSession}
-              >
-                <h2 className="home__call-text">End Session</h2>
-              </div>
-            ) : (
-              <div
-                className="home__session home__session--create"
-                onClick={handleCreateSession}
-              >
-                <h2 className="home__call-text">New Session</h2>
-              </div>
-            )}
-          </div> */}
+          <SessionsList usersArr={usersArr} isInModal={false} />
         </div>
       </main>
 
       <Footer
+        myUserID={myUserID}
         photoCaptured={photoCaptured}
         toggleMute={toggleMute}
         isMuted={isMuted}

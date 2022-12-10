@@ -1,3 +1,19 @@
 @use "../../styles/globals";
 @use "../../styles/partials/vars" as *;
 @use "../../styles/partials/mixins" as *;
+
+.header {
+
+    &__mobile-menu {
+
+        display: flex;
+        justify-content: flex-end;
+        background-color: $color-active;
+        width: 80%;
+        border-radius: 10px;
+
+        @include tablet {
+            display: none
+        }
+    }
+}

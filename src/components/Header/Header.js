@@ -1,21 +1,44 @@
 import "./Header.scss";
 
 import { useState } from "react";
+import Modal from 'react-modal';
 
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
 import closeIcon from "../../assets/images/icons/close-line.svg";
 
-const Header = ({ myUserID }) => {
+import ModalMenu from "../ModalMenu/ModalMenu";
 
+
+const Header = ({ myUserID, usersArr }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  }
 
   const toggleSessions = () => {
-    setMenuIsOpen((menuIsOpen) => !menuIsOpen);
+    setMenuIsOpen((menuIsOpen) => {
+      if (!menuIsOpen) {
+        handleOpenModal();
+      } 
+      return !menuIsOpen
+    });
   };
 
   return (
     <header className="home__header">
+
+      <ModalMenu 
+        isOpen={isOpen}
+        handleCloseModal={handleCloseModal}
+        usersArr={usersArr}
+      />
 
       {/* Logo */}
       <div className="home__header-container">
@@ -24,21 +47,21 @@ const Header = ({ myUserID }) => {
       </div>
 
       {/* Menu */}
-      {menuIsOpen ? (
-        <img
+      {/* {menuIsOpen ? ( */}
+        {/* <img
           className="home__button home__button--square"
           src={closeIcon}
           alt="Close Sessions List"
           onClick={toggleSessions}
-        />
-      ) : (
+        /> */}
+      {/* ) : ( */}
         <img
           className="home__button home__button--square"
           src={joinIcon}
           alt="Join Sessions List"
           onClick={toggleSessions}
         />
-      )}
+      {/* )} */}
     </header>
   );
 };

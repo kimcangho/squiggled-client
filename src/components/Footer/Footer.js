@@ -8,9 +8,9 @@ import downloadIcon from "../../assets/images/icons/download-line.svg";
 import drawIcon from "../../assets/images/icons/draw.svg";
 
 const Footer = ({
+  myUserId,
   handleExitCapture,
   photoCaptured,
-//   handleDownloadImage,
   handleCaptureImage,
   toggleMute,
   isMuted,

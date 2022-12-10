@@ -4,16 +4,19 @@
 
 .sessions-list {
   display: none;
+
   @include tablet {
     display: flex;
     flex-direction: column;
-    border: 1px solid #888888;
     padding: 1rem;
-    width: 20rem;
-    height: 100%;
     align-items: center;
     border-radius: 10px;
     background-color: $color-invert-text;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 20rem;
+    height: 32.25rem;
+    border: 1px solid #888888; 
   }
 
   &__empty-container {
