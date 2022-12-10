@@ -30,14 +30,16 @@ const HomePage = () => {
   const [myUserID, setMyUserID] = useState("");
   const [usersArr, setUsersArr] = useState([]);
 
-  //VideoPlayer Code
+  //useRef Variables
   const videoRef = useRef(null);
   const socket = useRef();
+
+  //Navigation variable
+  const navigate = useNavigate();
 
   //Connect to server on component mount
   useEffect(() => {
     
-
     //Get Video Stream
     navigator.mediaDevices
       .getUserMedia({
@@ -52,19 +54,14 @@ const HomePage = () => {
   }, []);
 
 
-  // //Take Screenshot Keydown Handler - Overwrites take photo
+  //Take Screenshot Keydown Handler
   const handleKeyDownPhoto = (event) => {
     if (event.key === " ") {
       handleCaptureImage();
     }
   };
-  // //DOM manipulation - Listen in on window
+  //DOM manipulation - Listen in on window
   window.onkeydown = handleKeyDownPhoto;
-
-  //Navigation variable
-  const navigate = useNavigate();
-
-  //Connect to server with socket.io
 
   //Functions
 
@@ -99,7 +96,7 @@ const HomePage = () => {
       //DOM Manipulation to set canvas, context and video
       const canvas = document.querySelector(".canvas");
       const context = canvas.getContext("2d");
-      const video = document.querySelector(".video__feed");
+      const video = document.querySelector(".home__feed");
       //Get canvas dimensions
       canvas.width = video.videoWidth; //videoWidth 2 times display size
       canvas.height = video.videoHeight; //videoHeight 2 times display size
