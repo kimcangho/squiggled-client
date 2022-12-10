@@ -1,12 +1,9 @@
 import "./Header.scss";
 
 import { useState } from "react";
-import Modal from 'react-modal';
 
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
-import closeIcon from "../../assets/images/icons/close-line.svg";
-
 import ModalMenu from "../ModalMenu/ModalMenu";
 
 
@@ -46,22 +43,13 @@ const Header = ({ myUserID, usersArr }) => {
         {/* <h1 className="home__title">{`Welcome, ${myUserID}`}</h1> */}
       </div>
 
-      {/* Menu */}
-      {/* {menuIsOpen ? ( */}
-        {/* <img
-          className="home__button home__button--square"
-          src={closeIcon}
-          alt="Close Sessions List"
-          onClick={toggleSessions}
-        /> */}
-      {/* ) : ( */}
         <img
           className="home__button home__button--square"
           src={joinIcon}
           alt="Join Sessions List"
           onClick={toggleSessions}
         />
-      {/* )} */}
+
     </header>
   );
 };

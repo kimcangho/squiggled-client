@@ -2,7 +2,7 @@
 import "./HomePage.scss";
 //React Hooks
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
 import Peer from "simple-peer";
@@ -10,10 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 
 //Components
 import Header from "../../components/Header/Header";
-import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 import Canvas from "../../components/Canvas/Canvas";
 import SessionsList from "../../components/SessionsList/SessionsList";
 import Footer from "../../components/Footer/Footer";
+
+
 
 const HomePage = () => {
   //State Variables
@@ -28,31 +29,14 @@ const HomePage = () => {
   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
   const [usersArr, setUsersArr] = useState([]);
-  //Peer-to-peer states
-  // const [receivingCall, setReceivingCall] = useState(false);
-  // const [caller, setCaller] = useState("");
-  // const [callerSignal, setCallerSignal] = useState();
-  // const [callAccepted, setCallAccepted] = useState(false);
-
-  const [me, setMe] = useState("");
-  const [stream, setStream] = useState(null);
-  const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState("");
-  const [callerSignal, setCallerSignal] = useState(null);
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [idToCall, setIdToCall] = useState("");
-  const [callEnded, setCallEnded] = useState(false);
-  const [name, setName] = useState("");
 
   //VideoPlayer Code
   const videoRef = useRef(null);
-  const partnerVideo = useRef();
   const socket = useRef();
 
   //Connect to server on component mount
   useEffect(() => {
-    //Connect to server
-    // socket.current = io.connect("http://localhost:8000/");
+    
 
     //Get Video Stream
     navigator.mediaDevices
@@ -66,6 +50,7 @@ const HomePage = () => {
       })
       .catch((err) => console.error(err));
   }, []);
+
 
   // //Take Screenshot Keydown Handler - Overwrites take photo
   const handleKeyDownPhoto = (event) => {
@@ -121,7 +106,7 @@ const HomePage = () => {
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
       context.scale(2, 2);
-    }, 10);
+    }, 0);
 
     //Toggle photo edit mode
     setPhotoCaptured(true);
@@ -138,12 +123,13 @@ const HomePage = () => {
       <Header myUserID={myUserID} usersArr={usersArr} />
 
       <main className="home__main-container">
+
         <div className="home__core-container">
           <video
             autoPlay
             ref={videoRef}
             muted={!isMuted}
-            className="video__feed"
+            className="home__feed"
           ></video>
 
           {photoCaptured ? (

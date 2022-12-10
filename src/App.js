@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage/HomePage';
-// import SessionPage from './pages/SessionPage/SessionPage';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 const App = () => {

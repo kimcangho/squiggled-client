@@ -95,6 +95,12 @@
     }
   }
 
+  &__feed {
+    width: 20rem;
+    transform: scaleX(-1);
+    border-radius: 10px;
+  }
+
   &__canvas-placeholder {
     background-color: $color-invert-text;
     background-image: url("../../assets/images/icons/camera-fill.svg");
