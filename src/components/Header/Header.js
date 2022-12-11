@@ -45,10 +45,10 @@ const Header = ({ myUserID, usersArr }) => {
       <div className="home__header-container">
         <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
         {/* <h1 className="home__title">{`Welcome, ${myUserID}`}</h1> */}
-        <input
+        {/* <input
           placeholder="What's your name, stranger?"
           onChange={handleNameChange}
-        />
+        /> */}
       </div>
 
       <img

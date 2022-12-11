@@ -19,7 +19,6 @@ const HomePage = () => {
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
-  const [isHost, setIsHost] = useState(false); //Session broadcaster/host
 
   //Video Stream State
   const [videoStream, setVideoStream] = useState(false);
@@ -44,13 +43,13 @@ const HomePage = () => {
       console.log(data.message);
     });
 
-    socketRef.current.on('getActiveSessions', (data) => {
+    socketRef.current.on("getActiveSessions", (data) => {
       setUsersArr(data);
-    })
+    });
 
-    socketRef.current.on('startingActiveSessions', (data) => {
+    socketRef.current.on("startingActiveSessions", (data) => {
       setUsersArr(data);
-    })
+    });
 
     //Get Video Stream
     navigator.mediaDevices
@@ -68,20 +67,20 @@ const HomePage = () => {
   //Socket.io
   const joinSession = (sessionID) => {
     console.log(`Joining session: ${sessionID}`);
+    setActiveCall(true);
     socketRef.current.emit("join_session", sessionID);
   };
   const exitSession = (sessionID) => {
     console.log(`Leaving session: ${sessionID}`);
+    setActiveCall(false);
     socketRef.current.emit("exit_session", sessionID);
   };
- 
 
   //Functions
   //Create Session
   const handleCreateSession = () => {
     const sessionId = uuidv4();
     setActiveCall(true);
-    setIsHost(true);
     setSession(sessionId);
     joinSession(sessionId);
     navigate(`/session/${sessionId}`);
@@ -89,7 +88,6 @@ const HomePage = () => {
   //End Session
   const handleEndSession = (session) => {
     setActiveCall(false);
-    setIsHost(false);
     exitSession(session);
     setSession("");
     navigate("/");
@@ -151,9 +149,17 @@ const HomePage = () => {
 
       <main className="home__main-container">
         <div className="home__core-container">
+          {/* User/Broadcaster */}
           <video
             autoPlay
             ref={videoRef}
+            muted={!isMuted}
+            className="home__feed"
+          ></video>
+          {/* Peer */}
+          <video
+            autoPlay
+            // ref={videoRef}
             muted={!isMuted}
             className="home__feed"
           ></video>
@@ -166,7 +172,12 @@ const HomePage = () => {
         </div>
 
         <div className="home__sessions-container">
-          <SessionsList usersArr={usersArr} isInModal={false} />
+          <SessionsList
+            usersArr={usersArr}
+            isInModal={false}
+            activeCall={activeCall}
+            joinSession={joinSession}
+          />
         </div>
       </main>
 
