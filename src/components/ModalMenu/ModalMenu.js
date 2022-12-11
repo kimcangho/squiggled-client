@@ -6,20 +6,6 @@ import tumbleweedImage from "../../assets/images/tumbleweed.png";
 
 Modal.setAppElement("#root");
 
-// const users = [
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-// ];
-
-const users = [];
-
 const ModalMenu = ({ isOpen, handleCloseModal, usersArr }) => {
   return (
     <Modal
@@ -32,7 +18,7 @@ const ModalMenu = ({ isOpen, handleCloseModal, usersArr }) => {
       <div className={`modal-menu__container`}>
         <h2 className="modal-menu__title">Active Sessions</h2>
 
-        {users.length === 0 ? (
+        {usersArr.length === 0 ? (
           <>
             <img
               className="modal-menu__empty-list"
@@ -42,8 +28,8 @@ const ModalMenu = ({ isOpen, handleCloseModal, usersArr }) => {
             <h3 className="modal-menu__empty-text">It's quiet...</h3>
           </>
         ) : (
-          users.map((session, index) => {
-            return <Session key={index} name={session.id} />;
+          usersArr.map((session, index) => {
+            return <Session key={index} name={session} />;
           })
         )}
       </div>

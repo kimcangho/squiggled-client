@@ -9,6 +9,7 @@ import drawIcon from "../../assets/images/icons/draw.svg";
 
 const Footer = ({
   myUserId,
+  session,
   handleExitCapture,
   photoCaptured,
   handleCaptureImage,
@@ -68,7 +69,7 @@ const Footer = ({
       {activeCall ? (
         <div
           className="home__session home__session--end"
-          onClick={handleEndSession}
+          onClick={() => handleEndSession(session)}
         >
           <h2 className="home__call-text">End Session</h2>
         </div>

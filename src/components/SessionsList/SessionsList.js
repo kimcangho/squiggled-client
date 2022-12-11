@@ -5,26 +5,13 @@ import tumbleweedImage from "../../assets/images/tumbleweed.png";
 //Components
 import Session from "../Session/Session";
 
-// const users = [
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-//   { id: 1, name: "Kent" },
-// ];
-const users = [];
-
 const SessionsList = ({ usersArr }) => {
 
   return (
     <div className={`sessions-list`}>
       <h2 className="sessions-list__title">Active Sessions</h2>
 
-      {users.length === 0 ? (
+      {usersArr.length === 0 ? (
         <div className="sessions-list__empty-container">
           <img
             className="sessions-list__empty-list"
@@ -34,8 +21,8 @@ const SessionsList = ({ usersArr }) => {
           <h3 className="sessions-list__empty-text">It's quiet...</h3>
         </div>
       ) : (
-        users.map((session, index) => {
-          return <Session key={index} name={session.id} />;
+        usersArr.map((session, index) => {
+          return <Session key={index} name={session} />;
         })
       )}
     </div>

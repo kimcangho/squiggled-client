@@ -27,17 +27,30 @@ const HomePage = () => {
   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
   const [usersArr, setUsersArr] = useState([]);
+  const [session, setSession] = useState("");
 
   //useRef Variables
   const videoRef = useRef(null);
-  const socketRef = useRef();
-
+  const socketRef = useRef(null);
   //Navigation variable
   const navigate = useNavigate();
 
   //Connect to server on component mount
   useEffect(() => {
+    // Connect in useEffect
     socketRef.current = io.connect("http://localhost:8000");
+
+    socketRef.current.on("receive message", (data) => {
+      console.log(data.message);
+    });
+
+    socketRef.current.on('getActiveSessions', (data) => {
+      setUsersArr(data);
+    })
+
+    socketRef.current.on('startingActiveSessions', (data) => {
+      setUsersArr(data);
+    })
 
     //Get Video Stream
     navigator.mediaDevices
@@ -52,30 +65,40 @@ const HomePage = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  //Functions
+  //Socket.io
+  const joinSession = (sessionID) => {
+    console.log(`Joining session: ${sessionID}`);
+    socketRef.current.emit("join_session", sessionID);
+  };
+  const exitSession = (sessionID) => {
+    console.log(`Leaving session: ${sessionID}`);
+    socketRef.current.emit("exit_session", sessionID);
+  };
+ 
 
+  //Functions
   //Create Session
   const handleCreateSession = () => {
     const sessionId = uuidv4();
     setActiveCall(true);
     setIsHost(true);
+    setSession(sessionId);
+    joinSession(sessionId);
     navigate(`/session/${sessionId}`);
-    // socketRef.current = io.connect('http://localhost:8000');
-    // socket.current.emit("test", { user: myUserID, session: sessionId });
   };
   //End Session
-  const handleEndSession = () => {
+  const handleEndSession = (session) => {
     setActiveCall(false);
     setIsHost(false);
-    console.log(`${myUserID} has left the building`);
-    console.log(socketRef.current);
-    socketRef.current.disconnect();
+    exitSession(session);
+    setSession("");
     navigate("/");
   };
 
   //Toggle Sound
   const toggleMute = () => {
     setIsMuted((isMuted) => !isMuted);
+    socketRef.current.emit("send message", { message: "Hello" });
   };
 
   //Capture Image - Asynchronous function under construction
@@ -108,10 +131,10 @@ const HomePage = () => {
 
   //Take/Delete Screenshot Keydown Handler
   const handleKeyDownPhoto = (event) => {
-    if (event.key === " ") {
+    if (event.key === "Enter") {
       handleCaptureImage();
     }
-    if (event.key === "Escape" || event.key === "Backspace") {
+    if (event.key === "Escape") {
       if (document.querySelector(".canvas")) {
         const canvas = document.querySelector(".canvas");
         const context = canvas.getContext("2d");
@@ -148,6 +171,7 @@ const HomePage = () => {
       </main>
 
       <Footer
+        session={session}
         myUserID={myUserID}
         photoCaptured={photoCaptured}
         toggleMute={toggleMute}
