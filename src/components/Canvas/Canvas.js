@@ -3,14 +3,14 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useRef } from "react";
 
-const Canvas = ({ handleExitCapture, handleCaptureImage }) => {
+const Canvas = () => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   //useRef variables
   let canvasRef = useRef(null);
   let contextRef = useRef(null);
 
-  //Set
+  //Set Canvas
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     contextRef.current = context;
@@ -35,26 +35,6 @@ const Canvas = ({ handleExitCapture, handleCaptureImage }) => {
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
   };
-
-  //Clear Canvas Handler
-  const handleKeyDown = (event) => {
-    console.log(event.key);
-    if (event.key === " ") {
-      handleCaptureImage();
-    }
-    if (event.key === "Escape" || event.key === "Backspace") {
-      contextRef.current.clearRect(
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
-      handleExitCapture();
-    }
-  };
-
-  //DOM manipulation - Listen in on window
-  window.onkeydown = handleKeyDown;
 
   return (
     <canvas

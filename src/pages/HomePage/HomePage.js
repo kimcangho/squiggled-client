@@ -14,8 +14,6 @@ import Canvas from "../../components/Canvas/Canvas";
 import SessionsList from "../../components/SessionsList/SessionsList";
 import Footer from "../../components/Footer/Footer";
 
-
-
 const HomePage = () => {
   //State Variables
   const [activeCall, setActiveCall] = useState(false);
@@ -32,14 +30,15 @@ const HomePage = () => {
 
   //useRef Variables
   const videoRef = useRef(null);
-  const socket = useRef();
+  const socketRef = useRef();
 
   //Navigation variable
   const navigate = useNavigate();
 
   //Connect to server on component mount
   useEffect(() => {
-    
+    socketRef.current = io.connect("http://localhost:8000");
+
     //Get Video Stream
     navigator.mediaDevices
       .getUserMedia({
@@ -53,16 +52,6 @@ const HomePage = () => {
       .catch((err) => console.error(err));
   }, []);
 
-
-  //Take Screenshot Keydown Handler
-  const handleKeyDownPhoto = (event) => {
-    if (event.key === " ") {
-      handleCaptureImage();
-    }
-  };
-  //DOM manipulation - Listen in on window
-  window.onkeydown = handleKeyDownPhoto;
-
   //Functions
 
   //Create Session
@@ -71,6 +60,7 @@ const HomePage = () => {
     setActiveCall(true);
     setIsHost(true);
     navigate(`/session/${sessionId}`);
+    // socketRef.current = io.connect('http://localhost:8000');
     // socket.current.emit("test", { user: myUserID, session: sessionId });
   };
   //End Session
@@ -78,7 +68,8 @@ const HomePage = () => {
     setActiveCall(false);
     setIsHost(false);
     console.log(`${myUserID} has left the building`);
-    console.log(socket.current);
+    console.log(socketRef.current);
+    socketRef.current.disconnect();
     navigate("/");
   };
 
@@ -115,12 +106,27 @@ const HomePage = () => {
     }
   };
 
+  //Take/Delete Screenshot Keydown Handler
+  const handleKeyDownPhoto = (event) => {
+    if (event.key === " ") {
+      handleCaptureImage();
+    }
+    if (event.key === "Escape" || event.key === "Backspace") {
+      if (document.querySelector(".canvas")) {
+        const canvas = document.querySelector(".canvas");
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        handleExitCapture();
+      }
+    }
+  };
+  window.onkeydown = handleKeyDownPhoto;
+
   return (
     <section className="home">
       <Header myUserID={myUserID} usersArr={usersArr} />
 
       <main className="home__main-container">
-
         <div className="home__core-container">
           <video
             autoPlay
@@ -130,10 +136,7 @@ const HomePage = () => {
           ></video>
 
           {photoCaptured ? (
-            <Canvas
-              handleExitCapture={handleExitCapture}
-              handleCaptureImage={handleCaptureImage}
-            />
+            <Canvas />
           ) : (
             <div className="home__canvas-placeholder" />
           )}
