@@ -8,7 +8,7 @@ import downloadIcon from "../../assets/images/icons/download-line.svg";
 import drawIcon from "../../assets/images/icons/draw.svg";
 
 const Footer = ({
-  myUserId,
+  myUserID,
   session,
   handleExitCapture,
   photoCaptured,
@@ -76,7 +76,7 @@ const Footer = ({
       ) : (
         <div
           className="home__session home__session--create"
-          onClick={handleCreateSession}
+          onClick={() => handleCreateSession(myUserID)}
         >
           <h2 className="home__call-text">New Session</h2>
         </div>

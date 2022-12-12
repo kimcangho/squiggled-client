@@ -1,19 +1,18 @@
 //Styling
 import "./Session.scss";
-
-import { useNavigate } from "react-router-dom";
 //Assets
 import phoneIcon from "../../assets/images/icons/phone.svg";
 
-const Session = ({ name, joinSession }) => {
+const Session = ({ name, handleJoinSession , handleCloseModal}) => {
 
-  const navigate = useNavigate();
-
-  //Join session
-  const handleJoinSession = () => {
-    navigate(`/session/${name}`)  //Redirect to session URL
-    joinSession(name);
-  };
+  const handleJoinClose = (name) => {
+    
+    handleJoinSession(name);
+    if (handleCloseModal) {
+      handleCloseModal();
+    }
+    
+  }
 
   return (
     <div className="session">
@@ -22,7 +21,7 @@ const Session = ({ name, joinSession }) => {
         className="session__phone"
         src={phoneIcon}
         alt="Phone Icon"
-        onClick={handleJoinSession}
+        onClick={()=> {handleJoinClose(name)}}
       />
     </div>
   );

@@ -6,7 +6,7 @@ import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
 import ModalMenu from "../ModalMenu/ModalMenu";
 
-const Header = ({ myUserID, usersArr }) => {
+const Header = ({ myUserID, usersArr, handleJoinSession, activeCall }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
@@ -39,16 +39,14 @@ const Header = ({ myUserID, usersArr }) => {
         isOpen={isOpen}
         handleCloseModal={handleCloseModal}
         usersArr={usersArr}
+        handleJoinSession={handleJoinSession}
+        activeCall={activeCall}
       />
 
       {/* Logo */}
       <div className="home__header-container">
         <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
-        {/* <h1 className="home__title">{`Welcome, ${myUserID}`}</h1> */}
-        {/* <input
-          placeholder="What's your name, stranger?"
-          onChange={handleNameChange}
-        /> */}
+        <h1 className="home__title">{`Welcome, ${myUserID}`}</h1>
       </div>
 
       <img

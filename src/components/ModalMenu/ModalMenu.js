@@ -6,7 +6,13 @@ import tumbleweedImage from "../../assets/images/tumbleweed.png";
 
 Modal.setAppElement("#root");
 
-const ModalMenu = ({ isOpen, handleCloseModal, usersArr }) => {
+const ModalMenu = ({
+  isOpen,
+  handleCloseModal,
+  usersArr,
+  handleJoinSession,
+  activeCall,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -16,21 +22,38 @@ const ModalMenu = ({ isOpen, handleCloseModal, usersArr }) => {
       overlayClassName="modal-menu__overlay"
     >
       <div className={`modal-menu__container`}>
-        <h2 className="modal-menu__title">Active Sessions</h2>
-
-        {usersArr.length === 0 ? (
+        {!activeCall ? (
           <>
-            <img
-              className="modal-menu__empty-list"
-              src={tumbleweedImage}
-              alt="Tumbleweed"
-            />
-            <h3 className="modal-menu__empty-text">It's quiet...</h3>
+            <h2 className="modal-menu__title">Active Sessions</h2>
+
+            {usersArr.length === 0 ? (
+              <>
+                <img
+                  className="modal-menu__empty-list"
+                  src={tumbleweedImage}
+                  alt="Tumbleweed"
+                />
+                <h3 className="modal-menu__empty-text">It's quiet...</h3>
+              </>
+            ) : (
+              usersArr.map((session, index) => {
+                return (
+                  <Session
+                    key={index}
+                    name={session}
+                    handleJoinSession={handleJoinSession}
+                    handleCloseModal={handleCloseModal}
+                  />
+                );
+              })
+            )}
           </>
         ) : (
-          usersArr.map((session, index) => {
-            return <Session key={index} name={session} />;
-          })
+          <>
+            <h2 className="sessions-list__title">In a call</h2>
+            <p>Hosted by</p>
+            <p>Attended by</p>
+          </>
         )}
       </div>
     </Modal>
