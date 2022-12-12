@@ -99,6 +99,11 @@
     width: 20rem;
     transform: scaleX(-1);
     border-radius: 10px;
+
+    &--peer {
+      border: 3px solid $color-error;
+      transform: scaleX(1);
+    }
   }
 
   &__canvas-placeholder {

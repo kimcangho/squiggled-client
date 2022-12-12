@@ -12,7 +12,10 @@ const SessionsList = ({
   isHost,
   myUserID,
   session,
-  peerID
+  peerID,
+  receivingCall,
+  acceptCall,
+  callPeer,
 }) => {
   return (
     <div className={`sessions-list`}>
@@ -37,6 +40,8 @@ const SessionsList = ({
                   name={session}
                   handleJoinSession={handleJoinSession}
                   myUserID={myUserID}
+                  callPeer={callPeer}
+                  peerID={peerID}
                 />
               );
             })
@@ -47,9 +52,14 @@ const SessionsList = ({
           <h2 className="sessions-list__title">
             {isHost ? "Hosting" : "Visiting"}
           </h2>
-          {/* <p>Hosted by {session}</p>
-          <p>Attended by {isHost ? peerID : myUserID}</p> */}
-          {/* <p>{peerID}</p> */}
+          {receivingCall ? (
+            <div>
+              <h3>{peerID} is calling you</h3>
+              <button onClick={acceptCall}>Accept</button>
+            </div>
+          ) : (
+            ""
+          )}
         </>
       )}
     </div>

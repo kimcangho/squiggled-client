@@ -16,6 +16,9 @@ const ModalMenu = ({
   myUserID,
   session,
   peerID,
+  receivingCall,
+  acceptCall,
+  callPeer
 }) => {
   return (
     <Modal
@@ -48,6 +51,8 @@ const ModalMenu = ({
                     handleJoinSession={handleJoinSession}
                     handleCloseModal={handleCloseModal}
                     myUserID={myUserID}
+                    callPeer={callPeer}
+                    peerID={peerID}
                   />
                 );
               })
@@ -58,9 +63,12 @@ const ModalMenu = ({
             <h2 className="sessions-list__title">
               {isHost ? "Hosting" : "Visiting"}
             </h2>
-            {/* <p>Hosted by {session}</p>
-            <p>Attended by {isHost ? peerID : myUserID}</p>
-            <p>{peerID}</p> */}
+            {receivingCall && (
+              <div>
+                <h3>{peerID} is calling you</h3>
+                <button onClick={acceptCall}>Accept</button>
+              </div>
+            )}
           </>
         )}
       </div>

@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
-// import Peer from "simple-peer";
+import Peer from "simple-peer";
 
 //Components
 import Header from "../../components/Header/Header";
@@ -24,14 +24,21 @@ const HomePage = () => {
 
   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
-  const [peerID, setPeerID] = useState('');
+  const [peerID, setPeerID] = useState("");
   const [usersArr, setUsersArr] = useState([]);
   const [session, setSession] = useState("");
   const [isHost, setIsHost] = useState(false);
 
+  //Peer states
+  const [callAccepted, setCallAccepted] = useState(false);
+  const [receivingCall, setReceivingCall] = useState(false);
+  const [caller, setCaller] = useState("");
+  const [callerSignal, setCallerSignal] = useState("");
+
   //useRef Variables
   const myVideoRef = useRef(null);
   const socketRef = useRef(null);
+  const peerVideoRef = useRef(null);
 
   //Navigation variable
   const navigate = useNavigate();
@@ -40,29 +47,33 @@ const HomePage = () => {
   useEffect(() => {
     // Connect in useEffect
     socketRef.current = io.connect("http://localhost:8000");
+    console.log(socketRef.current);
     //Get socket id and set as user id
     socketRef.current.on("me", (data) => {
       setMyUserID(data);
       console.log(`Your user ID: ${data}`);
     });
-
+    //Get list of active sessions on start
     socketRef.current.on("getActiveSessions", (data) => {
       setUsersArr(data);
+      setCallAccepted(false);
+      setReceivingCall(false);
     });
+    //Set PeerID on join
     socketRef.current.on("join-confirm", (userData, sessionData) => {
       if (isHost) {
-        setPeerID(userData)
-        console.log(userData)
+        setPeerID(userData);
+        console.log(userData);
       } else {
-        setPeerID(sessionData)
+        setPeerID(sessionData);
         console.log(sessionData);
       }
     });
-
-    socketRef.current.on('exit-room', () => {
+    //Handle exit room
+    socketRef.current.on("exit-room", () => {
       setActiveCall(false);
-      navigate('/')
-    })
+      navigate("/");
+    });
 
     //Get Video Stream
     navigator.mediaDevices
@@ -75,16 +86,78 @@ const HomePage = () => {
         myVideoRef.current.srcObject = stream;
       })
       .catch((err) => console.error(err));
+
+    //SimplePeer
+    //Handle being called by a peer, notify us that we are receiving a call
+    socketRef.current.on("hey", (data) => {
+      setReceivingCall(true);
+      setCaller(data.from);
+      setCallerSignal(data.signal);
+    });
   }, []);
 
-  //Socket.io
+  //Simple-peer - WebRTC Logic to call someone else
+  //Initiating call to another peer with our video stream
+  const callPeer = (id) => {
+    //Create new peer object
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream: videoStream,
+    });
+
+    //on signal event, send signal for handshake
+    //peer.on('signal', arg) emits a signal event to a peer
+    //That peer calls peer.signal(data) to receive your event
+    peer.on("signal", (data) => {
+      socketRef.current.emit("callUser", {
+        userToCall: id, //send to peer's id
+        signalData: data, //send peer our signaling data
+        from: myUserID, //user's ID
+      });
+    });
+    //on stream event from peer
+    peer.on("stream", (stream) => {
+      if (peerVideoRef.current) {
+        peerVideoRef.current.srcObject = stream;
+      }
+    });
+    //Receive call accepted signal from peer
+    socketRef.current.on("callAccepted", (signal) => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    });
+  };
+
+  const acceptCall = () => {
+    setCallAccepted(true);
+    //Create peer object that will receive our data
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: videoStream,
+    });
+    //fire off signal to peer (caller) with our signal
+    peer.on("signal", (data) => {
+      socketRef.current.emit("acceptCall", {
+        signal: data,
+        to: caller,
+      });
+    });
+    //Getting stream from our peer and setting it to peer Ref
+    peer.on("stream", (stream) => {
+      peerVideoRef.current.srcObject = stream;
+    });
+    //
+    peer.signal(callerSignal);
+  };
 
   //Functions
   //Create Session from myUserID
   const handleCreateSession = (userID) => {
     setActiveCall(true);
     setIsHost(true);
-    setPeerID('')
+    setPeerID("");
     setSession(userID); //Set session state
     socketRef.current.emit("create_session", userID);
     navigate(`/session/${userID}`); //Redirect to session
@@ -100,10 +173,12 @@ const HomePage = () => {
   //End Session
   const handleEndSession = (sessionID, userID) => {
     setActiveCall(false); //Set active call to false
+    setCallAccepted(false);
+    setReceivingCall(false);
     socketRef.current.emit("exit_session", sessionID, userID);
     setSession(""); //Clear session state
     setIsHost(false);
-    setPeerID('')
+    setPeerID("");
     navigate("/"); //Redirect back to home
     //Destroy connection?
   };
@@ -166,18 +241,39 @@ const HomePage = () => {
         isHost={isHost}
         session={session}
         peerID={peerID}
+        receivingCall={receivingCall}
+        acceptCall={acceptCall}
+        callPeer={callPeer}
       />
 
       <main className="home__main-container">
         <div className="home__core-container">
+          {/* <div>
+            {usersArr.map((user) => {
+              return (
+                <button onClick={() => callPeer(user)}>Call {user}</button>
+              );
+            })}
+          </div> */}
+          {/* <div>{incomingCall}</div> */}
           {/* User/Broadcaster */}
           {/* if user not in active call or is host then show user's video */}
-          <video
-            autoPlay
-            ref={myVideoRef}
-            muted={!isMuted}
-            className="home__feed"
-          ></video>
+          {!callAccepted || isHost ? (
+            <video
+              autoPlay
+              ref={myVideoRef}
+              muted={!isMuted}
+              className="home__feed"
+            ></video>
+          ) : (
+            // Peer/Viewer if user in active call and is not host
+            <video
+              className="home__feed home__feed--peer"
+              muted
+              autoPlay
+              ref={peerVideoRef}
+            />
+          )}
 
           {photoCaptured ? (
             <Canvas />
@@ -196,6 +292,9 @@ const HomePage = () => {
             myUserID={myUserID}
             session={session}
             peerID={peerID}
+            receivingCall={receivingCall}
+            acceptCall={acceptCall}
+            callPeer={callPeer}
           />
         </div>
       </main>
