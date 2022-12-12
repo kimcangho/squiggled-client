@@ -6,10 +6,17 @@ import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
 import ModalMenu from "../ModalMenu/ModalMenu";
 
-const Header = ({ myUserID, usersArr, handleJoinSession, activeCall }) => {
+const Header = ({
+  myUserID,
+  usersArr,
+  handleJoinSession,
+  activeCall,
+  isHost,
+  session,
+  peerID
+}) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState('');
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -28,11 +35,6 @@ const Header = ({ myUserID, usersArr, handleJoinSession, activeCall }) => {
     });
   };
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-    console.log(event.target.value);
-  }
-
   return (
     <header className="home__header">
       <ModalMenu
@@ -41,6 +43,10 @@ const Header = ({ myUserID, usersArr, handleJoinSession, activeCall }) => {
         usersArr={usersArr}
         handleJoinSession={handleJoinSession}
         activeCall={activeCall}
+        isHost={isHost}
+        myUserID={myUserID}
+        session={session}
+        peerID={peerID}
       />
 
       {/* Logo */}

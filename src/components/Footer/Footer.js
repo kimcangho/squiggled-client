@@ -18,6 +18,7 @@ const Footer = ({
   handleCreateSession,
   handleEndSession,
   activeCall,
+  peerID
 }) => {
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
@@ -69,7 +70,7 @@ const Footer = ({
       {activeCall ? (
         <div
           className="home__session home__session--end"
-          onClick={() => handleEndSession(session)}
+          onClick={() => handleEndSession(session, myUserID, peerID)}
         >
           <h2 className="home__call-text">End Session</h2>
         </div>

@@ -5,7 +5,15 @@ import tumbleweedImage from "../../assets/images/tumbleweed.png";
 //Components
 import Session from "../Session/Session";
 
-const SessionsList = ({ usersArr, activeCall, handleJoinSession }) => {
+const SessionsList = ({
+  usersArr,
+  activeCall,
+  handleJoinSession,
+  isHost,
+  myUserID,
+  session,
+  peerID
+}) => {
   return (
     <div className={`sessions-list`}>
       {!activeCall ? (
@@ -28,6 +36,7 @@ const SessionsList = ({ usersArr, activeCall, handleJoinSession }) => {
                   key={session}
                   name={session}
                   handleJoinSession={handleJoinSession}
+                  myUserID={myUserID}
                 />
               );
             })
@@ -35,9 +44,12 @@ const SessionsList = ({ usersArr, activeCall, handleJoinSession }) => {
         </>
       ) : (
         <>
-          <h2 className="sessions-list__title">In a call</h2>
-          <p>Hosted by</p>
-          <p>Attended by</p>
+          <h2 className="sessions-list__title">
+            {isHost ? "Hosting" : "Visiting"}
+          </h2>
+          {/* <p>Hosted by {session}</p>
+          <p>Attended by {isHost ? peerID : myUserID}</p> */}
+          {/* <p>{peerID}</p> */}
         </>
       )}
     </div>

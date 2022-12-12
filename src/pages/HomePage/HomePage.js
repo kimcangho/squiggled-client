@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
-import Peer from "simple-peer";
+// import Peer from "simple-peer";
 
 //Components
 import Header from "../../components/Header/Header";
@@ -24,27 +24,17 @@ const HomePage = () => {
 
   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
+  const [peerID, setPeerID] = useState('');
   const [usersArr, setUsersArr] = useState([]);
   const [session, setSession] = useState("");
+  const [isHost, setIsHost] = useState(false);
 
   //useRef Variables
   const myVideoRef = useRef(null);
   const socketRef = useRef(null);
 
-  //Peer
-  const peerVideoRef = useRef(null);
-  const connectionRef = useRef(null);
-
   //Navigation variable
   const navigate = useNavigate();
-
-  //Peer states
-  const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState("");
-  const [name, setName] = useState("");
-  const [callerSignal, setCallerSignal] = useState(null);
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [callEnded, setCallEnded] = useState(false);
 
   //Connect to server on component mount
   useEffect(() => {
@@ -56,29 +46,20 @@ const HomePage = () => {
       console.log(`Your user ID: ${data}`);
     });
 
-    //Call user listener
-    // socketRef.current.on("callUser", (data) => {
-    //   setReceivingCall(true);
-    //   setCaller(data.from); //Simple peer
-    //   setName(data.name);
-    //   setCallerSignal(data.signal);
-    // });
-
-    // socketRef.current.on("receive message", (data) => {
-    //   console.log(data.message);
-    // });
     socketRef.current.on("getActiveSessions", (data) => {
       setUsersArr(data);
     });
+    socketRef.current.on("join-confirm", (userData, sessionData) => {
+      if (isHost) {
+        setPeerID(userData)
+        console.log(userData)
+      } else {
+        setPeerID(sessionData)
+        console.log(sessionData);
+      }
+    });
 
-    socketRef.current.on("room-confirm", (data) => {
-      console.log(data);
-    });
-    socketRef.current.on("join-confirm", (data) => {
-      console.log(data);
-    });
-    socketRef.current.on('exit-room', (data) => {
-      console.log(data)
+    socketRef.current.on('exit-room', () => {
       setActiveCall(false);
       navigate('/')
     })
@@ -96,82 +77,24 @@ const HomePage = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  //Peer
-  //Call user
-  const callUser = (id) => {
-    //Create a new peer
-    const peer = new Peer({
-      initiator: true,
-      trickle: true,
-      stream: videoStream, //This is our stream
-    });
-
-    //Send signaling data as object to other peer
-    peer.on("signal", (data) => {
-      socketRef.current.emit("callUser", {
-        userToCall: id,
-        signalData: data,
-        from: myUserID,
-        name: name,
-      });
-    });
-    //On peer's stream event sending their stream to us
-    peer.on("stream", (stream) => {
-      peerVideoRef.current.srcObject = stream; //Set peer's stream
-    });
-
-    socketRef.current.on("callAccepted", (signal) => {
-      setCallAccepted(true);
-      peer.signal(signal);
-    });
-    //Set connection to peer so we can cancel later on during disconnect
-    connectionRef.current = peer;
-  };
-
-  const answerCall = () => {
-    setCallAccepted(true);
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
-      stream: videoStream,
-    });
-    //Send signaling data as object to other peer
-    peer.on("signal", (data) => {
-      socketRef.current.emit("answerCall", {
-        signal: data,
-        to: caller,
-      });
-    });
-    //On peer's stream event sending their stream to us
-    peer.on("stream", (stream) => {
-      peerVideoRef.current.srcObject = stream; //Set peer's stream
-    });
-
-    peer.signal(callerSignal);
-
-    connectionRef.current = peer;
-  };
-
-  const leaveCall = () => {
-    setCallEnded(true);
-    connectionRef.current.destroy();
-  };
-
   //Socket.io
 
   //Functions
   //Create Session from myUserID
   const handleCreateSession = (userID) => {
     setActiveCall(true);
+    setIsHost(true);
+    setPeerID('')
     setSession(userID); //Set session state
     socketRef.current.emit("create_session", userID);
     navigate(`/session/${userID}`); //Redirect to session
   };
   //Join Session
-  const handleJoinSession = (sessionID, myUserID) => {
+  const handleJoinSession = (sessionID, userID) => {
     setActiveCall(true);
     setSession(sessionID); //Set session state
-    socketRef.current.emit("join_session", sessionID, myUserID);
+    setIsHost(false);
+    socketRef.current.emit("join_session", sessionID, userID);
     navigate(`/session/${sessionID}`); //Redirect to session
   };
   //End Session
@@ -179,6 +102,8 @@ const HomePage = () => {
     setActiveCall(false); //Set active call to false
     socketRef.current.emit("exit_session", sessionID, userID);
     setSession(""); //Clear session state
+    setIsHost(false);
+    setPeerID('')
     navigate("/"); //Redirect back to home
     //Destroy connection?
   };
@@ -238,6 +163,9 @@ const HomePage = () => {
         usersArr={usersArr}
         activeCall={activeCall}
         handleJoinSession={handleJoinSession}
+        isHost={isHost}
+        session={session}
+        peerID={peerID}
       />
 
       <main className="home__main-container">
@@ -250,16 +178,6 @@ const HomePage = () => {
             muted={!isMuted}
             className="home__feed"
           ></video>
-          {/* Peer - If joining in on another user's call*/}
-          {/* If call has been accepted and call has not ended */}
-          {callAccepted && !callEnded && (
-            <video
-              autoPlay
-              ref={peerVideoRef}
-              muted={!isMuted}
-              className="home__feed"
-            ></video>
-          )}
 
           {photoCaptured ? (
             <Canvas />
@@ -274,6 +192,10 @@ const HomePage = () => {
             isInModal={false}
             activeCall={activeCall}
             handleJoinSession={handleJoinSession}
+            isHost={isHost}
+            myUserID={myUserID}
+            session={session}
+            peerID={peerID}
           />
         </div>
       </main>
@@ -290,6 +212,7 @@ const HomePage = () => {
         setPhotoCaptured={setPhotoCaptured}
         activeCall={activeCall}
         handleCaptureImage={handleCaptureImage}
+        peerID={peerID}
       />
     </section>
   );
