@@ -1,11 +1,13 @@
 import "./Footer.scss";
 
+import drawIcon from "../../assets/images/icons/draw.svg";
+import eraserIcon from '../../assets/images/icons/eraser.svg'
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
-import cameraIcon from "../../assets/images/icons/camera-fill.svg";
-import eraserIcon from '../../assets/images/icons/eraser.svg'
+
+import sendIcon from '../../assets/images/icons/send-plane.svg';
 import downloadIcon from "../../assets/images/icons/download-line.svg";
-import drawIcon from "../../assets/images/icons/draw.svg";
+import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 
 const Footer = ({
   myUserID,
@@ -23,11 +25,12 @@ const Footer = ({
   handleClearCanvas,
 }) => {
   //Download Image from Canvas
+
   const handleDownloadImage = async (event) => {
     if (photoCaptured) {
       event.preventDefault(); //Prevent redirect
-      console.log(socket);
-      console.log(session);
+      // console.log(socket);
+      // console.log(session);
       const canvas = document.querySelector(".canvas"); //DOM manipulation
       const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
       const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
@@ -42,6 +45,15 @@ const Footer = ({
       }
     }
   };
+
+  const handleSendImage = () => {
+    if (!!session) {
+      //if session is running
+      const canvas = document.querySelector(".canvas"); //DOM manipulation
+      const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
+      socket.emit("send_screenshot", image, session);
+    }
+  }
 
   const handleClearClose = () => {
     if (photoCaptured) {
@@ -108,15 +120,25 @@ const Footer = ({
       )}
 
       <div className="home__canvas-buttons">
-        {/* Download Button */}
+        {/* Send Button */}
         <img
           className={`home__button ${
             !photoCaptured && "home__button--inactive"
+          }`}
+          src={sendIcon}
+          alt="Send Icon"
+          onClick={handleSendImage}
+        />
+        {/* Download Button */}
+        <img
+          className={`home__button ${
+            !photoCaptured  && "home__button--inactive"
           }`}
           src={downloadIcon}
           alt="Download Icon"
           onClick={handleDownloadImage}
         />
+        {/* Capture Image Button */}
         <img
           className="home__button"
           src={cameraIcon}
