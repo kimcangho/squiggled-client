@@ -115,6 +115,7 @@ const HomePage = () => {
           console.log(newImg.width, newImg.height)
         
           const oldCanvas = document.querySelector(".canvas");
+          // const video = document.querySelector('video')
           oldCanvas.width = 320;
           oldCanvas.height = 240;
           // console.log(oldCanvas.width, oldCanvas.height);

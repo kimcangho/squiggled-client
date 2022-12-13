@@ -3,7 +3,7 @@ import "./Footer.scss";
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
-import closeCircleIcon from "../../assets/images/icons/close-circle-line.svg";
+import eraserIcon from '../../assets/images/icons/eraser.svg'
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import drawIcon from "../../assets/images/icons/draw.svg";
 
@@ -53,6 +53,15 @@ const Footer = ({
   return (
     <footer className="home__footer">
       <div className="home__canvas-buttons">
+        {/* Clear Canvas */}
+        <img
+          className={`home__button ${
+            !photoCaptured && "home__button--inactive"
+          }`}
+          src={eraserIcon}
+          alt="Close Circle Icon"
+          onClick={handleClearClose}
+        />
         {/* Draw Mode */}
         <img
           className={`home__button ${
@@ -99,15 +108,6 @@ const Footer = ({
       )}
 
       <div className="home__canvas-buttons">
-        {/* Close Download Button */}
-        <img
-          className={`home__button ${
-            !photoCaptured && "home__button--inactive"
-          }`}
-          src={closeCircleIcon}
-          alt="Close Circle Icon"
-          onClick={handleClearClose}
-        />
         {/* Download Button */}
         <img
           className={`home__button ${
