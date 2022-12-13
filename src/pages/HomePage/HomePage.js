@@ -72,19 +72,22 @@ const HomePage = () => {
     });
     //Handle exit room
     socketRef.current.on("exit-room", () => {
-      setSession('');
+      setSession("");
       setActiveCall(false);
       navigate("/");
     });
 
     //Take Screenshot
-    socketRef.current.on("confirm_screenshot", async (message, data) => {
+    socketRef.current.on("confirm_screenshot", (data) => {
       //Create new image
       const newImg = new Image();
+      setPhotoCaptured(true);
+
       newImg.addEventListener(
         "load",
         () => {
           const oldCanvas = document.querySelector(".canvas");
+
           oldCanvas.width = 320;
           oldCanvas.height = 240;
           const context = oldCanvas.getContext("2d");

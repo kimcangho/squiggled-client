@@ -52,7 +52,7 @@ const Canvas = ({ photoCaptured }) => {
   return (
     <canvas
       ref={canvasRef}
-      className={photoCaptured ? "canvas" : "canvas--placeholder"}
+      className={photoCaptured ? "canvas" : "canvas canvas--placeholder"}
       onMouseDown={startDrawing}
       onMouseMove={drawing}
       onMouseUp={finishDrawing}
