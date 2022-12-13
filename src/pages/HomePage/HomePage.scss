@@ -11,28 +11,6 @@
   background-position: center;
   height: 100vh;
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1rem 0;
-
-    position: fixed;
-    width: 100%;
-    // z-index: 1;
-
-    @include tablet {
-      justify-content: flex-start;
-    }
-
-    @include desktop {
-      position: static;
-      max-width: 63.75rem;
-      margin: 0 auto;
-    }
-
-  }
-
   &__button {
     background-color: $color-active;
     border-radius: 100%;
@@ -61,13 +39,6 @@
       }
     }
 
-  }
-
-  &__title {
-    margin: 0;
-    font-weight: 600;
-    font-family: "Montserrat";
-    font-size: 2rem;
   }
 
   &__main-container {

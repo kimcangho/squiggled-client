@@ -17,7 +17,7 @@ const Header = ({
   receivingCall,
   acceptCall,
   callPeer,
-  callAccepted
+  callAccepted,
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +40,7 @@ const Header = ({
   };
 
   return (
-    <header className="home__header">
+    <header className="header">
       <ModalMenu
         isOpen={isOpen}
         handleCloseModal={handleCloseModal}
@@ -58,9 +58,9 @@ const Header = ({
       />
 
       {/* Logo */}
-      <div className="home__header-container">
-        <img className="home__button" src={quailLogo} alt="Qual Quail Logo" />
-        <h1 className="home__title">{`Welcome, ${myUserID}`}</h1>
+      <div className="header__container">
+        <img className="header__logo" src={quailLogo} alt="Qual Quail Logo" />
+        <h1 className="header__title">{`User: ${myUserID}`}</h1>
       </div>
 
       <img
