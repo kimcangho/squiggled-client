@@ -27,12 +27,12 @@ const SessionsList = ({
 
           {usersArr.length === 0 ? (
             <div className="sessions-list__empty-container">
-              <img
+              {/* <img
                 className="sessions-list__empty-list"
                 src={tumbleweedImage}
                 alt="Tumbleweed"
-              />
-              <h3 className="sessions-list__empty-text">It's quiet...</h3>
+              /> */}
+              {/* <h3 className="sessions-list__empty-text">It's quiet...</h3> */}
             </div>
           ) : (
             usersArr.map((session) => {
@@ -60,7 +60,7 @@ const SessionsList = ({
               <img
                 src={phoneIcon}
                 alt="Phone Icon"
-                className="home__button"
+                className="session__phone"
                 onClick={acceptCall}
               />
             </div>

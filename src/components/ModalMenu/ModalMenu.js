@@ -2,7 +2,7 @@ import "./ModalMenu.scss";
 import Modal from "react-modal";
 import Session from "../Session/Session";
 
-import tumbleweedImage from "../../assets/images/tumbleweed.png";
+import phoneIcon from "../../assets/images/icons/phone.svg";
 
 Modal.setAppElement("#root");
 
@@ -19,7 +19,7 @@ const ModalMenu = ({
   receivingCall,
   acceptCall,
   callPeer,
-  callAccepted
+  callAccepted,
 }) => {
   return (
     <Modal
@@ -35,14 +35,7 @@ const ModalMenu = ({
             <h2 className="modal-menu__title">Active Sessions</h2>
 
             {usersArr.length === 0 ? (
-              <>
-                <img
-                  className="modal-menu__empty-list"
-                  src={tumbleweedImage}
-                  alt="Tumbleweed"
-                />
-                <h3 className="modal-menu__empty-text">It's quiet...</h3>
-              </>
+              <></>
             ) : (
               usersArr.map((session, index) => {
                 return (
@@ -65,29 +58,22 @@ const ModalMenu = ({
               {isHost ? "Hosting" : "Visiting"}
             </h2>
 
-            <div className="sessions-list__status">
             {receivingCall && isHost && !callAccepted && (
-              <>
+              <div className="sessions-list__status">
                 <h3>{peerID} is calling you</h3>
-                <div className="sessions-list__accept" onClick={acceptCall}>
-                  Accept
-                </div>
-              </>
+                <img
+                  src={phoneIcon}
+                  alt="Phone Icon"
+                  className="session__phone"
+                  onClick={acceptCall}
+                />
+              </div>
             )}
             {receivingCall && !isHost && !callAccepted && (
-              <>
-                <h1>HOLD UP</h1>
+              <div className="sessions-list__status">
                 <h3>You are calling {session}</h3>
-              </>
-            )}
-            </div>
-
-            {/* {receivingCall && (
-              <div>
-                <h3>{peerID} is calling you</h3>
-                <button onClick={acceptCall}>Accept</button>
               </div>
-            )} */}
+            )}
           </>
         )}
       </div>
