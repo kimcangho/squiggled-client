@@ -4,7 +4,6 @@ import drawIcon from "../../assets/images/icons/draw.svg";
 import eraserIcon from '../../assets/images/icons/eraser.svg'
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
-
 import sendIcon from '../../assets/images/icons/send-plane.svg';
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
