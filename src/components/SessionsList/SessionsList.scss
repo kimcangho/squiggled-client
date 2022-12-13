@@ -16,7 +16,7 @@
     overflow-y: auto;
     width: 20rem;
     height: 32.25rem;
-    border: 1px solid #888888; 
+    border: 1px solid #888888;
   }
 
   &__empty-container {
@@ -36,5 +36,17 @@
   }
   &__empty-text {
     color: $color-text;
+  }
+  &__status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $color-text;
+
+    width: 100%;
+    background-color: $color-active;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
   }
 }

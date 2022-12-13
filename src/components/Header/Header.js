@@ -16,7 +16,8 @@ const Header = ({
   peerID,
   receivingCall,
   acceptCall,
-  callPeer
+  callPeer,
+  callAccepted
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +54,7 @@ const Header = ({
         receivingCall={receivingCall}
         acceptCall={acceptCall}
         callPeer={callPeer}
+        callAccepted={callAccepted}
       />
 
       {/* Logo */}

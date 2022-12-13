@@ -3,7 +3,7 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useRef } from "react";
 
-const Canvas = () => {
+const Canvas = ({ photoCaptured }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   //useRef variables
@@ -14,14 +14,27 @@ const Canvas = () => {
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     contextRef.current = context;
-  }, [canvasRef]);
+  }, []);
+
+  //Random Color
+  const getRandomColor = () => {
+    const hexCode = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += hexCode[Math.floor(Math.random()) * 16]
+    }
+    return color;
+  };
 
   //Start Drawing
   const startDrawing = ({ nativeEvent }) => {
-    const { offsetX, offsetY } = nativeEvent;
-    contextRef.current.beginPath();
-    contextRef.current.moveTo(offsetX, offsetY);
-    setIsDrawing(true);
+    if (photoCaptured) {
+      const { offsetX, offsetY } = nativeEvent;
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(offsetX, offsetY);
+      contextRef.current.strokeStyle = `yellow`;  //Should be random
+      setIsDrawing(true);
+    }
   };
   //Finish Drawing
   const finishDrawing = () => {
@@ -39,7 +52,7 @@ const Canvas = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="canvas"
+      className={photoCaptured ? "canvas" : "canvas--placeholder"}
       onMouseDown={startDrawing}
       onMouseMove={drawing}
       onMouseUp={finishDrawing}

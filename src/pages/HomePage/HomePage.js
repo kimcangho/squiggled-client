@@ -59,7 +59,7 @@ const HomePage = () => {
       setCallAccepted(false);
       setReceivingCall(false);
     });
-    //Set PeerID on join
+    //Set PeerID on join - Under Construction
     socketRef.current.on("join-confirm", (userData, sessionData) => {
       if (isHost) {
         setPeerID(userData);
@@ -73,6 +73,59 @@ const HomePage = () => {
     socketRef.current.on("exit-room", () => {
       setActiveCall(false);
       navigate("/");
+    });
+
+    //Screenshot
+    socketRef.current.on("confirm_screenshot", async (message, data) => {
+      // console.log(message);
+      // console.log(data);
+
+      // document.querySelector('.home__core-container').append(image);
+
+      //Selects current canvas
+      // const oldCanvas = document.querySelector(".canvas");
+      // const context = canvas.getContext("2d");
+      // const video = document.querySelector("video");
+
+      // const canvas = document.createElement("canvas"); //Creates new canvas
+      // canvas.classList.add("canvas"); //Add canvas classname
+      // const context = canvas.getContext("2d"); //select context
+      // context.scale(2, 2);
+      // // canvas.width = 640; //videoWidth 2 times display size
+      // // canvas.height = 480; //videoHeight 2 times display size
+      // //add image to container
+      // // const image = document.createElement("img");
+      // let newImage = new Image();
+      // newImage.src = await data;
+
+      // // newImage.onLoad = () => {
+      // context.drawImage(newImage, 0, 0); //draw image to canvas
+      // document.querySelector(".canvas").replaceWith(canvas);
+      // console.log("end");
+      // console.log(canvas); //Confirmed canvas coming through on both ends
+      // // };
+
+      //Create new image
+      const newImg = new Image();
+      console.log("loading");
+      newImg.addEventListener(
+        "load",
+        () => {
+          console.log("loaded");
+          console.log(newImg.width, newImg.height)
+        
+          const oldCanvas = document.querySelector(".canvas");
+          oldCanvas.width = 320;
+          oldCanvas.height = 240;
+          // console.log(oldCanvas.width, oldCanvas.height);
+          const context = oldCanvas.getContext("2d");
+          // const video = document.querySelector("video");
+          context.drawImage(newImg, 0, 0, oldCanvas.width, oldCanvas.height); //draw image to canvas
+        },
+        false
+      );
+      newImg.src = data;
+      console.log("between?");
     });
 
     //Get Video Stream
@@ -204,6 +257,9 @@ const HomePage = () => {
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
       context.scale(2, 2);
+      // if (!!session) {  //if session is running
+      //   socketRef.current.emit('send_screenshot', video, session);
+      // }
     }, 0);
 
     //Toggle photo edit mode
@@ -215,6 +271,12 @@ const HomePage = () => {
       setPhotoCaptured(false);
     }
   };
+  //Clears canvas
+  const handleClearCanvas = () => {
+    const canvas = document.querySelector(".canvas");
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  };
   //Take/Delete Screenshot Keydown Handler
   const handleKeyDownPhoto = (event) => {
     if (event.key === "Enter") {
@@ -222,9 +284,7 @@ const HomePage = () => {
     }
     if (event.key === "Escape") {
       if (document.querySelector(".canvas")) {
-        const canvas = document.querySelector(".canvas");
-        const context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        handleClearCanvas();
         handleExitCapture();
       }
     }
@@ -244,18 +304,11 @@ const HomePage = () => {
         receivingCall={receivingCall}
         acceptCall={acceptCall}
         callPeer={callPeer}
+        callAccepted={callAccepted}
       />
 
       <main className="home__main-container">
         <div className="home__core-container">
-          {/* <div>
-            {usersArr.map((user) => {
-              return (
-                <button onClick={() => callPeer(user)}>Call {user}</button>
-              );
-            })}
-          </div> */}
-          {/* <div>{incomingCall}</div> */}
           {/* User/Broadcaster */}
           {/* if user not in active call or is host then show user's video */}
           {!callAccepted || isHost ? (
@@ -274,12 +327,7 @@ const HomePage = () => {
               ref={peerVideoRef}
             />
           )}
-
-          {photoCaptured ? (
-            <Canvas />
-          ) : (
-            <div className="home__canvas-placeholder" />
-          )}
+          <Canvas photoCaptured={photoCaptured} />
         </div>
 
         <div className="home__sessions-container">
@@ -295,6 +343,7 @@ const HomePage = () => {
             receivingCall={receivingCall}
             acceptCall={acceptCall}
             callPeer={callPeer}
+            callAccepted={callAccepted}
           />
         </div>
       </main>
@@ -312,6 +361,8 @@ const HomePage = () => {
         activeCall={activeCall}
         handleCaptureImage={handleCaptureImage}
         peerID={peerID}
+        socket={socketRef.current}
+        handleClearCanvas={handleClearCanvas}
       />
     </section>
   );

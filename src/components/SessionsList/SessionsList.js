@@ -2,6 +2,7 @@
 import "./SessionsList.scss";
 //Assets
 import tumbleweedImage from "../../assets/images/tumbleweed.png";
+import phoneIcon from "../../assets/images/icons/phone.svg";
 //Components
 import Session from "../Session/Session";
 
@@ -16,6 +17,7 @@ const SessionsList = ({
   receivingCall,
   acceptCall,
   callPeer,
+  callAccepted,
 }) => {
   return (
     <div className={`sessions-list`}>
@@ -52,13 +54,21 @@ const SessionsList = ({
           <h2 className="sessions-list__title">
             {isHost ? "Hosting" : "Visiting"}
           </h2>
-          {receivingCall ? (
-            <div>
+          {receivingCall && isHost && !callAccepted && (
+            <div className="sessions-list__status">
               <h3>{peerID} is calling you</h3>
-              <button onClick={acceptCall}>Accept</button>
+              <img
+                src={phoneIcon}
+                alt="Phone Icon"
+                className="home__button"
+                onClick={acceptCall}
+              />
             </div>
-          ) : (
-            ""
+          )}
+          {receivingCall && !isHost && !callAccepted && (
+            <div className="sessions-list__status">
+              <h3>You are calling {session}</h3>
+            </div>
           )}
         </>
       )}
