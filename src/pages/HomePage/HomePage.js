@@ -72,6 +72,7 @@ const HomePage = () => {
     });
     //Handle exit room
     socketRef.current.on("exit-room", () => {
+      setSession('');
       setActiveCall(false);
       navigate("/");
     });
