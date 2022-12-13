@@ -83,72 +83,74 @@ const ModalMenu = ({
             )}
           </>
         )}
-        <div className="sessions-list__tip-container">
-          <h2 className="sessions-list__tip-title">Legend</h2>
+        {callAccepted && (
+          <div className="sessions-list__tip-container">
+            <h2 className="sessions-list__tip-title">Legend</h2>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={cameraIcon}
-              alt="Camera Icon"
-              className="sessions-list__icon"
-            />
-            <p>Take screenshot</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={cameraIcon}
+                alt="Camera Icon"
+                className="sessions-list__icon"
+              />
+              <p>Take screenshot</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={sendIcon}
-              alt="Send Icon"
-              className="sessions-list__icon"
-            />
-            <p>Send screenshot</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={sendIcon}
+                alt="Send Icon"
+                className="sessions-list__icon"
+              />
+              <p>Send screenshot</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={downloadIcon}
-              alt="Download Icon"
-              className="sessions-list__icon"
-            />
-            <p>Download screenshot</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={downloadIcon}
+                alt="Download Icon"
+                className="sessions-list__icon"
+              />
+              <p>Download screenshot</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={drawIcon}
-              alt="Draw Icon"
-              className="sessions-list__icon"
-            />
-            <p>Draw mode enabled</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={drawIcon}
+                alt="Draw Icon"
+                className="sessions-list__icon"
+              />
+              <p>Draw mode enabled</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={eraserIcon}
-              alt="Eraser Icon"
-              className="sessions-list__icon"
-            />
-            <p>Clear screenshot</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={eraserIcon}
+                alt="Eraser Icon"
+                className="sessions-list__icon"
+              />
+              <p>Clear screenshot</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={muteIcon}
-              alt="Muted Icon"
-              className="sessions-list__icon"
-            />
-            <p>Muted</p>
-          </div>
+            <div className="sessions-list__tip-box">
+              <img
+                src={muteIcon}
+                alt="Muted Icon"
+                className="sessions-list__icon"
+              />
+              <p>Muted</p>
+            </div>
 
-          <div className="sessions-list__tip-box">
-            <img
-              src={unmuteIcon}
-              alt="Unmuted Icon"
-              className="sessions-list__icon"
-            />
-            <p>Unmuted</p>
+            <div className="sessions-list__tip-box">
+              <img
+                src={unmuteIcon}
+                alt="Unmuted Icon"
+                className="sessions-list__icon"
+              />
+              <p>Unmuted</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Modal>
   );
