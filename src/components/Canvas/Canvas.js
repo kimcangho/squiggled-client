@@ -16,11 +16,10 @@ const Canvas = ({ photoCaptured }) => {
     contextRef.current = context;
   }, []);
 
-  //Random Color
+  //Random Number Generator
   const randomNumber = (number) => {
     return Math.floor(Math.random() * (number + 1));
   };
-
   //Start Drawing
   const startDrawing = ({ nativeEvent }) => {
     if (photoCaptured) {
@@ -31,7 +30,7 @@ const Canvas = ({ photoCaptured }) => {
       const randomColor = `rgb(${randomNumber(255)}, ${randomNumber(
         255
       )}, ${randomNumber(255)})`;
-      contextRef.current.strokeStyle = randomColor; //Should be random
+      contextRef.current.strokeStyle = randomColor;
       setIsDrawing(true);
     }
   };

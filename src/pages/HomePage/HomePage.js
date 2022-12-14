@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
 import Peer from "simple-peer";
-
 //Components
 import Header from "../../components/Header/Header";
 import Canvas from "../../components/Canvas/Canvas";
@@ -82,16 +81,15 @@ const HomePage = () => {
       //Create new image
       const newImg = new Image();
       setPhotoCaptured(true);
-
+      //Once new image is loaded
       newImg.addEventListener(
         "load",
         () => {
-          const oldCanvas = document.querySelector(".canvas");
-
-          oldCanvas.width = 320;
-          oldCanvas.height = 240;
-          const context = oldCanvas.getContext("2d");
-          context.drawImage(newImg, 0, 0, oldCanvas.width, oldCanvas.height); //draw image to canvas
+          const canvas = document.querySelector(".canvas");
+          canvas.width = 320;
+          canvas.height = 240;
+          const context = canvas.getContext("2d");
+          context.drawImage(newImg, 0, 0, canvas.width, canvas.height); //draw image to canvas
         },
         false
       );
