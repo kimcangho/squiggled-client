@@ -63,13 +63,14 @@ const HomePage = () => {
     });
     //Set PeerID on join - Under Construction
     socketRef.current.on("join-confirm", (userData, sessionData) => {
+      console.log(`user: ${userData}`);
       console.log(`session: ${sessionData}`);
       if (isHost) {
         setPeerID(userData);
-        console.log(userData);
+        console.log(`Peer userdata: ${userData}`);
       } else {
         setPeerID(sessionData);
-        console.log(sessionData);
+        console.log(`Peer userdata: ${sessionData}`);
       }
     });
     //Handle exit room
