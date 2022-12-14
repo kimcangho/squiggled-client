@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
 import Peer from "simple-peer";
+//Assets
+import broadcastIcon from "../../assets/images/icons/broadcast.svg";
+import viewIcon from "../../assets/images/icons/eye.svg";
 //Components
 import Header from "../../components/Header/Header";
 import Canvas from "../../components/Canvas/Canvas";
@@ -276,22 +279,40 @@ const HomePage = () => {
         <div className="home__core-container">
           {/* User/Broadcaster */}
           {/* if user not in active call or is host then show user's video */}
-          {!callAccepted || isHost ? (
-            <video
-              autoPlay
-              ref={myVideoRef}
-              muted={!isMuted}
-              className="home__feed"
-            ></video>
-          ) : (
-            // Peer/Viewer if user in active call and is not host
-            <video
-              className="home__feed home__feed--peer"
-              muted
-              autoPlay
-              ref={peerVideoRef}
-            />
-          )}
+          <div className="home__video-container">
+            {!callAccepted || isHost ? (
+              <>
+                <video
+                  autoPlay
+                  ref={myVideoRef}
+                  muted={!isMuted}
+                  className="home__feed"
+                />
+                {callAccepted && (
+                  <img
+                    className="home__broadcast-view"
+                    src={broadcastIcon}
+                    alt="Broadcast Icon"
+                  />
+                )}
+              </>
+            ) : (
+              // Peer/Viewer if user in active call and is not host
+              <>
+                <video
+                  className="home__feed"
+                  muted
+                  autoPlay
+                  ref={peerVideoRef}
+                />
+                <img
+                  className="home__broadcast-view"
+                  src={viewIcon}
+                  alt="Broadcast Icon"
+                />
+              </>
+            )}
+          </div>
           <Canvas photoCaptured={photoCaptured} />
         </div>
 

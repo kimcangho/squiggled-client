@@ -66,15 +66,25 @@
     }
   }
 
+  &__video-container {
+    position: relative;
+    border: none;
+  }
+
   &__feed {
     width: 20rem;
     transform: scaleX(-1);
     border-radius: 10px;
+  }
 
-    &--peer {
-      border: 3px solid $color-error;
-      transform: scaleX(1);
-    }
+  &__broadcast-view {
+    background-color: $color-success;
+    border-radius: 100%;
+    width: 1.25rem;
+    padding: 0.125rem;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
   }
 
   &__canvas-placeholder {
