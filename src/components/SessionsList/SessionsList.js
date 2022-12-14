@@ -38,7 +38,7 @@ const SessionsList = ({
               return (
                 <Session
                   key={sessionID}
-                  session={sessionID}
+                  sessionID={sessionID}
                   handleJoinSession={handleJoinSession}
                   myUserID={myUserID}
                   callPeer={callPeer}
