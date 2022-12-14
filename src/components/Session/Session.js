@@ -13,7 +13,7 @@ const Session = ({
 }) => {
   const handleJoinClose = (sessionID, userID, peerID) => {
     handleJoinSession(sessionID, userID);
-    callPeer(sessionID);
+    callPeer(sessionID, userID);
     if (handleCloseModal) {
       handleCloseModal();
     }
