@@ -113,7 +113,7 @@ const HomePage = () => {
 
     //SimplePeer
     //Handle being called by a peer, notify us that we are receiving a call
-    socketRef.current.on("hey", (data) => {
+    socketRef.current.on("sendCall", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
       setCallerSignal(data.signal);
@@ -312,7 +312,9 @@ const HomePage = () => {
               </>
             )}
           </div>
+
           <Canvas photoCaptured={photoCaptured} />
+        
         </div>
 
         <div className="home__sessions-container">
@@ -349,6 +351,7 @@ const HomePage = () => {
         socket={socketRef.current}
         handleClearCanvas={handleClearCanvas}
       />
+
     </section>
   );
 };
