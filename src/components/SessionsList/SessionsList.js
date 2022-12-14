@@ -51,7 +51,7 @@ const SessionsList = ({
       ) : (
         <>
           <h2 className="sessions-list__title">
-            {isHost ? "Hosting" : "Visiting"}
+            {isHost ? "Hosting" : "Viewing"}
           </h2>
           {receivingCall && isHost && !callAccepted && (
             <div className="sessions-list__status">

@@ -123,7 +123,7 @@ const HomePage = () => {
 
   //Simple-peer - WebRTC Logic to call someone else
   //Initiating call to another peer with our video stream
-  const callPeer = (id) => {
+  const callPeer = (sessionID, userID) => {
     //Create new peer object
     const peer = new Peer({
       initiator: true,
@@ -136,9 +136,9 @@ const HomePage = () => {
     //That peer calls peer.signal(data) to receive your event
     peer.on("signal", (data) => {
       socketRef.current.emit("callUser", {
-        userToCall: id, //send to peer's id
+        userToCall: sessionID, //send to peer's id
         signalData: data, //send peer our signaling data
-        from: myUserID, //user's ID
+        from: userID, //user's ID
       });
     });
     //on stream event from peer
