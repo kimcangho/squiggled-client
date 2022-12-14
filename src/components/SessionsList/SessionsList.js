@@ -55,7 +55,7 @@ const SessionsList = ({
           </h2>
           {receivingCall && isHost && !callAccepted && (
             <div className="sessions-list__status">
-              <h3>{peerID} is calling you</h3>
+              <h3>Receiving call...</h3>
               <img
                 src={phoneIcon}
                 alt="Phone Icon"
@@ -66,7 +66,7 @@ const SessionsList = ({
           )}
           {receivingCall && !isHost && !callAccepted && (
             <div className="sessions-list__status">
-              <h3>You are calling {sessionID}</h3>
+              <h3>Calling...</h3>
             </div>
           )}
         </>
