@@ -28,8 +28,6 @@ const Footer = ({
   const handleDownloadImage = async (event) => {
     if (photoCaptured) {
       event.preventDefault(); //Prevent redirect
-      // console.log(socket);
-      // console.log(session);
       const canvas = document.querySelector(".canvas"); //DOM manipulation
       const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
       const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
@@ -38,10 +36,6 @@ const Footer = ({
       link.href = blobURL; //Set href of unmounted anchor tag
       link.download = "image.png"; //Define image download format
       link.click(); //Trigger link with programmatic click
-      if (!!sessionID) {
-        //if session is running
-        socket.emit("send_screenshot", image, sessionID);
-      }
     }
   };
 
