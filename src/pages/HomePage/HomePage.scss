@@ -78,13 +78,17 @@
   }
 
   &__broadcast-view {
-    background-color: $color-success;
+    background-color: $color-error;
     border-radius: 100%;
     width: 1.25rem;
     padding: 0.125rem;
     position: absolute;
     right: 0.5rem;
     bottom: 0.5rem;
+
+    &--viewer {
+      background-color: $color-success;
+    }
   }
 
   &__canvas-placeholder {

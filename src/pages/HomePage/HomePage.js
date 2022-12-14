@@ -277,10 +277,9 @@ const HomePage = () => {
 
       <main className="home__main-container">
         <div className="home__core-container">
-          {/* User/Broadcaster */}
-          {/* if user not in active call or is host then show user's video */}
           <div className="home__video-container">
             {!callAccepted || isHost ? (
+              //Broadcaster
               <>
                 <video
                   autoPlay
@@ -297,7 +296,7 @@ const HomePage = () => {
                 )}
               </>
             ) : (
-              // Peer/Viewer if user in active call and is not host
+              // Viewer
               <>
                 <video
                   className="home__feed"
@@ -306,7 +305,7 @@ const HomePage = () => {
                   ref={peerVideoRef}
                 />
                 <img
-                  className="home__broadcast-view"
+                  className="home__broadcast-view home__broadcast-view--viewer"
                   src={viewIcon}
                   alt="Broadcast Icon"
                 />
