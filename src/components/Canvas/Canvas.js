@@ -17,13 +17,8 @@ const Canvas = ({ photoCaptured }) => {
   }, []);
 
   //Random Color
-  const getRandomColor = () => {
-    const hexCode = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += hexCode[Math.floor(Math.random()) * 16]
-    }
-    return color;
+  const randomNumber = (number) => {
+    return Math.floor(Math.random() * (number + 1));
   };
 
   //Start Drawing
@@ -32,7 +27,11 @@ const Canvas = ({ photoCaptured }) => {
       const { offsetX, offsetY } = nativeEvent;
       contextRef.current.beginPath();
       contextRef.current.moveTo(offsetX, offsetY);
-      contextRef.current.strokeStyle = `yellow`;  //Should be random
+
+      const randomColor = `rgb(${randomNumber(255)}, ${randomNumber(
+        255
+      )}, ${randomNumber(255)})`;
+      contextRef.current.strokeStyle = randomColor; //Should be random
       setIsDrawing(true);
     }
   };
