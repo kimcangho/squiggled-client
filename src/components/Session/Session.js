@@ -4,16 +4,16 @@ import "./Session.scss";
 import phoneIcon from "../../assets/images/icons/phone.svg";
 
 const Session = ({
-  name,
+  sessionID,
   handleJoinSession,
   handleCloseModal,
   myUserID,
   callPeer,
   peerID
 }) => {
-  const handleJoinClose = (name, userID, peerID) => {
-    handleJoinSession(name, userID);
-    callPeer(name);
+  const handleJoinClose = (sessionID, userID, peerID) => {
+    handleJoinSession(sessionID, userID);
+    callPeer(sessionID);
     if (handleCloseModal) {
       handleCloseModal();
     }
@@ -21,13 +21,13 @@ const Session = ({
 
   return (
     <div className="session">
-      <h3 className="session__name">{name}</h3>
+      <h3 className="session__name">{sessionID}</h3>
       <img
         className="session__phone"
         src={phoneIcon}
         alt="Phone Icon"
         onClick={() => {
-          handleJoinClose(name, myUserID, peerID);
+          handleJoinClose(sessionID, myUserID, peerID);
         }}
       />
     </div>

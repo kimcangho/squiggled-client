@@ -28,7 +28,7 @@ const HomePage = () => {
   const [myUserID, setMyUserID] = useState("");
   const [peerID, setPeerID] = useState("");
   const [usersArr, setUsersArr] = useState([]);
-  const [session, setSession] = useState("");
+  const [sessionID, setSessionID] = useState("");
   const [isHost, setIsHost] = useState(false);
 
   //Peer states
@@ -74,7 +74,7 @@ const HomePage = () => {
     });
     //Handle exit room
     socketRef.current.on("exit-room", () => {
-      setSession("");
+      setSessionID("");
       setActiveCall(false);
       navigate("/");
     });
@@ -182,14 +182,14 @@ const HomePage = () => {
     setActiveCall(true);
     setIsHost(true);
     setPeerID("");
-    setSession(userID); //Set session state
+    setSessionID(userID); //Set session state
     socketRef.current.emit("create_session", userID);
     navigate(`/session/${userID}`); //Redirect to session
   };
   //Join Session
   const handleJoinSession = (sessionID, userID) => {
     setActiveCall(true);
-    setSession(sessionID); //Set session state
+    setSessionID(sessionID); //Set session state
     setIsHost(false);
     socketRef.current.emit("join_session", sessionID, userID);
     navigate(`/session/${sessionID}`); //Redirect to session
@@ -200,7 +200,7 @@ const HomePage = () => {
     setCallAccepted(false);
     setReceivingCall(false);
     socketRef.current.emit("exit_session", sessionID, userID);
-    setSession(""); //Clear session state
+    setSessionID(""); //Clear session state
     setIsHost(false);
     setPeerID("");
     navigate("/"); //Redirect back to home
@@ -267,7 +267,7 @@ const HomePage = () => {
         activeCall={activeCall}
         handleJoinSession={handleJoinSession}
         isHost={isHost}
-        session={session}
+        sessionID={sessionID}
         peerID={peerID}
         receivingCall={receivingCall}
         acceptCall={acceptCall}
@@ -325,7 +325,7 @@ const HomePage = () => {
             handleJoinSession={handleJoinSession}
             isHost={isHost}
             myUserID={myUserID}
-            session={session}
+            sessionID={sessionID}
             peerID={peerID}
             receivingCall={receivingCall}
             acceptCall={acceptCall}
@@ -337,7 +337,7 @@ const HomePage = () => {
 
       <Footer
         myUserID={myUserID}
-        session={session}
+        sessionID={sessionID}
         photoCaptured={photoCaptured}
         toggleMute={toggleMute}
         isMuted={isMuted}

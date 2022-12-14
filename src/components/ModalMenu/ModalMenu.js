@@ -21,7 +21,7 @@ const ModalMenu = ({
   activeCall,
   isHost,
   myUserID,
-  session,
+  sessionID,
   peerID,
   receivingCall,
   acceptCall,
@@ -44,11 +44,11 @@ const ModalMenu = ({
             {usersArr.length === 0 ? (
               <></>
             ) : (
-              usersArr.map((session, index) => {
+              usersArr.map((sessionID, index) => {
                 return (
                   <Session
                     key={index}
-                    name={session}
+                    sessionID={sessionID}
                     handleJoinSession={handleJoinSession}
                     handleCloseModal={handleCloseModal}
                     myUserID={myUserID}
@@ -78,7 +78,7 @@ const ModalMenu = ({
             )}
             {receivingCall && !isHost && !callAccepted && (
               <div className="sessions-list__status">
-                <h3>You are calling {session}</h3>
+                <h3>You are calling {sessionID}</h3>
               </div>
             )}
           </>

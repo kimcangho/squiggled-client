@@ -12,7 +12,7 @@ const Header = ({
   handleJoinSession,
   activeCall,
   isHost,
-  session,
+  sessionID,
   peerID,
   receivingCall,
   acceptCall,
@@ -49,7 +49,7 @@ const Header = ({
         activeCall={activeCall}
         isHost={isHost}
         myUserID={myUserID}
-        session={session}
+        sessionID={sessionID}
         peerID={peerID}
         receivingCall={receivingCall}
         acceptCall={acceptCall}

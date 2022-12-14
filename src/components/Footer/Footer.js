@@ -10,7 +10,7 @@ import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 
 const Footer = ({
   myUserID,
-  session,
+  sessionID,
   handleExitCapture,
   photoCaptured,
   handleCaptureImage,
@@ -38,19 +38,19 @@ const Footer = ({
       link.href = blobURL; //Set href of unmounted anchor tag
       link.download = "image.png"; //Define image download format
       link.click(); //Trigger link with programmatic click
-      if (!!session) {
+      if (!!sessionID) {
         //if session is running
-        socket.emit("send_screenshot", image, session);
+        socket.emit("send_screenshot", image, sessionID);
       }
     }
   };
 
   const handleSendImage = () => {
-    if (!!session) {
+    if (!!sessionID) {
       //if session is running
       const canvas = document.querySelector(".canvas"); //DOM manipulation
       const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
-      socket.emit("send_screenshot", image, session);
+      socket.emit("send_screenshot", image, sessionID);
     }
   }
 
@@ -105,7 +105,7 @@ const Footer = ({
       {activeCall ? (
         <div
           className="home__session home__session--end"
-          onClick={() => handleEndSession(session, myUserID, peerID)}
+          onClick={() => handleEndSession(sessionID, myUserID, peerID)}
         >
           <h2 className="home__call-text">End Session</h2>
         </div>

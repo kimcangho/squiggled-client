@@ -18,7 +18,7 @@ const SessionsList = ({
   handleJoinSession,
   isHost,
   myUserID,
-  session,
+  sessionID,
   peerID,
   receivingCall,
   acceptCall,
@@ -34,11 +34,11 @@ const SessionsList = ({
           {usersArr.length === 0 ? (
             <div className="sessions-list__empty-container"></div>
           ) : (
-            usersArr.map((session) => {
+            usersArr.map((sessionID) => {
               return (
                 <Session
-                  key={session}
-                  name={session}
+                  key={sessionID}
+                  session={sessionID}
                   handleJoinSession={handleJoinSession}
                   myUserID={myUserID}
                   callPeer={callPeer}
@@ -66,7 +66,7 @@ const SessionsList = ({
           )}
           {receivingCall && !isHost && !callAccepted && (
             <div className="sessions-list__status">
-              <h3>You are calling {session}</h3>
+              <h3>You are calling {sessionID}</h3>
             </div>
           )}
         </>
