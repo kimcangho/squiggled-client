@@ -1,6 +1,5 @@
 @use "./partials/vars" as *;
 @use "./partials/mixins" as *;
-@use "./partials/fonts";
 
 //Border-box, margin and padding resets
 * {
@@ -13,46 +12,6 @@
 body {
   font-family: $font-fam, $backup-fonts;
 }
-// //Page Header
-// h1 {
-//   @include page-header-small;
-
-//   @include tablet {
-//     @include page-header-big;
-//   }
-// }
-// //Section Header
-// h2 {
-//   @include section-header-small;
-
-//   @include tablet {
-//     @include section-header-big;
-//   }
-// }
-// //Subheader
-// h3 {
-//   @include subheader-small;
-
-//   @include tablet {
-//     @include subheader-big;
-//   }
-// }
-// //Labels and Buttons
-// h4 {
-//   @include labels-small;
-
-//   @include tablet {
-//     @include labels-big;
-//   }
-// }
-// //Body Text
-// p {
-//   @include body-small;
-
-//   @include tablet {
-//     @include body-big;
-//   }
-// }
 
 //Unordered Lists
 ul {

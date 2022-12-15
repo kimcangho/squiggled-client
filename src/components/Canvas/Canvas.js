@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 const Canvas = ({ photoCaptured }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
+  const [strokeColor, setStrokeColor] = useState("");
   //useRef variables
   let canvasRef = useRef(null);
   let contextRef = useRef(null);
@@ -14,6 +15,9 @@ const Canvas = ({ photoCaptured }) => {
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     contextRef.current = context;
+    setStrokeColor(
+      `rgb(${randomNumber(255)}, ${randomNumber(255)}, ${randomNumber(255)})`
+    );
   }, []);
 
   //Random Number Generator
@@ -26,11 +30,7 @@ const Canvas = ({ photoCaptured }) => {
       const { offsetX, offsetY } = nativeEvent;
       contextRef.current.beginPath();
       contextRef.current.moveTo(offsetX, offsetY);
-
-      const randomColor = `rgb(${randomNumber(255)}, ${randomNumber(
-        255
-      )}, ${randomNumber(255)})`;
-      contextRef.current.strokeStyle = randomColor;
+      contextRef.current.strokeStyle = strokeColor;
       setIsDrawing(true);
     }
   };

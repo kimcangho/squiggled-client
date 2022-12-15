@@ -45,9 +45,8 @@ const HomePage = () => {
   //Navigation variable
   const navigate = useNavigate();
 
-  //Connect to server on component mount
   useEffect(() => {
-    // Connect in useEffect
+    //Connect to server
     socketRef.current = io.connect("http://localhost:8000");
     console.log(socketRef.current);
     //Get socket id and set as user id
@@ -61,10 +60,8 @@ const HomePage = () => {
       setCallAccepted(false);
       setReceivingCall(false);
     });
-    //Set PeerID on join - Under Construction
+    //Set PeerID on join
     socketRef.current.on("join-confirm", (userData, sessionData) => {
-      console.log(`user: ${userData}`);
-      console.log(`session: ${sessionData}`);
       if (isHost) {
         setPeerID(userData);
         console.log(`Peer userdata: ${userData}`);
@@ -82,10 +79,8 @@ const HomePage = () => {
 
     //Take Screenshot
     socketRef.current.on("confirm_screenshot", (data) => {
-      //Create new image
       const newImg = new Image();
       setPhotoCaptured(true);
-      //Once new image is loaded
       newImg.addEventListener(
         "load",
         () => {
@@ -107,12 +102,13 @@ const HomePage = () => {
         audio: true,
       })
       .then((stream) => {
-        setVideoStream(stream); //Set stream to our video stream
+        setVideoStream(stream);
         myVideoRef.current.srcObject = stream;
       })
       .catch((err) => console.error(err));
 
-    //SimplePeer
+    //Simple-peer for WebRTC
+
     //Handle being called by a peer, notify us that we are receiving a call
     socketRef.current.on("sendCall", (data) => {
       setReceivingCall(true);
@@ -121,19 +117,16 @@ const HomePage = () => {
     });
   }, []);
 
-  //Simple-peer - WebRTC Logic to call someone else
-  //Initiating call to another peer with our video stream
+  //Initiating call to peer
   const callPeer = (id, user) => {
-    //Create new peer object
+    //Create new peer object containing our stream
     const peer = new Peer({
       initiator: true,
       trickle: false,
       stream: videoStream,
     });
 
-    //on signal event, send signal for handshake
-    //peer.on('signal', arg) emits a signal event to a peer
-    //That peer calls peer.signal(data) to receive your event
+    //Peer signal event listener
     peer.on("signal", (data) => {
       socketRef.current.emit("callUser", {
         userToCall: id, //send to peer's id
@@ -141,7 +134,7 @@ const HomePage = () => {
         from: user, //user's ID
       });
     });
-    //on stream event from peer
+    //Peer stream event listener
     peer.on("stream", (stream) => {
       if (peerVideoRef.current) {
         peerVideoRef.current.srcObject = stream;
@@ -154,6 +147,7 @@ const HomePage = () => {
     });
   };
 
+  //Accept Call from Peer
   const acceptCall = () => {
     setCallAccepted(true);
     //Create peer object that will receive our data
@@ -169,7 +163,7 @@ const HomePage = () => {
         to: caller,
       });
     });
-    //Getting stream from our peer and setting it to peer Ref
+    //Get peer stream
     peer.on("stream", (stream) => {
       peerVideoRef.current.srcObject = stream;
     });
@@ -178,14 +172,15 @@ const HomePage = () => {
   };
 
   //Functions
-  //Create Session from myUserID
+
+  //Create Session
   const handleCreateSession = (userID) => {
     setActiveCall(true);
     setIsHost(true);
     setPeerID("");
-    setSessionID(userID); //Set session state
+    setSessionID(userID);
     socketRef.current.emit("create_session", userID);
-    navigate(`/session/${userID}`); //Redirect to session
+    navigate(`/session/${userID}`);
   };
   //Join Session
   const handleJoinSession = (sessionID, userID) => {
@@ -193,18 +188,18 @@ const HomePage = () => {
     setSessionID(sessionID); //Set session state
     setIsHost(false);
     socketRef.current.emit("join_session", sessionID, userID);
-    navigate(`/session/${sessionID}`); //Redirect to session
+    navigate(`/session/${sessionID}`);
   };
   //End Session
   const handleEndSession = (sessionID, userID) => {
-    setActiveCall(false); //Set active call to false
+    setActiveCall(false);
     setCallAccepted(false);
     setReceivingCall(false);
     socketRef.current.emit("exit_session", sessionID, userID);
-    setSessionID(""); //Clear session state
+    setSessionID("");
     setIsHost(false);
     setPeerID("");
-    navigate("/"); //Redirect back to home
+    navigate("/");
   };
 
   //Toggle Sound
@@ -212,9 +207,8 @@ const HomePage = () => {
     setIsMuted((isMuted) => !isMuted);
     socketRef.current.emit("send message", { message: "Hello" });
   };
-  //Capture Image - Asynchronous function under construction
-  //ISSUE: execute function AFTER <Canvas /> component is mounted
-  //TEMP FIX: Use setTimeout function for arbitrary delay
+
+  //Capture Image
   const handleCaptureImage = () => {
     //Arbitrary delay until component mounted
     setTimeout(() => {
@@ -223,14 +217,12 @@ const HomePage = () => {
       const context = canvas.getContext("2d");
       const video = document.querySelector(".home__feed");
       //Get canvas dimensions
-      canvas.width = video.videoWidth; //videoWidth 2 times display size
-      canvas.height = video.videoHeight; //videoHeight 2 times display size
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
       //Set screenshot in canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-      context.scale(2, 2);
+      context.scale(2, 2);  //Scale down by 2 as camera native resolution is 640 x 480 px
     }, 0);
-
-    //Toggle photo edit mode
     setPhotoCaptured(true);
   };
   //Exit photo edit mode
@@ -239,18 +231,20 @@ const HomePage = () => {
       setPhotoCaptured(false);
     }
   };
-  //Clears canvas
+  //Clear canvas
   const handleClearCanvas = () => {
     const canvas = document.querySelector(".canvas");
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     setPhotoCaptured(false);
   };
-  //Take/Delete Screenshot Keydown Handler
+  //Screenshot Keydown Handler
   const handleKeyDownPhoto = (event) => {
+    //Capture Image
     if (event.key === "Enter") {
       handleCaptureImage();
     }
+    //Clear canvas
     if (event.key === "Escape") {
       if (document.querySelector(".canvas")) {
         handleClearCanvas();
@@ -262,6 +256,7 @@ const HomePage = () => {
 
   return (
     <section className="home">
+
       <Header
         myUserID={myUserID}
         usersArr={usersArr}
@@ -277,6 +272,7 @@ const HomePage = () => {
       />
 
       <main className="home__main-container">
+
         <div className="home__core-container">
           <div className="home__video-container">
             {!callAccepted || isHost ? (
@@ -319,6 +315,7 @@ const HomePage = () => {
         </div>
 
         <div className="home__sessions-container">
+
           <SessionsList
             usersArr={usersArr}
             isInModal={false}
@@ -326,13 +323,13 @@ const HomePage = () => {
             handleJoinSession={handleJoinSession}
             isHost={isHost}
             myUserID={myUserID}
-            sessionID={sessionID}
             peerID={peerID}
             receivingCall={receivingCall}
             acceptCall={acceptCall}
             callPeer={callPeer}
             callAccepted={callAccepted}
           />
+
         </div>
       </main>
 

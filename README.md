@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# kent-ho-capstone-client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## This is the client-side of the Qual web application. Ensure that two browser windows are open to simulate broadcaster/viewer interaction.
 
-## Available Scripts
+# Initialization
+1. Install
+> npm install
+2. Start React App
+> npm start
 
-In the project directory, you can run:
+# Camera Indicators (bottom right on video element)
+Red broadcast icon: user is broadcasting live stream to viewer
+Green view icon: user is viewing broadcaster stream
+# Session Button
+Start session: opens new session
+End session: quits current session (kicks peer if also in session)
+# Control Panel Legend Icons
+Take screenshot: takes user's screenshot
+Send screenshot: sends screenshot to peer
+Download screenshot: downloads screenshot locally
+Draw Mode Enabled: indicates drawable canvas/screenshot
+Clear Screenshot: clears entire canvas
+Muted: No audio
+Unmuted: Max audio
 
-### `npm start`
+# Peer Interaction
+1. Peer A (Broadcaster) creates session.
+2. Peer B (Viewer) can join by clicking phone icon in side container (modal menu if in mobile view).
+3. Peer A receives notification in side container and accepts by clicking phone icon.
+4. Peer B joins call and can view Peer A's stream.
+5. Peer A takes screenshot and can add annotations on screenshot.
+6. Peer A sends screenshot to Peer B.
+7. Peer B may add annotations to sent screenshot.
+8. Peer B sends back annotated screenshot to Peer A.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Note: Draw mode not enabled if no screenshot is present.
+### Note: Download/Send options available when screenshot is present.
+### Note: Ending session will remove both peers from session.
