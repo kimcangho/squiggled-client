@@ -1,9 +1,10 @@
 import "./Header.scss";
-
+//React Hooks
 import { useState } from "react";
-
+//Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
+//Component
 import ModalMenu from "../ModalMenu/ModalMenu";
 
 const Header = ({
@@ -64,12 +65,17 @@ const Header = ({
         <h1 className="header__title">{`User: ${myUserID}`}</h1>
       </div>
       {/* Open Modal Menu */}
-      <img
-        className="home__button home__button--square"
-        src={joinIcon}
-        alt="Join Sessions List"
-        onClick={toggleSessions}
-      />
+      <div className="header__session-container">
+        <img
+          className="home__button home__button--square"
+          src={joinIcon}
+          alt="Join Sessions List"
+          onClick={toggleSessions}
+        />
+        {receivingCall && isHost && (
+          <div className="header__notification"></div>
+        )}
+      </div>
     </header>
   );
 };

@@ -323,6 +323,7 @@ const HomePage = () => {
             handleJoinSession={handleJoinSession}
             isHost={isHost}
             myUserID={myUserID}
+            sessionID={sessionID}
             peerID={peerID}
             receivingCall={receivingCall}
             acceptCall={acceptCall}
