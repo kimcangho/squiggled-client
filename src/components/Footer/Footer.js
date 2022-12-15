@@ -1,10 +1,10 @@
 import "./Footer.scss";
-
+//Assets
 import drawIcon from "../../assets/images/icons/draw.svg";
-import eraserIcon from '../../assets/images/icons/eraser.svg'
+import eraserIcon from "../../assets/images/icons/eraser.svg";
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
-import sendIcon from '../../assets/images/icons/send-plane.svg';
+import sendIcon from "../../assets/images/icons/send-plane.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 
@@ -24,30 +24,30 @@ const Footer = ({
   handleClearCanvas,
 }) => {
   //Download Image from Canvas
-
   const handleDownloadImage = async (event) => {
     if (photoCaptured) {
       event.preventDefault(); //Prevent redirect
-      const canvas = document.querySelector(".canvas"); //DOM manipulation
-      const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
+      const canvas = document.querySelector(".canvas");
+      const image = canvas.toDataURL("image/png");
       const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
       const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
-      const link = document.createElement("a"); //Create unmounted anchor tag
-      link.href = blobURL; //Set href of unmounted anchor tag
-      link.download = "image.png"; //Define image download format
-      link.click(); //Trigger link with programmatic click
+      const link = document.createElement("a");
+      link.href = blobURL;
+      link.download = "image.png";
+      link.click();
     }
   };
 
+  //Send image from canvas
   const handleSendImage = () => {
     if (!!sessionID) {
-      //if session is running
-      const canvas = document.querySelector(".canvas"); //DOM manipulation
-      const image = canvas.toDataURL("image/png"); //Convert canvas element to URL
+      const canvas = document.querySelector(".canvas");
+      const image = canvas.toDataURL("image/png");
       socket.emit("send_screenshot", image, sessionID);
     }
-  }
+  };
 
+  //Exit capture mode and clear canvas
   const handleClearClose = () => {
     if (photoCaptured) {
       handleExitCapture();
@@ -95,7 +95,7 @@ const Footer = ({
         )}
       </div>
 
-      {/* Session Button */}
+      {/* New/End Session Button */}
       {activeCall ? (
         <div
           className="home__session home__session--end"
@@ -125,7 +125,7 @@ const Footer = ({
         {/* Download Button */}
         <img
           className={`home__button ${
-            !photoCaptured  && "home__button--inactive"
+            !photoCaptured && "home__button--inactive"
           }`}
           src={downloadIcon}
           alt="Download Icon"

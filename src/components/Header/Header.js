@@ -19,17 +19,18 @@ const Header = ({
   callPeer,
   callAccepted,
 }) => {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [_menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  //Open Modal Menu
   const handleOpenModal = () => {
     setIsOpen(true);
   };
-
+  //Close Modal Menu
   const handleCloseModal = () => {
     setIsOpen(false);
   };
-
+  //Trigger Modal Open
   const toggleSessions = () => {
     setMenuIsOpen((menuIsOpen) => {
       if (!menuIsOpen) {
@@ -62,7 +63,7 @@ const Header = ({
         <img className="header__logo" src={quailLogo} alt="Qual Quail Logo" />
         <h1 className="header__title">{`User: ${myUserID}`}</h1>
       </div>
-
+      {/* Open Modal Menu */}
       <img
         className="home__button home__button--square"
         src={joinIcon}

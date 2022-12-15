@@ -1,6 +1,6 @@
 //Styling
 import "./Session.scss";
-//Assets
+//Asset
 import phoneIcon from "../../assets/images/icons/phone.svg";
 
 const Session = ({
@@ -11,7 +11,8 @@ const Session = ({
   callPeer,
   peerID
 }) => {
-  const handleJoinClose = (sessionID, userID, peerID) => {
+  //Joins session, calls peer and closes modal
+  const handleJoinClose = (sessionID, userID) => {
     handleJoinSession(sessionID, userID);
     callPeer(sessionID, userID);
     if (handleCloseModal) {
