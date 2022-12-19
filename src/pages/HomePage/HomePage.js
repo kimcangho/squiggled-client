@@ -217,10 +217,10 @@ const HomePage = () => {
       const context = canvas.getContext("2d");
       const video = document.querySelector(".home__feed");
       //Get canvas dimensions
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      canvas.width = 640;
+      canvas.height = 480;
       //Set screenshot in canvas
-      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      context.drawImage(video, 0, 0, 640, 480);
       context.scale(2, 2);  //Scale down by 2 as camera native resolution is 640 x 480 px
     }, 0);
     setPhotoCaptured(true);
