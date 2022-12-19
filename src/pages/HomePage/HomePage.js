@@ -1,7 +1,7 @@
 //Styling
 import "./HomePage.scss";
 //React Hooks
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 //External Libraries
 import io from "socket.io-client";
@@ -14,54 +14,53 @@ import Header from "../../components/Header/Header";
 import Canvas from "../../components/Canvas/Canvas";
 import SessionsList from "../../components/SessionsList/SessionsList";
 import Footer from "../../components/Footer/Footer";
+//Use Context
+import { SocketContext } from "../../SocketContext";
 
 const HomePage = () => {
-  //State Variables
-  const [activeCall, setActiveCall] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [photoCaptured, setPhotoCaptured] = useState(false);
 
-  //Video Stream State
-  const [videoStream, setVideoStream] = useState(false); //stream
-
-  //Socket.io states
-  const [myUserID, setMyUserID] = useState("");
-  const [peerID, setPeerID] = useState("");
-  const [usersArr, setUsersArr] = useState([]);
-  const [sessionID, setSessionID] = useState("");
-  const [isHost, setIsHost] = useState(false);
-
-  //Peer states
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState("");
-  const [callerSignal, setCallerSignal] = useState("");
-
-  //useRef Variables
-  const myVideoRef = useRef(null);
-  const socketRef = useRef(null);
-  const peerVideoRef = useRef(null);
+  //SocketContext
+  const {
+    activeCall, setActiveCall,
+    isMuted, setIsMuted,
+    photoCaptured, setPhotoCaptured,
+    myUserID, setMyUserID,
+    peerID, setPeerID,
+    usersArr, setUsersArr,
+    sessionID, setSessionID,
+    isHost, setIsHost,
+    callAccepted, setCallAccepted,
+    receivingCall, setReceivingCall,
+    caller, setCaller,
+    callerSignal, setCallerSignal,
+    socketConnection,
+    myVideo,
+    peerVideo,
+    videoStream, setVideoStream,
+    canvas,
+    canvasContext
+  } = useContext(SocketContext);
 
   //Navigation variable
   const navigate = useNavigate();
 
   useEffect(() => {
     //Connect to server
-    socketRef.current = io.connect("http://localhost:8000");
-    console.log(socketRef.current);
+    socketConnection.current = io.connect("http://localhost:8000");
+    console.log(socketConnection.current);
     //Get socket id and set as user id
-    socketRef.current.on("me", (data) => {
+    socketConnection.current.on("me", (data) => {
       setMyUserID(data);
       console.log(`Your user ID: ${data}`);
     });
     //Get list of active sessions on start
-    socketRef.current.on("getActiveSessions", (data) => {
+    socketConnection.current.on("getActiveSessions", (data) => {
       setUsersArr(data);
       setCallAccepted(false);
       setReceivingCall(false);
     });
     //Set PeerID on join
-    socketRef.current.on("join-confirm", (userData, sessionData) => {
+    socketConnection.current.on("join-confirm", (userData, sessionData) => {
       if (isHost) {
         setPeerID(userData);
         console.log(`Peer userdata: ${userData}`);
@@ -71,24 +70,30 @@ const HomePage = () => {
       }
     });
     //Handle exit room
-    socketRef.current.on("exit-room", () => {
+    socketConnection.current.on("exit-room", () => {
       setSessionID("");
       setActiveCall(false);
       navigate("/");
     });
 
     //Take Screenshot
-    socketRef.current.on("confirm_screenshot", (data) => {
+    socketConnection.current.on("confirm_screenshot", (data) => {
       const newImg = new Image();
       setPhotoCaptured(true);
       newImg.addEventListener(
         "load",
         () => {
-          const canvas = document.querySelector(".canvas");
+          // const canvas = document.querySelector(".canvas");
           canvas.width = 320;
           canvas.height = 240;
-          const context = canvas.getContext("2d");
-          context.drawImage(newImg, 0, 0, canvas.width, canvas.height); //draw image to canvas
+          // const context = canvas.getContext("2d");
+          canvasContext.current.drawImage(
+            newImg,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          ); //draw image to canvas
         },
         false
       );
@@ -103,14 +108,14 @@ const HomePage = () => {
       })
       .then((stream) => {
         setVideoStream(stream);
-        myVideoRef.current.srcObject = stream;
+        myVideo.current.srcObject = stream;
       })
       .catch((err) => console.error(err));
 
     //Simple-peer for WebRTC
 
     //Handle being called by a peer, notify us that we are receiving a call
-    socketRef.current.on("sendCall", (data) => {
+    socketConnection.current.on("sendCall", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
       setCallerSignal(data.signal);
@@ -128,7 +133,7 @@ const HomePage = () => {
 
     //Peer signal event listener
     peer.on("signal", (data) => {
-      socketRef.current.emit("callUser", {
+      socketConnection.current.emit("callUser", {
         userToCall: id, //send to peer's id
         signalData: data, //send peer our signaling data
         from: user, //user's ID
@@ -136,12 +141,12 @@ const HomePage = () => {
     });
     //Peer stream event listener
     peer.on("stream", (stream) => {
-      if (peerVideoRef.current) {
-        peerVideoRef.current.srcObject = stream;
+      if (peerVideo.current) {
+        peerVideo.current.srcObject = stream;
       }
     });
     //Receive call accepted signal from peer
-    socketRef.current.on("callAccepted", (signal) => {
+    socketConnection.current.on("callAccepted", (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -158,14 +163,14 @@ const HomePage = () => {
     });
     //fire off signal to peer (caller) with our signal
     peer.on("signal", (data) => {
-      socketRef.current.emit("acceptCall", {
+      socketConnection.current.emit("acceptCall", {
         signal: data,
         to: caller,
       });
     });
     //Get peer stream
     peer.on("stream", (stream) => {
-      peerVideoRef.current.srcObject = stream;
+      peerVideo.current.srcObject = stream;
     });
     //
     peer.signal(callerSignal);
@@ -179,7 +184,7 @@ const HomePage = () => {
     setIsHost(true);
     setPeerID("");
     setSessionID(userID);
-    socketRef.current.emit("create_session", userID);
+    socketConnection.current.emit("create_session", userID);
     navigate(`/session/${userID}`);
   };
   //Join Session
@@ -187,7 +192,7 @@ const HomePage = () => {
     setActiveCall(true);
     setSessionID(sessionID); //Set session state
     setIsHost(false);
-    socketRef.current.emit("join_session", sessionID, userID);
+    socketConnection.current.emit("join_session", sessionID, userID);
     navigate(`/session/${sessionID}`);
   };
   //End Session
@@ -195,7 +200,7 @@ const HomePage = () => {
     setActiveCall(false);
     setCallAccepted(false);
     setReceivingCall(false);
-    socketRef.current.emit("exit_session", sessionID, userID);
+    socketConnection.current.emit("exit_session", sessionID, userID);
     setSessionID("");
     setIsHost(false);
     setPeerID("");
@@ -205,7 +210,7 @@ const HomePage = () => {
   //Toggle Sound
   const toggleMute = () => {
     setIsMuted((isMuted) => !isMuted);
-    socketRef.current.emit("send message", { message: "Hello" });
+    socketConnection.current.emit("send message", { message: "Hello" });
   };
 
   //Capture Image
@@ -213,15 +218,13 @@ const HomePage = () => {
     //Arbitrary delay until component mounted
     setTimeout(() => {
       //DOM Manipulation to set canvas, context and video
-      const canvas = document.querySelector(".canvas");
-      const context = canvas.getContext("2d");
       const video = document.querySelector(".home__feed");
       //Get canvas dimensions
-      canvas.width = 640;
-      canvas.height = 480;
+      canvas.current.width = 640;
+      canvas.current.height = 480;
       //Set screenshot in canvas
-      context.drawImage(video, 0, 0, 640, 480);
-      context.scale(2, 2);  //Scale down by 2 as camera native resolution is 640 x 480 px
+      canvasContext.current.drawImage(video, 0, 0, 640, 480);
+      canvasContext.current.scale(2, 2); //Scale down by 2 as camera native resolution is 640 x 480 px
     }, 0);
     setPhotoCaptured(true);
   };
@@ -233,9 +236,14 @@ const HomePage = () => {
   };
   //Clear canvas
   const handleClearCanvas = () => {
-    const canvas = document.querySelector(".canvas");
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    // const canvas = document.querySelector(".canvas");
+    // const context = canvas.getContext("2d");
+    canvasContext.current.clearRect(
+      0,
+      0,
+      canvas.current.width,
+      canvas.current.height
+    );
     setPhotoCaptured(false);
   };
   //Screenshot Keydown Handler
@@ -256,7 +264,6 @@ const HomePage = () => {
 
   return (
     <section className="home">
-
       <Header
         myUserID={myUserID}
         usersArr={usersArr}
@@ -272,7 +279,6 @@ const HomePage = () => {
       />
 
       <main className="home__main-container">
-
         <div className="home__core-container">
           <div className="home__video-container">
             {!callAccepted || isHost ? (
@@ -280,7 +286,7 @@ const HomePage = () => {
               <>
                 <video
                   autoPlay
-                  ref={myVideoRef}
+                  ref={myVideo}
                   muted={!isMuted}
                   className="home__feed"
                 />
@@ -295,12 +301,7 @@ const HomePage = () => {
             ) : (
               // Viewer
               <>
-                <video
-                  className="home__feed"
-                  muted
-                  autoPlay
-                  ref={peerVideoRef}
-                />
+                <video className="home__feed" muted autoPlay ref={peerVideo} />
                 <img
                   className="home__broadcast-view home__broadcast-view--viewer"
                   src={viewIcon}
@@ -311,11 +312,9 @@ const HomePage = () => {
           </div>
 
           <Canvas photoCaptured={photoCaptured} />
-        
         </div>
 
         <div className="home__sessions-container">
-
           <SessionsList
             usersArr={usersArr}
             isInModal={false}
@@ -330,7 +329,6 @@ const HomePage = () => {
             callPeer={callPeer}
             callAccepted={callAccepted}
           />
-
         </div>
       </main>
 
@@ -347,10 +345,9 @@ const HomePage = () => {
         activeCall={activeCall}
         handleCaptureImage={handleCaptureImage}
         peerID={peerID}
-        socket={socketRef.current}
+        socket={socketConnection.current}
         handleClearCanvas={handleClearCanvas}
       />
-
     </section>
   );
 };
