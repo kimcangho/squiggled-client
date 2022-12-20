@@ -1,25 +1,30 @@
 import "./Header.scss";
 //React Hooks
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { SocketContext } from "../../SocketContext";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
 //Component
 import ModalMenu from "../ModalMenu/ModalMenu";
 
-const Header = ({
-  myUserID,
-  usersArr,
-  handleJoinSession,
-  activeCall,
-  isHost,
-  sessionID,
-  peerID,
-  receivingCall,
-  acceptCall,
-  callPeer,
-  callAccepted,
-}) => {
+const Header = () => {
+
+    //SocketContext
+    const {
+      activeCall,
+      myUserID,
+      peerID,
+      usersArr,
+      sessionID,
+      isHost,
+      callAccepted,
+      receivingCall,
+      callPeer,
+      acceptCall,
+      handleJoinSession,
+    } = useContext(SocketContext);
+
   const [_menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

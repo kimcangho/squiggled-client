@@ -42,19 +42,7 @@ const HomePage = () => {
 
   return (
     <section className="home">
-      <Header
-        myUserID={myUserID}
-        usersArr={usersArr}
-        activeCall={activeCall}
-        handleJoinSession={handleJoinSession}
-        isHost={isHost}
-        sessionID={sessionID}
-        peerID={peerID}
-        receivingCall={receivingCall}
-        acceptCall={acceptCall}
-        callPeer={callPeer}
-        callAccepted={callAccepted}
-      />
+      <Header />
 
       <main className="home__main-container">
         <div className="home__core-container">
