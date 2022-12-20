@@ -1,7 +1,7 @@
 import "./Footer.scss";
 //React Hooks
 import { useContext } from "react";
-import { SocketContext } from "../../SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import drawIcon from "../../assets/images/icons/draw.svg";
 import eraserIcon from "../../assets/images/icons/eraser.svg";

@@ -9,7 +9,7 @@ const Session = ({
   handleCloseModal,
   myUserID,
   callPeer,
-  peerID
+  peerID,
 }) => {
   //Joins session, calls peer and closes modal
   const handleJoinClose = (sessionID, userID) => {

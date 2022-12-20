@@ -1,5 +1,8 @@
 //Styling
 import "./ModalMenu.scss";
+//React Hooks
+import React, { useContext } from "react";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Module
 import Modal from "react-modal";
 //Assets
@@ -11,21 +14,22 @@ import Session from "../Session/Session";
 //Set modal to app
 Modal.setAppElement("#root");
 
-const ModalMenu = ({
-  isOpen,
-  handleCloseModal,
-  usersArr,
-  handleJoinSession,
-  activeCall,
-  isHost,
-  myUserID,
-  sessionID,
-  peerID,
-  receivingCall,
-  acceptCall,
-  callPeer,
-  callAccepted,
-}) => {
+const ModalMenu = ({ isOpen, handleCloseModal }) => {
+  //SocketContext
+  const {
+    usersArr,
+    handleJoinSession,
+    activeCall,
+    isHost,
+    myUserID,
+    sessionID,
+    peerID,
+    receivingCall,
+    acceptCall,
+    callPeer,
+    callAccepted,
+  } = useContext(SocketContext);
+
   return (
     <Modal
       isOpen={isOpen}

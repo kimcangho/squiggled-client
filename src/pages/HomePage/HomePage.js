@@ -2,7 +2,7 @@
 import "./HomePage.scss";
 //React Hooks
 import React, { useContext } from "react";
-import { SocketContext } from "../../SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import broadcastIcon from "../../assets/images/icons/broadcast.svg";
 import viewIcon from "../../assets/images/icons/eye.svg";
@@ -14,25 +14,12 @@ import Footer from "../../components/Footer/Footer";
 
 const HomePage = () => {
   //SocketContext
-  const {
-    activeCall,
-    isMuted,
-    myUserID,
-    peerID,
-    usersArr,
-    sessionID,
-    isHost,
-    callAccepted,
-    receivingCall,
-    myVideo,
-    peerVideo,
-    callPeer,
-    acceptCall,
-    handleJoinSession,
-  } = useContext(SocketContext);
+  const { isMuted, isHost, callAccepted, myVideo, peerVideo } =
+    useContext(SocketContext);
 
   return (
     <section className="home">
+
       <Header />
 
       <main className="home__main-container">
@@ -72,20 +59,7 @@ const HomePage = () => {
         </div>
 
         <div className="home__sessions-container">
-          <SessionsList
-            usersArr={usersArr}
-            isInModal={false}
-            activeCall={activeCall}
-            handleJoinSession={handleJoinSession}
-            isHost={isHost}
-            myUserID={myUserID}
-            sessionID={sessionID}
-            peerID={peerID}
-            receivingCall={receivingCall}
-            acceptCall={acceptCall}
-            callPeer={callPeer}
-            callAccepted={callAccepted}
-          />
+          <SessionsList />
         </div>
       </main>
 

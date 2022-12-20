@@ -1,24 +1,30 @@
 //Styling
 import "./SessionsList.scss";
+//React Hooks
+import { useContext } from "react";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import phoneIcon from "../../assets/images/icons/phone.svg";
 //Components
 import Legend from "../Legend/Legend";
 import Session from "../Session/Session";
 
-const SessionsList = ({
-  usersArr,
-  activeCall,
-  handleJoinSession,
-  isHost,
-  myUserID,
-  sessionID,
-  peerID,
-  receivingCall,
-  acceptCall,
-  callPeer,
-  callAccepted,
-}) => {
+const SessionsList = () => {
+  //SocketContext
+  const {
+    usersArr,
+    activeCall,
+    handleJoinSession,
+    isHost,
+    myUserID,
+    sessionID,
+    peerID,
+    receivingCall,
+    acceptCall,
+    callPeer,
+    callAccepted,
+  } = useContext(SocketContext);
+
   return (
     <div className={`sessions-list`}>
       {!activeCall ? (

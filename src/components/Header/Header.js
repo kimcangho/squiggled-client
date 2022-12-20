@@ -1,7 +1,7 @@
 import "./Header.scss";
 //React Hooks
 import React, { useContext, useState } from "react";
-import { SocketContext } from "../../SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
@@ -9,21 +9,8 @@ import joinIcon from "../../assets/images/icons/join-in.svg";
 import ModalMenu from "../ModalMenu/ModalMenu";
 
 const Header = () => {
-
-    //SocketContext
-    const {
-      activeCall,
-      myUserID,
-      peerID,
-      usersArr,
-      sessionID,
-      isHost,
-      callAccepted,
-      receivingCall,
-      callPeer,
-      acceptCall,
-      handleJoinSession,
-    } = useContext(SocketContext);
+  //SocketContext
+  const { myUserID, isHost, receivingCall } = useContext(SocketContext);
 
   const [_menuIsOpen, setMenuIsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -48,21 +35,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <ModalMenu
-        isOpen={isOpen}
-        handleCloseModal={handleCloseModal}
-        usersArr={usersArr}
-        handleJoinSession={handleJoinSession}
-        activeCall={activeCall}
-        isHost={isHost}
-        myUserID={myUserID}
-        sessionID={sessionID}
-        peerID={peerID}
-        receivingCall={receivingCall}
-        acceptCall={acceptCall}
-        callPeer={callPeer}
-        callAccepted={callAccepted}
-      />
+      <ModalMenu isOpen={isOpen} handleCloseModal={handleCloseModal} />
 
       {/* Logo */}
       <div className="header__container">
