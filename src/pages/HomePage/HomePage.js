@@ -17,8 +17,6 @@ const HomePage = () => {
   const {
     activeCall,
     isMuted,
-    photoCaptured,
-    setPhotoCaptured,
     myUserID,
     peerID,
     usersArr,
@@ -26,18 +24,11 @@ const HomePage = () => {
     isHost,
     callAccepted,
     receivingCall,
-    socketConnection,
     myVideo,
     peerVideo,
-    toggleMute,
-    handleCaptureImage,
-    handleExitCapture,
-    handleClearCanvas,
     callPeer,
     acceptCall,
-    handleCreateSession,
     handleJoinSession,
-    handleEndSession,
   } = useContext(SocketContext);
 
   return (
@@ -77,7 +68,7 @@ const HomePage = () => {
             )}
           </div>
 
-          <Canvas photoCaptured={photoCaptured} />
+          <Canvas />
         </div>
 
         <div className="home__sessions-container">
@@ -98,22 +89,7 @@ const HomePage = () => {
         </div>
       </main>
 
-      <Footer
-        myUserID={myUserID}
-        sessionID={sessionID}
-        photoCaptured={photoCaptured}
-        toggleMute={toggleMute}
-        isMuted={isMuted}
-        handleCreateSession={handleCreateSession}
-        handleEndSession={handleEndSession}
-        handleExitCapture={handleExitCapture}
-        setPhotoCaptured={setPhotoCaptured}
-        activeCall={activeCall}
-        handleCaptureImage={handleCaptureImage}
-        peerID={peerID}
-        socket={socketConnection.current}
-        handleClearCanvas={handleClearCanvas}
-      />
+      <Footer />
     </section>
   );
 };

@@ -8,12 +8,12 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 const App = () => {
   return (
     <BrowserRouter>
-    <SocketProvider>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/session/:id" element={<HomePage />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
+      <SocketProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/session/:id" element={<HomePage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
       </SocketProvider>
     </BrowserRouter>
   );

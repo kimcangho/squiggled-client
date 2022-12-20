@@ -288,8 +288,6 @@ const SocketProvider = ({ children }) => {
         socketConnection,
         myVideo,
         peerVideo,
-        myUserID,
-        setMyUserID,
         videoStream,
         setVideoStream,
         canvas,

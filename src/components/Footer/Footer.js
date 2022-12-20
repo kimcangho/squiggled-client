@@ -1,4 +1,7 @@
 import "./Footer.scss";
+//React Hooks
+import { useContext } from "react";
+import { SocketContext } from "../../SocketContext";
 //Assets
 import drawIcon from "../../assets/images/icons/draw.svg";
 import eraserIcon from "../../assets/images/icons/eraser.svg";
@@ -8,27 +11,30 @@ import sendIcon from "../../assets/images/icons/send-plane.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import cameraIcon from "../../assets/images/icons/camera-fill.svg";
 
-const Footer = ({
-  myUserID,
-  sessionID,
-  handleExitCapture,
-  photoCaptured,
-  handleCaptureImage,
-  toggleMute,
-  isMuted,
-  handleCreateSession,
-  handleEndSession,
-  activeCall,
-  peerID,
-  socket,
-  handleClearCanvas,
-}) => {
+const Footer = () => {
+  //SocketContext
+  const {
+    activeCall,
+    isMuted,
+    photoCaptured,
+    myUserID,
+    peerID,
+    sessionID,
+    canvas,
+    socketConnection,
+    toggleMute,
+    handleCaptureImage,
+    handleExitCapture,
+    handleClearCanvas,
+    handleCreateSession,
+    handleEndSession,
+  } = useContext(SocketContext);
+
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
     if (photoCaptured) {
       event.preventDefault(); //Prevent redirect
-      const canvas = document.querySelector(".canvas");
-      const image = canvas.toDataURL("image/png");
+      const image = canvas.current.toDataURL("image/png");
       const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
       const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
       const link = document.createElement("a");
@@ -41,9 +47,8 @@ const Footer = ({
   //Send image from canvas
   const handleSendImage = () => {
     if (!!sessionID) {
-      const canvas = document.querySelector(".canvas");
-      const image = canvas.toDataURL("image/png");
-      socket.emit("send_screenshot", image, sessionID);
+      const image = canvas.current.toDataURL("image/png");
+      socketConnection.current.emit("send_screenshot", image, sessionID);
     }
   };
 

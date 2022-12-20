@@ -7,9 +7,9 @@ import { SocketContext } from "../../SocketContext";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 
-const Canvas = ({ photoCaptured }) => {
+const Canvas = () => {
   //Context Variables
-  const { canvas, canvasContext } = useContext(SocketContext);
+  const { canvas, canvasContext, photoCaptured } = useContext(SocketContext);
 
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
