@@ -209,7 +209,7 @@ const SocketProvider = ({ children }) => {
     //Arbitrary delay until component mounted
     setTimeout(() => {
       //DOM Manipulation to set canvas, context and video
-      const video = document.querySelector(".home__feed");
+      const video = document.querySelector(".video__feed");
       //Get canvas dimensions
       canvas.current.width = 640;
       canvas.current.height = 480;

@@ -1,7 +1,7 @@
 import "./Header.scss";
 //React Hooks
 import React, { useContext, useState } from "react";
-import { SocketContext } from "../../utilities/contexts/SocketContext";
+import { SocketContext } from "../../contexts/SocketContext";
 //Assets
 import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";

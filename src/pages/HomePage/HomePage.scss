@@ -66,30 +66,6 @@
     }
   }
 
-  &__video-container {
-    position: relative;
-    border: none;
-  }
-
-  &__feed {
-    width: 20rem;
-    border-radius: 10px;
-  }
-
-  &__broadcast-view {
-    background-color: $color-error;
-    border-radius: 100%;
-    width: 1.25rem;
-    padding: 0.125rem;
-    position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
-
-    &--viewer {
-      background-color: $color-success;
-    }
-  }
-
   &__canvas-placeholder {
     background-color: $color-invert-text;
     background-image: url("../../assets/images/icons/camera-fill.svg");

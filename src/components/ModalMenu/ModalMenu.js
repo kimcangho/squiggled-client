@@ -2,7 +2,7 @@
 import "./ModalMenu.scss";
 //React Hooks
 import React, { useContext } from "react";
-import { SocketContext } from "../../utilities/contexts/SocketContext";
+import { SocketContext } from "../../contexts/SocketContext";
 //Module
 import Modal from "react-modal";
 //Assets
