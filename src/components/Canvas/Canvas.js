@@ -6,6 +6,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { SocketContext } from "../../contexts/SocketContext";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
+import { getToPathname } from "@remix-run/router";
 
 const Canvas = () => {
   //Context Variables
@@ -24,7 +25,7 @@ const Canvas = () => {
     );
   }, []);
 
-  //Start Drawing
+  //Start Drawing - Mouse
   const startDrawing = ({ nativeEvent }) => {
     if (photoCaptured) {
       const { offsetX, offsetY } = nativeEvent;
@@ -34,27 +35,27 @@ const Canvas = () => {
       setIsDrawing(true);
     }
   };
-  //Finish Drawing
-  const finishDrawing = () => {
-    canvasContext.current.closePath();
-    setIsDrawing(false);
-  };
-  //While Drawing
+  //While Drawing - Mouse
   const drawing = ({ nativeEvent }) => {
     if (!isDrawing) return;
     const { offsetX, offsetY } = nativeEvent;
     canvasContext.current.lineTo(offsetX, offsetY);
     canvasContext.current.stroke();
   };
+  //Finish Drawing - Mouse
+  const finishDrawing = () => {
+    canvasContext.current.closePath();
+    setIsDrawing(false);
+  };
 
   return (
     <canvas
       ref={canvas}
       className={photoCaptured ? "canvas" : "canvas canvas--placeholder"}
-      onMouseDown={startDrawing}
-      onMouseMove={drawing}
-      onMouseUp={finishDrawing}
-      onMouseLeave={finishDrawing}
+      onPointerDown={startDrawing}
+      onPointerUp={finishDrawing}
+      onPointerMove={drawing}
+      onPointerCancel={finishDrawing}
     ></canvas>
   );
 };

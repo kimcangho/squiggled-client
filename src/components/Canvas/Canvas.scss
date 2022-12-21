@@ -6,6 +6,7 @@
   width: 20rem;
   cursor: crosshair;
   border-radius: 10px;
+  touch-action: none;
 
   &--placeholder {
     background-color: $color-invert-text;
@@ -19,4 +20,13 @@
     border-radius: 10px;
     border: 1px solid #888888;
   }
+}
+
+.dot {
+  background-color: red;
+  height: 2rem;
+  width: 2rem;
+  z-index: 2;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
