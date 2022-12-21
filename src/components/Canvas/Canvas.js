@@ -6,7 +6,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { SocketContext } from "../../contexts/SocketContext";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
-import { getToPathname } from "@remix-run/router";
 
 const Canvas = () => {
   //Context Variables
