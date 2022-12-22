@@ -7,8 +7,12 @@
   border: none;
 
   &__feed {
-    width: 20rem;
+    width: 100vw;
     border-radius: 10px;
+
+    @include tablet {
+      width: 20rem;
+    }
   }
 
   &__broadcast-view {

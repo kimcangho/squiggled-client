@@ -215,7 +215,7 @@ const SocketProvider = ({ children }) => {
       canvas.current.height = 480;
       //Set screenshot in canvas
       canvasContext.current.drawImage(video, 0, 0, 640, 480);
-      canvasContext.current.scale(2, 2); //Scale down by 2 as camera native resolution is 640 x 480 px
+      canvasContext.current.scale(1, 1); //Scale down by 2 as camera native resolution is 640 x 480 px
     }, 0);
     setPhotoCaptured(true);
   };

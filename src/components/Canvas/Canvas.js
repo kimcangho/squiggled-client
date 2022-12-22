@@ -51,6 +51,7 @@ const Canvas = () => {
     <canvas
       ref={canvas}
       className={photoCaptured ? "canvas" : "canvas canvas--placeholder"}
+      onClick={() => { console.log('clicked')}}
       onPointerDown={startDrawing}
       onPointerUp={finishDrawing}
       onPointerMove={drawing}
