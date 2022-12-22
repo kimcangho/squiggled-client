@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SocketProvider } from "./contexts/SocketContext";
+import { SocketProvider } from "./utilities/contexts/SocketContext";
 
 import HomePage from "./pages/HomePage/HomePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";

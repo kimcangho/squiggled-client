@@ -3,7 +3,7 @@ import "./Canvas.scss";
 //React Hooks
 import React, { useEffect, useState, useContext } from "react";
 //Use Context
-import { SocketContext } from "../../contexts/SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 

@@ -2,7 +2,7 @@
 import "./VideoPlayer.scss";
 //React Hooks
 import React, { useContext } from "react";
-import { SocketContext } from "../../contexts/SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import broadcastIcon from "../../assets/images/icons/broadcast.svg";
 import viewIcon from "../../assets/images/icons/eye.svg";

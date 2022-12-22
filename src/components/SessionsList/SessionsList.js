@@ -2,7 +2,7 @@
 import "./SessionsList.scss";
 //React Hooks
 import { useContext } from "react";
-import { SocketContext } from "../../contexts/SocketContext";
+import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import phoneIcon from "../../assets/images/icons/phone.svg";
 //Components
