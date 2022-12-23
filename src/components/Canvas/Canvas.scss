@@ -20,13 +20,22 @@
     border-radius: 10px;
     border: 1px solid #888888;
   }
-}
 
-.dot {
-  background-color: red;
-  height: 2rem;
-  width: 2rem;
-  z-index: 2;
-  position: absolute;
-  transform: translate(-50%, -50%);
+  &__container {
+    position: relative;
+  }
+
+  &__draw-stamp {
+    background-color: $color-invert-text;
+    border-radius: 100%;
+    padding: 0.125rem;
+    width: 1rem;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+
+    &--inactive {
+      opacity: 20%;
+    }
+  }
 }

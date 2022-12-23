@@ -78,7 +78,7 @@ const Footer = () => {
           alt="Close Circle Icon"
           onClick={handleClearClose}
         />
-        {marking ? (
+        {!marking ? (
           // Drawing Mode
           <img
             className={`home__button ${

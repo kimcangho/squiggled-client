@@ -6,6 +6,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
+//Assets
+import drawIcon from "../../assets/images/icons/draw.svg";
+import stampIcon from "../../assets/images/icons/focus.svg";
 
 const Canvas = () => {
   //Context Variables
@@ -20,7 +23,7 @@ const Canvas = () => {
   //Set Canvas
   useEffect(() => {
     canvasContext.current = canvas.current.getContext("2d");
-    
+
     setStrokeColor(
       `rgb(${randomNumber(255)}, ${randomNumber(255)}, ${randomNumber(255)})`
     );
@@ -65,15 +68,34 @@ const Canvas = () => {
   };
 
   return (
-    <canvas
-      ref={canvas}
-      className={photoCaptured ? "canvas" : "canvas canvas--placeholder"}
-      onPointerDown={startDrawing}
-      onPointerUp={finishDrawing}
-      onPointerMove={drawing}
-      onPointerCancel={finishDrawing}
-      onClick={handleStamp}
-    ></canvas>
+    <div className="canvas__container">
+      <canvas
+        ref={canvas}
+        className={photoCaptured ? "canvas" : "canvas canvas--placeholder"}
+        onPointerDown={startDrawing}
+        onPointerUp={finishDrawing}
+        onPointerMove={drawing}
+        onPointerCancel={finishDrawing}
+        onClick={handleStamp}
+      ></canvas>
+      {marking ? (
+        <img
+          className={`canvas__draw-stamp ${
+            photoCaptured ? "" : "canvas__draw-stamp--inactive"
+          }`}
+          src={drawIcon}
+          alt="Draw Icon"
+        />
+      ) : (
+        <img
+          className={`canvas__draw-stamp ${
+            photoCaptured ? "" : "canvas__draw-stamp--inactive"
+          }`}
+          src={stampIcon}
+          alt="Stamp Icon"
+        />
+      )}
+    </div>
   );
 };
 
