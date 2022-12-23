@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
 import drawIcon from "../../assets/images/icons/draw.svg";
+import stampIcon from "../../assets/images/icons/focus.svg";
 import eraserIcon from "../../assets/images/icons/eraser.svg";
 import muteIcon from "../../assets/images/icons/volume-mute-line.svg";
 import unmuteIcon from "../../assets/images/icons/volume-up-line.svg";
@@ -28,7 +29,12 @@ const Footer = () => {
     handleClearCanvas,
     handleCreateSession,
     handleEndSession,
+    marking,
+    toggleMarking,
   } = useContext(SocketContext);
+
+  //State Variables
+  // const [marking, setMarking] = useState(true);
 
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
@@ -72,16 +78,32 @@ const Footer = () => {
           alt="Close Circle Icon"
           onClick={handleClearClose}
         />
-        {/* Draw Mode */}
-        <img
-          className={`home__button ${
-            photoCaptured
-              ? "home__button--auto-selected"
-              : "home__button--inactive"
-          }`}
-          src={drawIcon}
-          alt="DrawIcon"
-        />
+        {marking ? (
+          // Drawing Mode
+          <img
+            className={`home__button ${
+              photoCaptured
+                ? "home__button--auto-selected"
+                : "home__button--inactive"
+            }`}
+            src={drawIcon}
+            alt="DrawIcon"
+            onClick={toggleMarking}
+          />
+        ) : (
+          // Stamping Mode
+          <img
+            className={`home__button ${
+              photoCaptured
+                ? "home__button--auto-selected"
+                : "home__button--inactive"
+            }`}
+            src={stampIcon}
+            alt="DrawIcon"
+            onClick={toggleMarking}
+          />
+        )}
+
         {/* Mute/Unmute Button */}
         {isMuted ? (
           <img

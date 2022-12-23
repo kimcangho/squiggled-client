@@ -33,7 +33,7 @@
 
     &--auto-selected {
       cursor: auto;
-      background-color: $color-invert-text;
+      // background-color: $color-invert-text;
       & svg path {
         fill: green;
       }

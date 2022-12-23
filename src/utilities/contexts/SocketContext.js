@@ -13,6 +13,7 @@ const SocketProvider = ({ children }) => {
   const [activeCall, setActiveCall] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [photoCaptured, setPhotoCaptured] = useState(false);
+  const [marking, setMarking] = useState(true);
 
   //   //Socket.io states
   const [myUserID, setMyUserID] = useState("");
@@ -204,6 +205,11 @@ const SocketProvider = ({ children }) => {
     socketConnection.current.emit("send message", { message: "Hello" });
   };
 
+  //Toggle marking mode
+  const toggleMarking = () => {
+    if (photoCaptured) setMarking((marking) => !marking);
+  };
+
   //Capture Image
   const handleCaptureImage = () => {
     //Arbitrary delay until component mounted
@@ -297,6 +303,8 @@ const SocketProvider = ({ children }) => {
         handleCreateSession,
         handleJoinSession,
         handleEndSession,
+        marking,
+        toggleMarking
       }}
     >
       {children}
