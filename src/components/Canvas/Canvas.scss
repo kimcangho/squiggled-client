@@ -16,7 +16,7 @@
   }
 
   &--placeholder {
-    background-color: $color-invert-text;
+    background-color: $color-texticon-high;
     background-image: url("../../assets/images/icons/camera-fill.svg");
     background-position: center;
     background-repeat: no-repeat;
@@ -33,7 +33,7 @@
   }
 
   &__draw-stamp {
-    background-color: $color-invert-text;
+    background-color: $color-texticon-high;
     border-radius: 100%;
     padding: 0.125rem;
     width: 1rem;

@@ -6,16 +6,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: $color-text;
+  color: $color-base-black;
 
   width: 100%;
-  background-color: $color-active;
+  background-color: $color-primary-default;
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 5px;
 
   &__phone {
-    background-color: $color-success;
+    background-color: $color-alert-warning;
     border-radius: 100%;
     width: 2.25rem;
     height: 2.25rem;

@@ -29,7 +29,7 @@
       }
     
       &__session {
-        color: $color-invert-text;
+        color: $color-texticon-high;
         width: 100%;
         cursor: grab;
         padding: 0.5rem;
@@ -40,10 +40,10 @@
         align-items: center;
     
         &--create {
-          background-color: $color-success;
+          background-color: $color-alert-success;
         }
         &--end {
-          background-color: $color-error;
+          background-color: $color-alert-error;
         }
       }
       &__call-text {

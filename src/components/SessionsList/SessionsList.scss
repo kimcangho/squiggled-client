@@ -27,7 +27,7 @@
   }
 
   &__title {
-    color: $color-texticon-medium;
+    color: $color-texticon-high;
     padding: 0 0 1rem;
     font-weight: 600;
   }
@@ -38,16 +38,16 @@
     opacity: 50%;
   }
   &__empty-text {
-    color: $color-text;
+    color: $color-texticon-high;
   }
   &__status {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: $color-text;
+    color: $color-texticon-high;
 
     width: 100%;
-    background-color: $color-active;
+    background-color: $color-background-darker;
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 5px;

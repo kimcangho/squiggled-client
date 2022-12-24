@@ -42,7 +42,7 @@
     padding: 1rem;
     gap: 1rem;
     border-radius: 10px;
-    background-color: $color-invert-text;
+    background-color: $color-texticon-high;;
     overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
@@ -57,7 +57,7 @@
   }
 
   &__title {
-    color: $color-text;
+    color: $color-base-black;
   }
 
   &__empty-list {
@@ -66,6 +66,6 @@
     opacity: 50%;
   }
   &__empty-text {
-    color: $color-text;
+    color: $color-base-black;
   }
 }
