@@ -14,10 +14,10 @@ const HomePage = () => {
       <main className="home__main-container">
         <div className="home__core-container">
           <VideoPlayer />
-          {/* <Canvas /> */}
+          <Canvas />
         </div>
         <div className="home__sessions-container">
-          <SessionsList />
+          {/* <SessionsList /> */}
         </div>
       </main>
       <Footer />
