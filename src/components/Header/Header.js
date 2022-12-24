@@ -39,7 +39,7 @@ const Header = () => {
       {/* Logo */}
       <div className="header__container">
         {/* <img className="header__logo" src={quailLogo} alt="Qual Quail Logo" /> */}
-        {/* <h1 className="header__title">{`User: ${myUserID}`}</h1> */}
+        <h1 className="header__title">{`User: ${myUserID}`}</h1>
       </div>
       {/* Open Modal Menu */}
       <div className="header__session-container">

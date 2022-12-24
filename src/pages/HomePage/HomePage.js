@@ -17,7 +17,7 @@ const HomePage = () => {
           <Canvas />
         </div>
         <div className="home__sessions-container">
-          {/* <SessionsList /> */}
+          <SessionsList />
         </div>
       </main>
       <Footer />

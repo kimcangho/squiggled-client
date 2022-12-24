@@ -4,11 +4,6 @@
 
 .sessions-list {
   display: none;
-  background-image: url('../../assets/images/tumbleweed.png');
-  background-size: contain;
-  background-position-x: center;
-  background-position-y: center;
-  background-repeat: no-repeat;
   background-size: 75%;
 
   @include tablet {
@@ -17,7 +12,7 @@
     padding: 1rem;
     align-items: center;
     border-radius: 10px;
-    background-color: $color-invert-text;
+    background-color: $color-surface-light;
     overflow-x: hidden;
     overflow-y: auto;
     width: 20rem;
@@ -32,8 +27,9 @@
   }
 
   &__title {
-    color: $color-text;
+    color: $color-texticon-medium;
     padding: 0 0 1rem;
+    font-weight: 600;
   }
 
   &__empty-list {
