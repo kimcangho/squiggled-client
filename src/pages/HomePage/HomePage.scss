@@ -10,6 +10,7 @@
   background-size: cover;
   background-position: center;
   height: 100vh;
+  padding: 1.5rem;
 
   &__button {
     background-color: $color-active;
@@ -61,78 +62,13 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    
     @include tablet {
       gap: 2.25rem;
     }
   }
 
-  &__canvas-placeholder {
-    background-color: $color-invert-text;
-    background-image: url("../../assets/images/icons/camera-fill.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 75%;
-    opacity: 20%;
-    width: 20rem;
-    height: 15rem;
-    border-radius: 10px;
-    border: 1px solid #888888;
-  }
-
   &__sessions-container {
     height: 32.25rem;
-  }
-
-  &__controls-bar {
-    display: flex;
-    gap: 1rem;
-  }
-
-  &__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 0.5rem;
-
-    position: fixed;
-    transform: translate(-50%, 0%);
-    width: 100%;
-    left: 50%;
-    bottom: 1rem;
-    padding: 0 1rem;
-
-    @include desktop {
-      max-width: 63.75rem;
-      justify-content: center;
-    }
-
-  }
-
-  &__session {
-    color: $color-invert-text;
-    width: 100%;
-    cursor: grab;
-    padding: 0.5rem;
-    border-radius: 20px;
-    height: 2.25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &--create {
-      background-color: $color-success;
-    }
-    &--end {
-      background-color: $color-error;
-    }
-  }
-  &__call-text {
-    font-size: 1.25rem;
-  }
-
-  &__canvas-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
   }
 }

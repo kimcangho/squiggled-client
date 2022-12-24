@@ -1,3 +1,59 @@
 @use "../../styles/globals";
 @use "../../styles/partials/vars" as *;
 @use "../../styles/partials/mixins" as *;
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 0.5rem;
+
+    position: fixed;
+    transform: translate(-50%, 0%);
+    width: 100%;
+    left: 50%;
+    bottom: 1rem;
+    padding: 0 1rem;
+
+    background-color: $color-invert-text;
+
+    @include desktop {
+      max-width: 63.75rem;
+      justify-content: center;
+    }
+
+    &__controls-bar {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+    
+      &__session {
+        color: $color-invert-text;
+        width: 100%;
+        cursor: grab;
+        padding: 0.5rem;
+        border-radius: 20px;
+        height: 2.25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        &--create {
+          background-color: $color-success;
+        }
+        &--end {
+          background-color: $color-error;
+        }
+      }
+      &__call-text {
+        font-size: 1.25rem;
+      }
+    
+      &__canvas-buttons {
+        display: flex;
+        // flex-direction: column;
+        gap: 0.5rem;
+      }
+
+  }

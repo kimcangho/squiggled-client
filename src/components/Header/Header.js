@@ -3,7 +3,6 @@ import "./Header.scss";
 import React, { useContext, useState } from "react";
 import { SocketContext } from "../../utilities/contexts/SocketContext";
 //Assets
-import quailLogo from "../../assets/images/logo/quail.png";
 import joinIcon from "../../assets/images/icons/join-in.svg";
 //Component
 import ModalMenu from "../ModalMenu/ModalMenu";
@@ -39,8 +38,8 @@ const Header = () => {
 
       {/* Logo */}
       <div className="header__container">
-        <img className="header__logo" src={quailLogo} alt="Qual Quail Logo" />
-        <h1 className="header__title">{`User: ${myUserID}`}</h1>
+        {/* <img className="header__logo" src={quailLogo} alt="Qual Quail Logo" /> */}
+        {/* <h1 className="header__title">{`User: ${myUserID}`}</h1> */}
       </div>
       {/* Open Modal Menu */}
       <div className="header__session-container">

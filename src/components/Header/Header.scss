@@ -5,10 +5,13 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 1rem 1rem 0;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  // margin: 1.5rem;
 
-  position: fixed;
+  background-color: $color-invert-text;
+
+  // position: fixed;
   width: 100%;
 
   @include tablet {

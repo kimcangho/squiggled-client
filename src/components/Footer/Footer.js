@@ -33,9 +33,6 @@ const Footer = () => {
     toggleMarking,
   } = useContext(SocketContext);
 
-  //State Variables
-  // const [marking, setMarking] = useState(true);
-
   //Download Image from Canvas
   const handleDownloadImage = async (event) => {
     if (photoCaptured) {
@@ -67,8 +64,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="home__footer">
-      <div className="home__canvas-buttons">
+    <footer className="footer">
+      <div className="footer__canvas-buttons">
         {/* Clear Canvas */}
         <img
           className={`home__button ${
@@ -123,23 +120,23 @@ const Footer = () => {
       </div>
 
       {/* New/End Session Button */}
-      {activeCall ? (
+      {/* {activeCall ? (
         <div
-          className="home__session home__session--end"
+          className="footer__session footer__session--end"
           onClick={() => handleEndSession(sessionID, myUserID, peerID)}
         >
-          <h2 className="home__call-text">End Session</h2>
+          <h2 className="footer__call-text">End Session</h2>
         </div>
       ) : (
         <div
-          className="home__session home__session--create"
+          className="footer__session footer__session--create"
           onClick={() => handleCreateSession(myUserID)}
         >
           <h2 className="home__call-text">New Session</h2>
         </div>
-      )}
+      )} */}
 
-      <div className="home__canvas-buttons">
+      <div className="footer__canvas-buttons">
         {/* Send Button */}
         <img
           className={`home__button ${
