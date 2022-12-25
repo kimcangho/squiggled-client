@@ -120,7 +120,7 @@ const Footer = () => {
       </div>
 
       {/* New/End Session Button */}
-      {/* {activeCall ? (
+      {activeCall ? (
         <div
           className="footer__session footer__session--end"
           onClick={() => handleEndSession(sessionID, myUserID, peerID)}
@@ -134,7 +134,7 @@ const Footer = () => {
         >
           <h2 className="home__call-text">New Session</h2>
         </div>
-      )} */}
+      )}
 
       <div className="footer__canvas-buttons">
         {/* Send Button */}
