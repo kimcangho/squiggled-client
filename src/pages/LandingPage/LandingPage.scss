@@ -1,0 +1,184 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.landing {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include tablet {
+    padding: 2.25rem;
+  }
+
+  @include desktop {
+    width: $desktop-breakpoint;
+    margin: 0 auto;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    gap: 2rem;
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__whiteboard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+  }
+
+  &__video-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-surface-default;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    position: relative;
+
+    @include tablet {
+      width: 50%;
+    }
+  }
+
+  &__canvas-placeholder {
+    display: none;
+
+    @include tablet {
+      display: block;
+      background-color: $color-surface-default;
+      width: 50%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+
+      background-image: url("../../assets/images/icons/screenshot.svg");
+      background-position: center;
+      background-size: 75%;
+      opacity: 20%;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &__user {
+    background-color: $color-twin-purple;
+    width: 52.75%;
+    height: 52.75%;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3.75rem 0;
+
+    @include desktop {
+      width: 19.375rem;
+      height: 19.375rem;
+    }
+  }
+
+  &__user-icon {
+    width: 40%;
+    height: 40%;
+    @include tablet {
+      width: 50%;
+      height: 50%;
+    }
+    @include desktop {
+      width: 9.625rem;
+      height: 9.625rem;
+    }
+  }
+
+  &__username {
+    position: absolute;
+    top: 80%;
+    left: 50% - width;
+    @include tablet {
+      top: 85%;
+    }
+  }
+
+  &__controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include tablet {
+      gap: 1.5rem;
+    }
+  }
+
+  &__tracks {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__button {
+    background-color: $color-border-light;
+    border-radius: 12px;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--disabled {
+      background-color: $color-texticon-high;
+    }
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &__credentials {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &__input {
+    background-color: $color-border-light;
+    color: $color-texticon-high;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    padding: 0.75rem 1rem;
+  }
+  &__join {
+    display: flex;
+    align-items: center;
+    background-color: $color-primary-default;
+    border-radius: 8px;
+    height: 3rem;
+  }
+  &__button-text {
+    font-weight: $font-semibold;
+    padding: 0.75rem 1rem;
+    width: 7.5rem;
+  }
+}

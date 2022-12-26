@@ -11,6 +11,17 @@
 //Global Font
 body {
   font-family: $font-fam, $backup-fonts;
+  background: $color-background-default;
+  color: $color-texticon-high;
+}
+
+h5 {
+  font-size: $font-mobile-h5;
+  font-weight: $font-semibold;
+}
+
+p {
+  font-size: $font-body-2;
 }
 
 //Unordered Lists
