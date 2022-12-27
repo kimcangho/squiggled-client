@@ -12,7 +12,7 @@ import stampIcon from "../../assets/images/icons/focus.svg";
 
 const Canvas = () => {
   //Context Variables
-  const { canvas, canvasContext, photoCaptured, marking } =
+  const { canvas, canvasContext, photoCaptured, marking, sessionID, socketConnection } =
     useContext(SocketContext);
 
   //State variable
@@ -52,6 +52,7 @@ const Canvas = () => {
     if (!isDrawing) return;
     canvasContext.current.closePath();
     setIsDrawing(false);
+    handleSendImage();
   };
 
   //Click to Stamp
@@ -64,6 +65,15 @@ const Canvas = () => {
       canvasContext.current.arc(offsetX, offsetY, 20, 0, 2 * Math.PI);
       canvasContext.current.stroke();
       canvasContext.current.closePath();
+      handleSendImage();
+    }
+  };
+
+  //Send image from canvas
+  const handleSendImage = () => {
+    if (!!sessionID) {
+      const image = canvas.current.toDataURL("image/png");
+      socketConnection.current.emit("send_screenshot", image, sessionID);
     }
   };
 
