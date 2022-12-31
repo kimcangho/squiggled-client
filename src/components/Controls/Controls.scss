@@ -1,0 +1,39 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include tablet {
+    gap: 1.5rem;
+  }
+
+  &__tracks {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__button {
+    background-color: $color-border-light;
+    border-radius: 12px;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--disabled {
+      background-color: $color-texticon-high;
+    }
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}

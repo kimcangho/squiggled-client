@@ -1,0 +1,58 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.video-feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-surface-default;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  position: relative;
+
+  @include tablet {
+    width: 50%;
+  }
+
+  &__user {
+    background-color: $color-twin-purple;
+    width: 52.75%;
+    height: 52.75%;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3.75rem 0;
+
+    @include desktop {
+      width: 19.375rem;
+      height: 19.375rem;
+    }
+  }
+
+  &__user-icon {
+    width: 40%;
+    height: 40%;
+    @include tablet {
+      width: 50%;
+      height: 50%;
+    }
+    @include desktop {
+      width: 9.625rem;
+      height: 9.625rem;
+    }
+  }
+
+  &__username {
+    position: absolute;
+    top: 80%;
+    left: 50% - width;
+    @include tablet {
+      top: 85%;
+    }
+  }
+}

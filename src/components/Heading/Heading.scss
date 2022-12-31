@@ -1,0 +1,10 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}

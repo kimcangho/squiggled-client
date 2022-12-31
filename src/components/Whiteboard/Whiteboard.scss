@@ -1,0 +1,21 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.whiteboard {
+  display: none;
+
+  @include tablet {
+    display: block;
+    background-color: $color-surface-default;
+    width: 50%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+
+    background-image: url("../../assets/images/icons/screenshot.svg");
+    background-position: center;
+    background-size: 75%;
+    opacity: 20%;
+    background-repeat: no-repeat;
+  }
+}
