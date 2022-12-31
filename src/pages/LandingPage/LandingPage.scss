@@ -35,4 +35,10 @@
     align-items: center;
     gap: 2.25rem;
   }
+
+  &__sliding {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }

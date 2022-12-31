@@ -2,7 +2,6 @@
 import "./LandingPage.scss";
 //React Hooks
 import { useState } from "react";
-
 //Components
 import Heading from "../../components/Heading/Heading";
 import VideoFeed from "../../components/VideoFeed/VideoFeed";
@@ -19,10 +18,8 @@ const LandingPage = () => {
   };
 
   return (
-
     <section className="landing">
       <main className="landing__main">
-        
         <Heading />
 
         <div className="landing__container">
@@ -35,12 +32,8 @@ const LandingPage = () => {
           username={username}
           handleUsernameChange={handleUsernameChange}
         />
-
-        <WhiteboardModal />
-
       </main>
     </section>
-
   );
 };
 
