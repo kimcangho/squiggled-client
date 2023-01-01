@@ -1,11 +1,19 @@
 import "./StartSessionForm.scss";
+//React Hooks
+import { useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+const StartSessionForm = ({ username, handleUsernameChange }) => {
+  //Navigation Hook
+  const navigate = useNavigate();
 
-const StartSessionForm = ({username, handleUsernameChange}) => {
+  //To-do: Add navigation path to custom session
+  const handleStartSession = (event) => {
+    event.preventDefault();
+    navigate('/')
+  };
 
   return (
-    <article className="startSessionForm">
+    <form className="startSessionForm">
       <input
         type="text"
         placeholder="Type your name"
@@ -13,10 +21,14 @@ const StartSessionForm = ({username, handleUsernameChange}) => {
         onChange={handleUsernameChange}
         className="startSessionForm__input"
       ></input>
-      <div className="startSessionForm__join">
+      <button
+        className="startSessionForm__join"
+        type="submit"
+        onClick={handleStartSession}
+      >
         <p className="startSessionForm__button-text">New Session</p>
-      </div>
-    </article>
+      </button>
+    </form>
   );
 };
 

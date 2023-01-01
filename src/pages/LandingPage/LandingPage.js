@@ -12,6 +12,7 @@ import StartSessionForm from "../../components/StartSessionForm/StartSessionForm
 
 const LandingPage = () => {
   const [username, setUsername] = useState("");
+  const [isDrawModeStamp, setIsDrawModeStamp] = useState(false);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -24,10 +25,13 @@ const LandingPage = () => {
 
         <div className="landing__container">
           <VideoFeed username={username} />
-          <Whiteboard />
+          <Whiteboard isDrawModeStamp={isDrawModeStamp} />
         </div>
 
-        <Controls />
+        <Controls
+          isDrawModeStamp={isDrawModeStamp}
+          setIsDrawModeStamp={setIsDrawModeStamp}
+        />
         <StartSessionForm
           username={username}
           handleUsernameChange={handleUsernameChange}

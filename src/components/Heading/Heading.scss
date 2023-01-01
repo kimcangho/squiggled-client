@@ -4,7 +4,74 @@
 
 .heading {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   gap: 0.25rem;
+  width: 100%;
+  position: relative;
+
+  &__logo {
+    height: 4rem;
+    width: 4rem;
+    @include tablet {
+      height: 6rem;
+      width: 6rem;
+    }
+  }
+
+  &__prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+
+  &__title {
+    @include tablet {
+      font-size: 2rem;
+    }
+    @include desktop {
+      font-size: 3rem;
+    }
+  }
+
+  &__body {
+    @include tablet {
+      font-size: 1rem;
+    }
+    @include desktop {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__avatar {
+    background-color: $color-twin-purple;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include tablet {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+
+  &__avatar-icon {
+    width: 2rem;
+    height: 2rem;
+    @include tablet {
+      width: 50%;
+      height: 50%;
+    }
+    @include desktop {
+      width: 50%;
+      height: 50%;
+    }
+  }
 }

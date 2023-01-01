@@ -31,6 +31,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: grab;
+
     &:hover {
       border: 4px solid $color-twin-orange;
     }

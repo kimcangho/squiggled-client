@@ -19,13 +19,14 @@
     padding: 0.75rem 1rem;
 
     &:focus {
-     outline: $color-twin-green solid 4px;
+     outline: $color-primary-default solid 4px;
     }
   }
   &__join {
     display: flex;
     align-items: center;
     background-color: $color-primary-default;
+    border: none;
     border-radius: 8px;
     height: 3rem;
     &:hover {
@@ -35,6 +36,7 @@
   }
   &__button-text {
     font-weight: $font-semibold;
+    color: $color-texticon-high;
     padding: 0.75rem 1rem;
     width: 7.5rem;
   }
