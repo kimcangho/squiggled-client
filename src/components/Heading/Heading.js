@@ -1,12 +1,24 @@
 import "./Heading.scss";
+import { useNavigate } from "react-router";
 //Assets
 import squiggledLogo from "../../assets/images/logos/squiggled-logo.svg";
 // import userIcon from "../../assets/images/icons/user.svg";
 
 const Heading = () => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/landing");
+  };
+
   return (
     <div className="heading">
-      <img src={squiggledLogo} alt="Squiggled Logo" className="heading__logo" />
+      <img
+        src={squiggledLogo}
+        alt="Squiggled Logo"
+        className="heading__logo"
+        onClick={handleRedirect}
+      />
       <div className="heading__prompt">
         <h5 className="heading__title">Get Started</h5>
         <p className="heading__body">Setup your audio and video</p>
