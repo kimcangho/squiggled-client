@@ -1,0 +1,79 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.flipcard {
+
+  &__container {
+    height: 500px;
+    width: 300px;
+    perspective: 1000px;
+  }
+
+  &__card {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: 5px solid white;
+    box-shadow: 0px 0px 15px rbga(0, 0, 0, 0.8);
+
+    position: relative;
+    //Enables 3D transform
+    transform-style: preserve-3d;
+    user-select: none;
+    cursor: pointer;
+
+    transition: transform 300ms;
+
+  }
+
+  &__flip-enter {
+    transform: rotateY(180deg);
+  
+    &-active {
+      transform: rotateY(0deg);
+      transition: transform 300ms;
+    }
+  
+    &-done {
+      transform: rotateY(0deg);
+    }
+  }
+  
+  &__flip-exit {
+    transform: rotateY(0deg);
+  
+    &-active {
+      transform: rotateY(180deg);
+      transition: transform 300ms;
+    }
+  
+    &-done {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__side {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    //Hides back of card
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    &--front {
+      background-color: $color-twin-cyan;
+    }
+    &--back {
+      background-color: $color-twin-orange;
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+

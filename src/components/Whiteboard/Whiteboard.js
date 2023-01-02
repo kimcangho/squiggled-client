@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 //Assets
 import drawIcon from "../../assets/images/icons/draw.svg";
 import stampIcon from "../../assets/images/icons/focus.svg";
+//Components
+import FlipIndicator from "../FlipIndicator/FlipIndicator";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 
@@ -88,7 +90,13 @@ const Whiteboard = ({ isDrawModeStamp }) => {
         onClick={handleStamp}
       ></canvas>
 
-      {isDrawModeStamp ? (
+      <FlipIndicator
+        backIndicator={drawIcon}
+        frontIndicator={stampIcon}
+        isDrawModeStamp={isDrawModeStamp}
+      />
+
+      {/* {isDrawModeStamp ? (
         <div className="whiteboard__tool-indicator">
           <img src={stampIcon} alt="Stamp Icon" className="whiteboard__icon" />
         </div>
@@ -96,7 +104,7 @@ const Whiteboard = ({ isDrawModeStamp }) => {
         <div className="whiteboard__tool-indicator">
           <img src={drawIcon} alt="Draw Icon" className="whiteboard__icon" />
         </div>
-      )}
+      )} */}
     </article>
   );
 };

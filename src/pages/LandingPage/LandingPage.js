@@ -9,6 +9,7 @@ import Whiteboard from "../../components/Whiteboard/Whiteboard";
 import WhiteboardModal from "../../components/WhiteboardModal/WhiteboardModal";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
+import FlipCard from "../../components/FlipCard/FlipCard";
 
 const LandingPage = () => {
   const [username, setUsername] = useState("");
@@ -22,16 +23,15 @@ const LandingPage = () => {
     <section className="landing">
       <main className="landing__main">
         <Heading />
-
+        {/* Container */}
         <div className="landing__container">
+          {/* <FlipCard /> */}
+
           <VideoFeed username={username} />
           <Whiteboard isDrawModeStamp={isDrawModeStamp} />
         </div>
 
-        <Controls
-          isDrawModeStamp={isDrawModeStamp}
-          setIsDrawModeStamp={setIsDrawModeStamp}
-        />
+        <Controls setIsDrawModeStamp={setIsDrawModeStamp} />
         <StartSessionForm
           username={username}
           handleUsernameChange={handleUsernameChange}

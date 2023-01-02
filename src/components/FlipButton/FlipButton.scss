@@ -1,0 +1,64 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.flipbutton {
+  &__container {
+    perspective: 1000px;
+  }
+
+  &__card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform-style: preserve-3d;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 300ms;
+  }
+
+  &__flip-enter {
+    transform: rotateY(180deg);
+
+    &-active {
+      transform: rotateY(0deg);
+      transition: transform 300ms;
+    }
+
+    &-done {
+      transform: rotateY(0deg);
+    }
+  }
+
+  &__flip-exit {
+    transform: rotateY(0deg);
+
+    &-active {
+      transform: rotateY(180deg);
+      transition: transform 300ms;
+    }
+
+    &-done {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__side {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    &--front {
+    }
+    &--back {
+      transform: rotateY(180deg);
+    }
+  }
+}

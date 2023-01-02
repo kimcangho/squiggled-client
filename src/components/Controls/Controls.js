@@ -1,6 +1,8 @@
 import "./Controls.scss";
 //React Hooks
 import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import FlipButton from "../FlipButton/FlipButton";
 //Assets
 import micOnIcon from "../../assets/images/icons/mic.svg";
 import micOffIcon from "../../assets/images/icons/mic-off.svg";
@@ -14,7 +16,7 @@ import stampIcon from "../../assets/images/icons/focus.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import canvasIcon from "../../assets/images/icons/artboard.svg";
 
-const Controls = ({ isDrawModeStamp, setIsDrawModeStamp }) => {
+const Controls = ({ setIsDrawModeStamp }) => {
   //State Variables
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
@@ -30,6 +32,7 @@ const Controls = ({ isDrawModeStamp, setIsDrawModeStamp }) => {
 
   //To-do: Toggle Whiteboard - Mobile
   const handleToggleWhiteboard = () => {
+    console.log("Flip it!");
     //Toggles whiteboard in mobile
   };
 
@@ -77,6 +80,8 @@ const Controls = ({ isDrawModeStamp, setIsDrawModeStamp }) => {
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");
     }, 100);
+
+    handleToggleWhiteboard();
   };
 
   return (
@@ -127,7 +132,12 @@ const Controls = ({ isDrawModeStamp, setIsDrawModeStamp }) => {
       <div className="controls__whiteboard">
         {/* Canvas */}
         <div className="controls__button controls__button--mobile-only">
-          <img src={canvasIcon} alt="Canvas Icon" className="controls__icon" />
+          <img
+            src={canvasIcon}
+            alt="Canvas Icon"
+            className="controls__icon"
+            onClick={handleToggleWhiteboard}
+          />
         </div>
         {/* Delete */}
         <div className="controls__button controls__button--tablet-only">
@@ -148,25 +158,13 @@ const Controls = ({ isDrawModeStamp, setIsDrawModeStamp }) => {
           />
         </div>
         {/* Toggle Stamp/Draw */}
-        {isDrawModeStamp ? (
-          <div className="controls__button controls__button--tablet-only">
-            <img
-              src={drawIcon}
-              alt="Draw Icon"
-              className="controls__icon"
-              onClick={handleToggleDrawMode}
-            />
-          </div>
-        ) : (
-          <div className="controls__button controls__button--tablet-only">
-            <img
-              src={stampIcon}
-              alt="Stamp Icon"
-              className="controls__icon"
-              onClick={handleToggleDrawMode}
-            />
-          </div>
-        )}
+
+        <FlipButton
+          frontButton={stampIcon}
+          backButton={drawIcon}
+          handleToggleDrawMode={handleToggleDrawMode}
+        />
+
         {/* Download */}
         <div className="controls__button controls__button--tablet-only">
           <img
