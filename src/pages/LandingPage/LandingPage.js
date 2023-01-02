@@ -6,14 +6,16 @@ import { useState } from "react";
 import Heading from "../../components/Heading/Heading";
 import VideoFeed from "../../components/VideoFeed/VideoFeed";
 import Whiteboard from "../../components/Whiteboard/Whiteboard";
-import WhiteboardModal from "../../components/WhiteboardModal/WhiteboardModal";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
-import FlipCard from "../../components/FlipCard/FlipCard";
-
 const LandingPage = () => {
   const [username, setUsername] = useState("");
-  const [isDrawModeStamp, setIsDrawModeStamp] = useState(false);
+  const [isDrawMode, setIsDrawModeStamp] = useState(false);
+  const [isMobileWhiteboardOn, setIsMobileWhiteboardOn] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(false)
+
+  
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -23,15 +25,16 @@ const LandingPage = () => {
     <section className="landing">
       <main className="landing__main">
         <Heading />
-        {/* Container */}
-        <div className="landing__container">
-          {/* <FlipCard /> */}
 
+        <div className="landing__container">
           <VideoFeed username={username} />
-          <Whiteboard isDrawModeStamp={isDrawModeStamp} />
+          <Whiteboard isDrawMode={isDrawMode} />
         </div>
 
-        <Controls setIsDrawModeStamp={setIsDrawModeStamp} />
+        <Controls
+          setIsDrawModeStamp={setIsDrawModeStamp}
+          setIsMobileWhiteboardOn={setIsMobileWhiteboardOn}
+        />
         <StartSessionForm
           username={username}
           handleUsernameChange={handleUsernameChange}

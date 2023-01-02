@@ -1,15 +1,12 @@
 import "./Whiteboard.scss";
 //React Hooks
 import { useEffect, useState, useRef } from "react";
-//Assets
-import drawIcon from "../../assets/images/icons/draw.svg";
-import stampIcon from "../../assets/images/icons/focus.svg";
 //Components
 import FlipIndicator from "../FlipIndicator/FlipIndicator";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 
-const Whiteboard = ({ isDrawModeStamp }) => {
+const Whiteboard = ({ isDrawMode, isMobile }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState("");
@@ -35,7 +32,7 @@ const Whiteboard = ({ isDrawModeStamp }) => {
   //Stamping Tool
   const handleStamp = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
-    if (isDrawModeStamp) {
+    if (isDrawMode) {
       console.log(offsetX, offsetY);
       myContextRef.current.strokeStyle = strokeColor;
       myContextRef.current.beginPath();
@@ -49,7 +46,7 @@ const Whiteboard = ({ isDrawModeStamp }) => {
   //Drawing Tool
   //Start Drawing - Mouse
   const startDrawing = ({ nativeEvent }) => {
-    if (!isDrawModeStamp) {
+    if (!isDrawMode) {
       const { offsetX, offsetY } = nativeEvent;
       console.log(offsetX, offsetY);
       myContextRef.current.beginPath();
@@ -90,21 +87,7 @@ const Whiteboard = ({ isDrawModeStamp }) => {
         onClick={handleStamp}
       ></canvas>
 
-      <FlipIndicator
-        backIndicator={drawIcon}
-        frontIndicator={stampIcon}
-        isDrawModeStamp={isDrawModeStamp}
-      />
-
-      {/* {isDrawModeStamp ? (
-        <div className="whiteboard__tool-indicator">
-          <img src={stampIcon} alt="Stamp Icon" className="whiteboard__icon" />
-        </div>
-      ) : (
-        <div className="whiteboard__tool-indicator">
-          <img src={drawIcon} alt="Draw Icon" className="whiteboard__icon" />
-        </div>
-      )} */}
+      <FlipIndicator isDrawMode={isDrawMode} />
     </article>
   );
 };

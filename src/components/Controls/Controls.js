@@ -16,7 +16,7 @@ import stampIcon from "../../assets/images/icons/focus.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import canvasIcon from "../../assets/images/icons/artboard.svg";
 
-const Controls = ({ setIsDrawModeStamp }) => {
+const Controls = ({ setIsDrawModeStamp, setIsMobileWhiteboardOn }) => {
   //State Variables
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
@@ -34,6 +34,7 @@ const Controls = ({ setIsDrawModeStamp }) => {
   const handleToggleWhiteboard = () => {
     console.log("Flip it!");
     //Toggles whiteboard in mobile
+    setIsMobileWhiteboardOn(value => !value);
   };
 
   //Clear entire whiteboard
@@ -52,7 +53,7 @@ const Controls = ({ setIsDrawModeStamp }) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
 
-  //To-do: Stamp/Draw Toggle
+  // Stamp/Draw Toggle
   const handleToggleDrawMode = () => {
     setIsDrawModeStamp((isDrawModeStamp) => !isDrawModeStamp);
   };

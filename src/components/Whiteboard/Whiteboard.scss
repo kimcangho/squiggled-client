@@ -10,13 +10,18 @@
   @include tablet {
     display: block;
     background-color: $color-surface-default;
-    width: 50%;
+    width: 100%;
     aspect-ratio: 1;
     border-radius: 16px;
     background-image: url("../../assets/images/icons/artboard-background.svg");
     background-position: center;
     background-size: 75%;
     background-repeat: no-repeat;
+  }
+
+  &--mobile {
+    display: block;
+    position: absolute;
   }
 
   &__layer {
