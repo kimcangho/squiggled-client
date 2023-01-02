@@ -13,9 +13,10 @@ const LandingPage = () => {
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isMobileWhiteboardOn, setIsMobileWhiteboardOn] = useState(false);
 
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
 
-  
+  const [isAudioOn, setIsAudioOn] = useState(false);
+  const [isVideoOn, setIsVideoOn] = useState(false);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -27,13 +28,17 @@ const LandingPage = () => {
         <Heading />
 
         <div className="landing__container">
-          <VideoFeed username={username} />
+          <VideoFeed isVideoOn={isVideoOn} username={username} />
           <Whiteboard isDrawMode={isDrawMode} />
         </div>
 
         <Controls
           setIsDrawModeStamp={setIsDrawModeStamp}
           setIsMobileWhiteboardOn={setIsMobileWhiteboardOn}
+          isAudioOn={isAudioOn}
+          setIsAudioOn={setIsAudioOn}
+          isVideoOn={isVideoOn}
+          setIsVideoOn={setIsVideoOn}
         />
         <StartSessionForm
           username={username}

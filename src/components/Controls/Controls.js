@@ -1,7 +1,5 @@
 import "./Controls.scss";
 //React Hooks
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
 import FlipButton from "../FlipButton/FlipButton";
 //Assets
 import micOnIcon from "../../assets/images/icons/mic.svg";
@@ -16,25 +14,29 @@ import stampIcon from "../../assets/images/icons/focus.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import canvasIcon from "../../assets/images/icons/artboard.svg";
 
-const Controls = ({ setIsDrawModeStamp, setIsMobileWhiteboardOn }) => {
-  //State Variables
-  const [isAudioOn, setIsAudioOn] = useState(false);
-  const [isVideoOn, setIsVideoOn] = useState(false);
+const Controls = ({
+  setIsDrawModeStamp,
+  setIsMobileWhiteboardOn,
+  isAudioOn,
+  setIsAudioOn,
+  isVideoOn,
+  setIsVideoOn,
+}) => {
 
   //Microphone
   const handleAudioToggle = () => {
-    setIsAudioOn((isAudioOn) => !isAudioOn);
+    setIsAudioOn((value) => !value);
   };
   //Camera
   const handleVideoToggle = () => {
-    setIsVideoOn((isAudioOn) => !isAudioOn);
+    setIsVideoOn((value) => !value);
   };
 
   //To-do: Toggle Whiteboard - Mobile
   const handleToggleWhiteboard = () => {
     console.log("Flip it!");
     //Toggles whiteboard in mobile
-    setIsMobileWhiteboardOn(value => !value);
+    setIsMobileWhiteboardOn((value) => !value);
   };
 
   //Clear entire whiteboard
