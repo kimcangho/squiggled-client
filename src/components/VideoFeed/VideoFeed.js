@@ -4,6 +4,7 @@ import { useState } from "react";
 import Webcam from "react-webcam";
 //Assets
 import userIcon from "../../assets/images/icons/user.svg";
+import cameraSwitch from "../../assets/images/icons/camera-switch.svg";
 
 const VideoFeed = ({ isVideoOn, username }) => {
   let viewWidth = "100%";
