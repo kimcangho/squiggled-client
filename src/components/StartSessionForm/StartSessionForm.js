@@ -1,22 +1,18 @@
 import "./StartSessionForm.scss";
 //React Hooks
-import { useContext }  from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { RoomContext} from "../../context/roomContext";
+import { RoomContext } from "../../context/roomContext";
 
 const StartSessionForm = ({ username, handleUsernameChange }) => {
   //Navigation Hook
   const navigate = useNavigate();
 
-  //room context
-  const {ws} = useContext(RoomContext);
-
+  //Peer-to-peer rooms
+  const { ws } = useContext(RoomContext);
   const createRoom = () => {
-    console.log('emitting create-room event to server')
-    ws.emit('create-room');
-  }
-
-  //To-do: Add navigation path to custom session
+    ws.emit("create-room");
+  };
   const handleStartSession = (event) => {
     event.preventDefault();
     createRoom();

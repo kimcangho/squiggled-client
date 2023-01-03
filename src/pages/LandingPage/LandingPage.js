@@ -3,13 +3,14 @@ import "./LandingPage.scss";
 //React Hooks
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { RoomContext } from "../../context/roomContext";
 //Components
 import Heading from "../../components/Heading/Heading";
 import VideoFeed from "../../components/VideoFeed/VideoFeed";
 import Whiteboard from "../../components/Whiteboard/Whiteboard";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
-import { RoomContext } from "../../context/roomContext";
+
 const LandingPage = () => {
   //State Variables
   const [username, setUsername] = useState("");
@@ -21,11 +22,15 @@ const LandingPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws } = useContext(RoomContext);
+  const { ws, me } = useContext(RoomContext);
 
   useEffect(() => {
-    ws.emit("join-room", { roomId: id });
-  }, [id]);
+    //Check for room id and user state
+    if (id && me) {
+      //Join room with roomId and peerId
+      ws.emit("join-room", { roomId: id, peerId: me.id });
+    }
+  }, [id, me, ws]);
 
   //Functions
   const handleUsernameChange = (event) => {
