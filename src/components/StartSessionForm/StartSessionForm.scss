@@ -24,6 +24,7 @@
   }
   &__join {
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: $color-primary-default;
     border: none;
@@ -32,6 +33,15 @@
     &:hover {
       background-color: $color-twin-green;
       cursor: grab;
+    }
+    &--end {
+      background-color: $color-alert-error;
+      width: 100%;
+
+      &:hover {
+        background-color: $color-twin-orange;
+        cursor: grab;
+      }
     }
   }
   &__button-text {

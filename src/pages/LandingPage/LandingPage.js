@@ -112,6 +112,7 @@ const LandingPage = () => {
           username={username}
           handleUsernameChange={handleUsernameChange}
           inRoom={inRoom}
+          setInRoom={setInRoom}
         />
       </main>
     </section>
