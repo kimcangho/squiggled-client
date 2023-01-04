@@ -3,6 +3,7 @@ import "./LandingPage.scss";
 //React Hooks
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import { RoomContext } from "../../context/roomContext";
 //Components
 import Heading from "../../components/Heading/Heading";
@@ -10,6 +11,8 @@ import VideoFeed from "../../components/VideoFeed/VideoFeed";
 import Whiteboard from "../../components/Whiteboard/Whiteboard";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
+//Assets
+import canvasIcon from "../../assets/images/icons/artboard.svg";
 
 const LandingPage = () => {
   //State Variables
@@ -43,12 +46,36 @@ const LandingPage = () => {
         <Heading />
 
         <div className="landing__container">
+          <div className="flip-stream">
+            <div className="flip-stream__container">
+              <CSSTransition
+                in={isMobileWhiteboardOn}
+                timeout={300}
+                classNames="flip-stream__flip"
+              >
+                <div className="flip-stream__card">
+                  <VideoFeed
+                    isVideoOn={isVideoOn}
+                    username={username}
+                    stream={stream}
+                  />
+                  <img
+                    src={canvasIcon}
+                    alt="Canvas Icon"
+                    className="flip-stream__side flip-stream__side--back"
+                  />
+                  <Whiteboard isDrawMode={isDrawMode} isMobile={true} />
+                </div>
+              </CSSTransition>
+            </div>
+          </div>
+
           {/* My Video Feed */}
-            <VideoFeed
-              isVideoOn={isVideoOn}
-              username={username}
-              stream={stream}
-            />
+          {/* <VideoFeed
+            isVideoOn={isVideoOn}
+            username={username}
+            stream={stream}
+          /> */}
           {/* Peer Video Feed */}
           {Object.values(peers).map((peer) => {
             return (
@@ -62,7 +89,7 @@ const LandingPage = () => {
             );
           })}
 
-          <Whiteboard isDrawMode={isDrawMode} />
+          <Whiteboard isDrawMode={isDrawMode} isMobile={false} />
         </div>
 
         <Controls
@@ -73,6 +100,7 @@ const LandingPage = () => {
           isVideoOn={isVideoOn}
           setIsVideoOn={setIsVideoOn}
         />
+
         <StartSessionForm
           username={username}
           handleUsernameChange={handleUsernameChange}

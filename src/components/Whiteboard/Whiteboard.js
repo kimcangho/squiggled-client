@@ -71,7 +71,7 @@ const Whiteboard = ({ isDrawMode, isMobile }) => {
   };
 
   return (
-    <article className="whiteboard">
+    <article className={`whiteboard`}>
       <canvas ref={captureCanvasRef} className="whiteboard__layer"></canvas>
       <canvas
         ref={peerCanvasRef}

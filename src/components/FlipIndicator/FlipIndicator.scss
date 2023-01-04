@@ -27,6 +27,7 @@
     }
   }
 
+  //Animation start at front end at back
   &__flip-enter {
     transform: rotateY(180deg);
 
@@ -39,7 +40,7 @@
       transform: rotateY(0deg);
     }
   }
-
+  //Animation start at back end at front
   &__flip-exit {
     transform: rotateY(0deg);
 
@@ -52,7 +53,7 @@
       transform: rotateY(180deg);
     }
   }
-
+  //Ensure hidden backface visibility
   &__side {
     display: flex;
     justify-content: center;
@@ -63,6 +64,7 @@
 
     &--front {
     }
+    //Start flipped 180deg
     &--back {
       transform: rotateY(180deg);
     }

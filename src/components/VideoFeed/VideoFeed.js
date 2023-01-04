@@ -15,7 +15,7 @@ const VideoFeed = ({ isVideoOn, username, stream }) => {
   });
 
   return (
-    <div className="video-feed">
+    <div className="video-feed flip-stream__side flip-stream__side--front">
       {isVideoOn ? (
         <div className="video-feed__video-container">
           <video
