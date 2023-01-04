@@ -22,7 +22,7 @@ const LandingPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws, me } = useContext(RoomContext);
+  const { ws, me, stream, peers } = useContext(RoomContext);
 
   useEffect(() => {
     //Check for room id and user state
@@ -43,7 +43,25 @@ const LandingPage = () => {
         <Heading />
 
         <div className="landing__container">
-          <VideoFeed isVideoOn={isVideoOn} username={username} />
+          {/* My Video Feed */}
+            <VideoFeed
+              isVideoOn={isVideoOn}
+              username={username}
+              stream={stream}
+            />
+          {/* Peer Video Feed */}
+          {Object.values(peers).map((peer) => {
+            return (
+              <div className="video-feed">
+                <VideoFeed
+                  isVideoOn={isVideoOn}
+                  username="Test"
+                  stream={peer.stream}
+                />
+              </div>
+            );
+          })}
+
           <Whiteboard isDrawMode={isDrawMode} />
         </div>
 

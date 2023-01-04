@@ -1,19 +1,29 @@
 import "./VideoFeed.scss";
-import { useState } from "react";
-//Libraries
-import Webcam from "react-webcam";
+import { useRef, useEffect } from "react";
 //Assets
 import userIcon from "../../assets/images/icons/user.svg";
-import cameraSwitch from "../../assets/images/icons/camera-switch.svg";
 
-const VideoFeed = ({ isVideoOn, username }) => {
+const VideoFeed = ({ isVideoOn, username, stream }) => {
   let viewWidth = "100%";
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  });
 
   return (
     <div className="video-feed">
       {isVideoOn ? (
         <div className="video-feed__video-container">
-          <Webcam className="video-feed__webcam" width={viewWidth} />
+          <video
+            className="video-feed__webcam"
+            ref={videoRef}
+            autoPlay
+            muted={true}
+          />
           <p className="video-feed__overlay">
             {username ? username : "Type your name below!"}
           </p>
