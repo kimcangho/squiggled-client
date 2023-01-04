@@ -13,15 +13,16 @@ import drawIcon from "../../assets/images/icons/draw.svg";
 import stampIcon from "../../assets/images/icons/focus.svg";
 import downloadIcon from "../../assets/images/icons/download-line.svg";
 import canvasIcon from "../../assets/images/icons/artboard.svg";
+import videoIcon from "../../assets/images/icons/video.svg";
 
 const Controls = ({
   setIsDrawModeStamp,
-  setIsMobileWhiteboardOn,
+  setIsWhiteboardMobile,
   isAudioOn,
   setIsAudioOn,
   isVideoOn,
   setIsVideoOn,
-  isMobileView,
+  isWhiteboardMobile,
 }) => {
   //Microphone
   const handleAudioToggle = () => {
@@ -36,7 +37,7 @@ const Controls = ({
   const handleToggleWhiteboard = () => {
     console.log("Flip it!");
     //Toggles whiteboard in mobile
-    setIsMobileWhiteboardOn((value) => !value);
+    setIsWhiteboardMobile((value) => !value);
   };
 
   //Clear entire whiteboard
@@ -76,9 +77,11 @@ const Controls = ({
   //To-do: Screenshot
   const handleCaptureImage = () => {
     //Toggle whiteboard if in mobile breakpoint
-    if (window.innerWidth < 768) handleToggleWhiteboard();
+    if (window.innerWidth < 768 && !isWhiteboardMobile)
+      handleToggleWhiteboard();
 
     //Capture image from video feed
+    console.log("captured");
 
     //Flash/Capture animation
     let videoFeedElt = document.querySelector(".video-feed");
@@ -136,7 +139,7 @@ const Controls = ({
       <div className="controls__whiteboard">
         <FlipButton
           frontButton={canvasIcon}
-          backButton={drawIcon}
+          backButton={videoIcon}
           handleTrigger={handleToggleWhiteboard}
           isMobile={true}
         />

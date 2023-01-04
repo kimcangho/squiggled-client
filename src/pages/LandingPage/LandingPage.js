@@ -18,21 +18,14 @@ const LandingPage = () => {
   //State Variables
   const [username, setUsername] = useState("");
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
-  const [isMobileWhiteboardOn, setIsMobileWhiteboardOn] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(true);
+  const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
+  // const [isMobileView, setIsMobileView] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
 
   //Room parameters
   const { id } = useParams();
   const { ws, me, stream, peers } = useContext(RoomContext);
-
-  useEffect(() => {
-    if (window.innerHeight >= 768) {
-      console.log("windo");
-      setIsMobileView(false);
-    }
-  }, []);
 
   //Join Room Useeffect
   useEffect(() => {
@@ -44,15 +37,10 @@ const LandingPage = () => {
   }, [id, me, ws]);
 
   //Functions
-
   window.onresize = () => {
-    console.log(window.innerHeight, window.innerWidth);
-
-    console.log("resizing...");
-    if (window.innerWidth < 768) {
-      setIsMobileView(true);
-    } else {
-      setIsMobileView(false);
+    console.log("ok");
+    if (window.innerWidth >= 768) {
+      setIsWhiteboardMobile(false);
     }
   };
 
@@ -69,7 +57,7 @@ const LandingPage = () => {
           <div className="flip-stream">
             <div className="flip-stream__container">
               <CSSTransition
-                in={isMobileWhiteboardOn}
+                in={!isWhiteboardMobile}
                 timeout={300}
                 classNames="flip-stream__flip"
               >
@@ -83,6 +71,9 @@ const LandingPage = () => {
                     src={canvasIcon}
                     alt="Canvas Icon"
                     className="flip-stream__side flip-stream__side--back"
+                    onClick={() => {
+                      console.log("ets");
+                    }}
                   />
                   {/* <Whiteboard isDrawMode={isDrawMode} isMobile={true} /> */}
                 </div>
@@ -114,12 +105,12 @@ const LandingPage = () => {
 
         <Controls
           setIsDrawModeStamp={setIsDrawModeStamp}
-          setIsMobileWhiteboardOn={setIsMobileWhiteboardOn}
+          isWhiteboardMobile={isWhiteboardMobile}
+          setIsWhiteboardMobile={setIsWhiteboardMobile}
           isAudioOn={isAudioOn}
           setIsAudioOn={setIsAudioOn}
           isVideoOn={isVideoOn}
           setIsVideoOn={setIsVideoOn}
-          isMobileView={isMobileView}
         />
 
         <StartSessionForm

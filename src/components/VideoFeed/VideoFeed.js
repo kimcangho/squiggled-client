@@ -4,7 +4,6 @@ import { useRef, useEffect } from "react";
 import userIcon from "../../assets/images/icons/user.svg";
 
 const VideoFeed = ({ isVideoOn, username, stream }) => {
-  let viewWidth = "100%";
 
   const videoRef = useRef(null);
 
