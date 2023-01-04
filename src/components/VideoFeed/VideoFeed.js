@@ -23,6 +23,7 @@ const VideoFeed = ({ isVideoOn, username, stream }) => {
             ref={videoRef}
             autoPlay
             muted={true}
+            playsInline
           />
           <p className="video-feed__overlay">
             {username ? username : "Type your name below!"}

@@ -91,8 +91,6 @@ const RoomProvider = ({ children }) => {
     });
   }, [me, stream]);
 
-  console.log({ peers });
-
   return (
     <RoomContext.Provider value={{ ws, me, stream, peers }}>
       {children}
