@@ -1,24 +1,53 @@
 import "./FlipButton.scss";
 //React Libraries
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 
-const FlipButton = ({frontButton, backButton, handleToggleDrawMode}) => {
+const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
+  const [showButtonFront, setShowButtonFront] = useState(true);
 
-    const [showButtonFront, setShowButtonFront] = useState(true);
-
-    const handleButtonFlip = () => {
-        setShowButtonFront(value => !value);
-        handleToggleDrawMode();
+  //Set state
+  useEffect((isMobile) => {
+    if (isMobile) {
+      setShowButtonFront(false);
+    } else {
+      setShowButtonFront(true);
     }
+  }, []);
+
+  const handleButtonFlip = (handleTrigger) => {
+    setShowButtonFront((value) => !value);
+    handleTrigger();
+  };
 
   return (
     <article className="flipbutton">
-      <div className="flipbutton__container controls__button controls__button--tablet-only">
-        <CSSTransition in={showButtonFront} timeout={300} classNames="flipbutton__flip">
-          <div className="flipbutton__card" onClick={handleButtonFlip}>
-            <img src={backButton} alt='Draw Icon' className="flipbutton__side flipbutton__side--back controls__icon" />
-            <img src={frontButton} alt='Stamp Icon' className="flipbutton__side flipbutton__side--front controls__icon" />
+      <div
+        className={`flipbutton__container controls__button ${
+          isMobile
+            ? "controls__button--mobile-only"
+            : "controls__button--tablet-only"
+        }`}
+      >
+        <CSSTransition
+          in={showButtonFront}
+          timeout={300}
+          classNames="flipbutton__flip"
+        >
+          <div
+            className="flipbutton__card"
+            onClick={() => handleButtonFlip(handleTrigger)}
+          >
+            <img
+              src={backButton}
+              alt="Draw Icon"
+              className="flipbutton__side flipbutton__side--back controls__icon"
+            />
+            <img
+              src={frontButton}
+              alt="Stamp Icon"
+              className="flipbutton__side flipbutton__side--front controls__icon"
+            />
           </div>
         </CSSTransition>
       </div>

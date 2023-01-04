@@ -21,8 +21,8 @@ const Controls = ({
   setIsAudioOn,
   isVideoOn,
   setIsVideoOn,
+  isMobileView,
 }) => {
-
   //Microphone
   const handleAudioToggle = () => {
     setIsAudioOn((value) => !value);
@@ -75,6 +75,9 @@ const Controls = ({
 
   //To-do: Screenshot
   const handleCaptureImage = () => {
+    //Toggle whiteboard if in mobile breakpoint
+    if (window.innerWidth < 768) handleToggleWhiteboard();
+
     //Capture image from video feed
 
     //Flash/Capture animation
@@ -83,8 +86,6 @@ const Controls = ({
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");
     }, 100);
-
-    handleToggleWhiteboard();
   };
 
   return (
@@ -133,15 +134,21 @@ const Controls = ({
       </div>
 
       <div className="controls__whiteboard">
+        <FlipButton
+          frontButton={canvasIcon}
+          backButton={drawIcon}
+          handleTrigger={handleToggleWhiteboard}
+          isMobile={true}
+        />
         {/* Canvas */}
-        <div className="controls__button controls__button--mobile-only">
+        {/* <div className="controls__button controls__button--mobile-only">
           <img
             src={canvasIcon}
             alt="Canvas Icon"
             className="controls__icon"
             onClick={handleToggleWhiteboard}
           />
-        </div>
+        </div> */}
         {/* Delete */}
         <div className="controls__button controls__button--tablet-only">
           <img
@@ -160,12 +167,14 @@ const Controls = ({
             onClick={handleEraseWhiteboard}
           />
         </div>
+
         {/* Toggle Stamp/Draw */}
 
         <FlipButton
           frontButton={stampIcon}
           backButton={drawIcon}
-          handleToggleDrawMode={handleToggleDrawMode}
+          handleTrigger={handleToggleDrawMode}
+          isMobile={false}
         />
 
         {/* Download */}

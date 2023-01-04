@@ -19,7 +19,7 @@ const LandingPage = () => {
   const [username, setUsername] = useState("");
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isMobileWhiteboardOn, setIsMobileWhiteboardOn] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
 
@@ -27,6 +27,14 @@ const LandingPage = () => {
   const { id } = useParams();
   const { ws, me, stream, peers } = useContext(RoomContext);
 
+  useEffect(() => {
+    if (window.innerHeight >= 768) {
+      console.log("windo");
+      setIsMobileView(false);
+    }
+  }, []);
+
+  //Join Room Useeffect
   useEffect(() => {
     //Check for room id and user state
     if (id && me) {
@@ -36,6 +44,18 @@ const LandingPage = () => {
   }, [id, me, ws]);
 
   //Functions
+
+  window.onresize = () => {
+    console.log(window.innerHeight, window.innerWidth);
+
+    console.log("resizing...");
+    if (window.innerWidth < 768) {
+      setIsMobileView(true);
+    } else {
+      setIsMobileView(false);
+    }
+  };
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -64,7 +84,7 @@ const LandingPage = () => {
                     alt="Canvas Icon"
                     className="flip-stream__side flip-stream__side--back"
                   />
-                  <Whiteboard isDrawMode={isDrawMode} isMobile={true} />
+                  {/* <Whiteboard isDrawMode={isDrawMode} isMobile={true} /> */}
                 </div>
               </CSSTransition>
             </div>
@@ -99,6 +119,7 @@ const LandingPage = () => {
           setIsAudioOn={setIsAudioOn}
           isVideoOn={isVideoOn}
           setIsVideoOn={setIsVideoOn}
+          isMobileView={isMobileView}
         />
 
         <StartSessionForm
