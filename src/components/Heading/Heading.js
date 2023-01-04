@@ -4,10 +4,11 @@ import { useNavigate } from "react-router";
 import squiggledLogo from "../../assets/images/logos/squiggled-logo.svg";
 // import userIcon from "../../assets/images/icons/user.svg";
 
-const Heading = () => {
+const Heading = ({ inRoom, setInRoom }) => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
+    setInRoom(false);
     navigate("/landing");
   };
 
@@ -20,8 +21,14 @@ const Heading = () => {
         onClick={handleRedirect}
       />
       <div className="heading__prompt">
-        <h5 className="heading__title">Get Started</h5>
-        <p className="heading__body">Setup your audio and video</p>
+        {inRoom ? (
+          <h5 className="heading__title">In a session</h5>
+        ) : (
+          <>
+            <h5 className="heading__title">Get Started</h5>
+            <p className="heading__body">Setup your audio and video</p>
+          </>
+        )}
       </div>
       {/* <div className="heading__avatar">
         <img

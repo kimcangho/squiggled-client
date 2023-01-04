@@ -25,7 +25,7 @@ const LandingPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws, me, stream, peers } = useContext(RoomContext);
+  const { ws, me, stream, peers, inRoom, setInRoom } = useContext(RoomContext);
 
   //Join Room Useeffect
   useEffect(() => {
@@ -51,8 +51,8 @@ const LandingPage = () => {
   return (
     <section className="landing">
       <main className="landing__main">
-        <Heading />
-
+        <Heading inRoom={inRoom} setInRoom={setInRoom} />
+        {/* My Video Feed */}
         <div className="landing__container">
           <div className="flip-stream">
             <div className="flip-stream__container">
@@ -67,28 +67,23 @@ const LandingPage = () => {
                     username={username}
                     stream={stream}
                   />
-                  <img
+                  {/* <img
                     src={canvasIcon}
                     alt="Canvas Icon"
                     className="flip-stream__side flip-stream__side--back"
                     onClick={() => {
                       console.log("ets");
                     }}
-                  />
-                  {/* <Whiteboard isDrawMode={isDrawMode} isMobile={true} /> */}
+                  /> */}
+                  <Whiteboard isDrawMode={isDrawMode} isMobile={true} />
                 </div>
               </CSSTransition>
             </div>
           </div>
 
-          {/* My Video Feed */}
-          {/* <VideoFeed
-            isVideoOn={isVideoOn}
-            username={username}
-            stream={stream}
-          /> */}
           {/* Peer Video Feed */}
           {Object.values(peers).map((peer) => {
+            console.log(peers.participants);
             return (
               <div className="video-feed">
                 <VideoFeed
@@ -116,6 +111,7 @@ const LandingPage = () => {
         <StartSessionForm
           username={username}
           handleUsernameChange={handleUsernameChange}
+          inRoom={inRoom}
         />
       </main>
     </section>

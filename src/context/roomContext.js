@@ -22,10 +22,13 @@ const RoomProvider = ({ children }) => {
   const [me, setMe] = useState(null);
   const [stream, setStream] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
+  
+  const [inRoom, setInRoom] = useState(false);
 
   //Enter Room
   const enterRoom = ({ roomId }) => {
     console.log(`entering room ${roomId}`);
+    setInRoom(true);
     navigate(`/landing-session/${roomId}`);
   };
   //Get Users
@@ -37,6 +40,7 @@ const RoomProvider = ({ children }) => {
   //To-do: Create error page
   const redirectHome = ({ roomId }) => {
     console.log(`${roomId} is full`);
+    setInRoom(false);
     navigate("/error");
   };
 
@@ -92,7 +96,7 @@ const RoomProvider = ({ children }) => {
   }, [me, stream]);
 
   return (
-    <RoomContext.Provider value={{ ws, me, stream, peers }}>
+    <RoomContext.Provider value={{ ws, me, stream, peers, inRoom, setInRoom }}>
       {children}
     </RoomContext.Provider>
   );

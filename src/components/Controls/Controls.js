@@ -137,21 +137,14 @@ const Controls = ({
       </div>
 
       <div className="controls__whiteboard">
+        {/* Canvas/Video in Mobile */}
         <FlipButton
           frontButton={canvasIcon}
           backButton={videoIcon}
           handleTrigger={handleToggleWhiteboard}
           isMobile={true}
         />
-        {/* Canvas */}
-        {/* <div className="controls__button controls__button--mobile-only">
-          <img
-            src={canvasIcon}
-            alt="Canvas Icon"
-            className="controls__icon"
-            onClick={handleToggleWhiteboard}
-          />
-        </div> */}
+
         {/* Delete */}
         <div className="controls__button controls__button--tablet-only">
           <img
@@ -172,7 +165,6 @@ const Controls = ({
         </div>
 
         {/* Toggle Stamp/Draw */}
-
         <FlipButton
           frontButton={stampIcon}
           backButton={drawIcon}

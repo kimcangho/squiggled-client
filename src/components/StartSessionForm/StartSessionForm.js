@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../../context/roomContext";
 
-const StartSessionForm = ({ username, handleUsernameChange }) => {
+const StartSessionForm = ({ username, handleUsernameChange, inRoom }) => {
   //Navigation Hook
   const navigate = useNavigate();
 
@@ -19,23 +19,27 @@ const StartSessionForm = ({ username, handleUsernameChange }) => {
   };
 
   return (
-    <form className="startSessionForm">
-      <input
-        type="text"
-        placeholder="Type your name"
-        value={username}
-        onChange={handleUsernameChange}
-        className="startSessionForm__input"
-      ></input>
-      {/* Create Session Button */}
-      <button
-        className="startSessionForm__join"
-        type="submit"
-        onClick={handleStartSession}
-      >
-        <p className="startSessionForm__button-text">New Session</p>
-      </button>
-    </form>
+    <>
+      {!inRoom && (
+        <form className="startSessionForm">
+          <input
+            type="text"
+            placeholder="Type your name"
+            value={username}
+            onChange={handleUsernameChange}
+            className="startSessionForm__input"
+          ></input>
+          {/* Create Session Button */}
+          <button
+            className="startSessionForm__join"
+            type="submit"
+            onClick={handleStartSession}
+          >
+            <p className="startSessionForm__button-text">New Session</p>
+          </button>
+        </form>
+      )}
+    </>
   );
 };
 

@@ -3,17 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SocketProvider } from "./utilities/contexts/SocketContext";
 //Context
 import { RoomProvider } from "./context/roomContext";
-
+//Pages
 import HomePage from "./pages/HomePage/HomePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import { useEffect } from "react";
 
 const App = () => {
-  // useEffect(() => {
-  //   socketIO(WS);
-  //   console.log(WS);
-  // }, [])
 
   return (
     <BrowserRouter>
