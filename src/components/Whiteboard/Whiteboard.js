@@ -13,15 +13,12 @@ const Whiteboard = ({ isDrawMode, isMobile }) => {
   //useRef variables
   const captureCanvasRef = useRef(null);
   const captureContextRef = useRef(null);
-  const peerCanvasRef = useRef(null);
-  const peerContextRef = useRef(null);
   const myCanvasRef = useRef(null);
   const myContextRef = useRef(null);
 
   //Set Canvas
   useEffect(() => {
     captureContextRef.current = captureCanvasRef.current.getContext("2d");
-    peerContextRef.current = peerCanvasRef.current.getContext("2d");
     myContextRef.current = myCanvasRef.current.getContext("2d");
 
     setStrokeColor(
@@ -78,10 +75,6 @@ const Whiteboard = ({ isDrawMode, isMobile }) => {
       } `}
     >
       <canvas ref={captureCanvasRef} className="whiteboard__layer"></canvas>
-      <canvas
-        ref={peerCanvasRef}
-        className="whiteboard__layer whiteboard__layer--peer"
-      ></canvas>
       <canvas
         ref={myCanvasRef}
         className="whiteboard__layer whiteboard__layer--me"
