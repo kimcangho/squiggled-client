@@ -69,7 +69,6 @@ const Controls = ({
 
   //To-do: Download Image from multiple canvases by putting all on a virtual canvas
   const handleDownloadImage = async () => {
-    
     const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
     let firstCanvas, firstContext, secondCanvas, secondContext; //Declare canvases and contexts
     //Mobile view - canvas 0 and 1
@@ -113,7 +112,7 @@ const Controls = ({
   };
 
   //To-do: Screenshot
-  const handleCaptureImage = () => {
+  const handleCaptureImage = async () => {
     //Check if video is on
     if (!isVideoOn) return;
     //Toggle whiteboard if in mobile breakpoint
@@ -121,11 +120,31 @@ const Controls = ({
       handleToggleWhiteboard();
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
+    console.log(videoFeedElt.videoWidth, videoFeedElt.videoHeight);
+    let videoContainerElt = document.querySelector(
+      ".video-feed__video-container"
+    );
+    console.log(videoContainerElt.offsetWidth);
     const canvases = document.querySelectorAll(".whiteboard__layer");
     const canvasArr = [canvases[0], canvases[2]];
     canvasArr.forEach((canvas) => {
+      console.log(canvas.width, canvas.height);
       let ctx = canvas.getContext("2d");
-      ctx.drawImage(videoFeedElt, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(
+        videoFeedElt,
+        0,
+        0,
+        videoFeedElt.videoWidth,
+        videoFeedElt.videoHeight,
+        // 0,
+        // 0,
+        // videoContainerElt.offsetWidth,
+        // videoContainerElt.offsetHeight,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
     });
     //Flash/Capture animation
     videoFeedElt.classList.add("video-feed--captured");
