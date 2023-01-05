@@ -67,37 +67,26 @@ const Controls = ({
 
   //To-do: Download Image from multiple canvases by putting all on a virtual canvas
   const handleDownloadImage = async () => {
+    //Get canvases
     const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
-    let firstCanvas, firstContext, secondCanvas, secondContext; //Declare canvases and contexts
-    //Mobile view - canvas 0 and 1
-    if (window.innerWidth < 768) {
-      firstCanvas = canvases[0];
-      firstContext = firstCanvas.getContext("2d");
-      secondCanvas = canvases[1];
-      secondContext = secondCanvas.getContext("2d");
-      //Non-mobile view - canvas 2 and 3
-    } else {
-      firstCanvas = canvases[2];
-      firstContext = firstCanvas.getContext("2d");
-      secondCanvas = canvases[3];
-      secondContext = secondCanvas.getContext("2d");
-    }
-    //Combine canvas contexts
+    const captureCanvas = canvases[0];
+    const drawCanvas = canvases[1];
+    //Combine canvas elements
     const virtualCanvas = document.createElement("canvas");
     const virtualContext = virtualCanvas.getContext("2d");
     virtualContext.drawImage(
-      firstCanvas,
+      captureCanvas,
       0,
       0,
-      firstCanvas.width,
-      firstCanvas.height
+      captureCanvas.width,
+      captureCanvas.height
     );
     virtualContext.drawImage(
-      secondCanvas,
+      drawCanvas,
       0,
       0,
-      secondCanvas.width,
-      secondCanvas.height
+      drawCanvas.width,
+      drawCanvas.height
     );
     //Convert to image
     const virtualImage = virtualCanvas.toDataURL("image/png");
@@ -120,33 +109,30 @@ const Controls = ({
 
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
-    // console.log(videoFeedElt.videoWidth, videoFeedElt.videoHeight);
     let videoContainerElt = document.querySelector(
       ".video-feed__video-container"
     );
     // console.log(videoContainerElt.offsetWidth);
     const canvas = document.querySelector(".whiteboard__layer");
-    // const canvasArr = [canvases[0]];
-    // canvasArr.forEach((canvas) => {
-      // console.log(canvas.width, canvas.height);
-      let ctx = canvas.getContext("2d");
-      ctx.drawImage(
-        videoFeedElt,
-        0,
-        0,
-        videoFeedElt.videoWidth,
-        videoFeedElt.videoHeight,
-        // 0,
-        // 0,
-        // videoContainerElt.offsetWidth,
-        // videoContainerElt.offsetHeight,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(
+      videoFeedElt,
+      0,
+      0,
+      videoFeedElt.videoWidth,
+      videoFeedElt.videoHeight,
+      // 0,
+      // 0,
+      // videoContainerElt.offsetWidth,
+      // videoContainerElt.offsetHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
     // });
-    //Flash/Capture animation
+
+    //Shutter Animation
     videoFeedElt.classList.add("video-feed--captured");
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");
