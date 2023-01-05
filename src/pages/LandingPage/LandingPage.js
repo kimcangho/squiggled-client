@@ -11,15 +11,12 @@ import VideoFeed from "../../components/VideoFeed/VideoFeed";
 import Whiteboard from "../../components/Whiteboard/Whiteboard";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
-//Assets
-import canvasIcon from "../../assets/images/icons/artboard.svg";
 
 const LandingPage = () => {
   //State Variables
   const [username, setUsername] = useState("");
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
-  // const [isMobileView, setIsMobileView] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
 
@@ -38,7 +35,6 @@ const LandingPage = () => {
 
   //Functions
   window.onresize = () => {
-    console.log("ok");
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
     }
@@ -52,7 +48,7 @@ const LandingPage = () => {
     <section className="landing">
       <main className="landing__main">
         <Heading inRoom={inRoom} setInRoom={setInRoom} />
-        {/* My Video Feed */}
+        {/* To-do: Set My Video Feed if broadcasting */}
         <div className="landing__container">
           <div className="flip-stream">
             <div className="flip-stream__container">
@@ -67,21 +63,13 @@ const LandingPage = () => {
                     username={username}
                     stream={stream}
                   />
-                  {/* <img
-                    src={canvasIcon}
-                    alt="Canvas Icon"
-                    className="flip-stream__side flip-stream__side--back"
-                    onClick={() => {
-                      console.log("ets");
-                    }}
-                  /> */}
                   <Whiteboard isDrawMode={isDrawMode} isMobile={true} />
                 </div>
               </CSSTransition>
             </div>
           </div>
 
-          {/* Peer Video Feed */}
+          {/* To-do: Set Peer Video Feed if viewing */}
           {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (

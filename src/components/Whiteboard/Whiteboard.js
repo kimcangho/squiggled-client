@@ -73,7 +73,8 @@ const Whiteboard = ({ isDrawMode, isMobile }) => {
   return (
     <article
       className={`whiteboard ${
-        isMobile && "whiteboard--mobile flip-stream__side flip-stream__side--back"
+        isMobile &&
+        "whiteboard--mobile flip-stream__side flip-stream__side--back"
       } `}
     >
       <canvas ref={captureCanvasRef} className="whiteboard__layer"></canvas>

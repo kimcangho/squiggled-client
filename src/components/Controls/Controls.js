@@ -51,8 +51,14 @@ const Controls = ({
 
   //Erase canvas layer
   const handleEraseWhiteboard = () => {
-    let canvas = document.querySelector(".whiteboard__layer--me");
-    let context = canvas.getContext("2d");
+    let canvas;
+    let canvases = document.querySelectorAll(".whiteboard__layer--me");
+    if (window.innerWidth < 768) {
+      canvas = canvases[0]; //Mobile
+    } else {
+      canvas = canvases[1]; //Non-mobile
+    }
+    const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
 
@@ -61,11 +67,17 @@ const Controls = ({
     setIsDrawModeStamp((isDrawModeStamp) => !isDrawModeStamp);
   };
 
-  //To-do: Download Image from multiple canvases
+  //To-do: Download Image from multiple canvases by putting all on a virtual canvas
   const handleDownloadImage = async () => {
-    const image = document
-      .querySelector(".whiteboard__layer--me")
-      .toDataURL("image/png");
+    //Select all canvases
+    let image;
+    const canvases = document.querySelectorAll(".whiteboard__layer--me");
+    if (window.innerWidth < 768) {
+      image = canvases[0].toDataURL("image/png"); //Mobile
+    } else {
+      image = canvases[1].toDataURL("image/png"); //Non-mobile
+    }
+
     const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
     const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
     const link = document.createElement("a");
@@ -146,7 +158,7 @@ const Controls = ({
         />
 
         {/* Delete */}
-        <div className="controls__button controls__button--tablet-only">
+        <div className="controls__button">
           <img
             src={deleteIcon}
             alt="Delete Icon"
@@ -155,7 +167,7 @@ const Controls = ({
           />
         </div>
         {/* Erase */}
-        <div className="controls__button controls__button--tablet-only">
+        <div className="controls__button">
           <img
             src={eraseIcon}
             alt="Erase Icon"
@@ -173,7 +185,7 @@ const Controls = ({
         />
 
         {/* Download */}
-        <div className="controls__button controls__button--tablet-only">
+        <div className="controls__button">
           <img
             src={downloadIcon}
             alt="Download Icon"

@@ -8,11 +8,17 @@ const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
 
   //Set state
   useEffect((isMobile) => {
-    if (isMobile) {
-      setShowButtonFront(false);
-    } else {
-      setShowButtonFront(true);
-    }
+    // if (isMobile) {
+    //   setShowButtonFront(false);
+    // } else {
+    //   setShowButtonFront(true);
+    // }
+    // window.onresize(() => {
+    //   console.log("asdl;kj");
+    //   if (window.innerWidth >= 768) {
+    //     console.log("FLip button to whiteboard");
+    //   }
+    // });
   }, []);
 
   const handleButtonFlip = (handleTrigger) => {
@@ -24,9 +30,7 @@ const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
     <article className="flipbutton">
       <div
         className={`flipbutton__container controls__button ${
-          isMobile
-            ? "controls__button--mobile-only"
-            : "controls__button--tablet-only"
+          isMobile && "controls__button--mobile-only"
         }`}
       >
         <CSSTransition
