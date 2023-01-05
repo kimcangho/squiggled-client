@@ -6,7 +6,7 @@ import FlipIndicator from "../FlipIndicator/FlipIndicator";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 
-const Whiteboard = ({ isDrawMode, isMobile }) => {
+const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState("");
@@ -69,8 +69,8 @@ const Whiteboard = ({ isDrawMode, isMobile }) => {
 
   return (
     <article
-      className={`whiteboard ${
-        isMobile &&
+      className={`whiteboard  ${
+        isMobile && !isMobileView &&
         "whiteboard--mobile flip-stream__side flip-stream__side--back"
       } `}
     >

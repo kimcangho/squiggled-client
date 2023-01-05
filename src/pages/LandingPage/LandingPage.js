@@ -20,6 +20,9 @@ const LandingPage = () => {
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
 
+  //test mobile view
+  const [isMobileView, setIsMobileView] = useState(true);
+
   //Room parameters
   const { id } = useParams();
   const { ws, me, stream, peers, inRoom, setInRoom } = useContext(RoomContext);
@@ -33,10 +36,23 @@ const LandingPage = () => {
     }
   }, [id, me, ws]);
 
+  //Initial window size useeffect
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsMobileView(false);
+      
+    } else {
+      setIsMobileView(true);
+    }
+  }, []);
+
   //Functions
   window.onresize = () => {
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
+      setIsMobileView(true);
+    } else {
+      setIsMobileView(false);
     }
   };
 
@@ -63,7 +79,11 @@ const LandingPage = () => {
                     username={username}
                     stream={stream}
                   />
-                  <Whiteboard isDrawMode={isDrawMode} isMobile={true} />
+                  <Whiteboard
+                    isDrawMode={isDrawMode}
+                    isMobile={true}
+                    isMobileView={isMobileView}
+                  />
                 </div>
               </CSSTransition>
             </div>
@@ -82,8 +102,6 @@ const LandingPage = () => {
               </div>
             );
           })}
-
-          <Whiteboard isDrawMode={isDrawMode} isMobile={false} />
         </div>
 
         <Controls

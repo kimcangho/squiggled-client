@@ -35,8 +35,6 @@ const Controls = ({
 
   //To-do: Toggle Whiteboard - Mobile
   const handleToggleWhiteboard = () => {
-    console.log("Flip it!");
-    //Toggles whiteboard in mobile
     setIsWhiteboardMobile((value) => !value);
   };
 
@@ -116,19 +114,21 @@ const Controls = ({
     //Check if video is on
     if (!isVideoOn) return;
     //Toggle whiteboard if in mobile breakpoint
-    if (window.innerWidth < 768 && !isWhiteboardMobile)
+    if (window.innerWidth < 768 && !isWhiteboardMobile) {
       handleToggleWhiteboard();
+    }
+
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
-    console.log(videoFeedElt.videoWidth, videoFeedElt.videoHeight);
+    // console.log(videoFeedElt.videoWidth, videoFeedElt.videoHeight);
     let videoContainerElt = document.querySelector(
       ".video-feed__video-container"
     );
-    console.log(videoContainerElt.offsetWidth);
-    const canvases = document.querySelectorAll(".whiteboard__layer");
-    const canvasArr = [canvases[0], canvases[2]];
-    canvasArr.forEach((canvas) => {
-      console.log(canvas.width, canvas.height);
+    // console.log(videoContainerElt.offsetWidth);
+    const canvas = document.querySelector(".whiteboard__layer");
+    // const canvasArr = [canvases[0]];
+    // canvasArr.forEach((canvas) => {
+      // console.log(canvas.width, canvas.height);
       let ctx = canvas.getContext("2d");
       ctx.drawImage(
         videoFeedElt,
@@ -145,7 +145,7 @@ const Controls = ({
         canvas.width,
         canvas.height
       );
-    });
+    // });
     //Flash/Capture animation
     videoFeedElt.classList.add("video-feed--captured");
     setTimeout(() => {

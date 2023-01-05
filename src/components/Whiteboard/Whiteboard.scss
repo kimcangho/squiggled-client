@@ -26,13 +26,16 @@
     position: absolute;
   }
 
+  &--test {
+    display: block;
+  }
+
   &__layer {
     border-radius: 16px;
     position: absolute;
     width: 100%;
     height: 100%;
     cursor: crosshair;
-
     &--me {
     }
   }
