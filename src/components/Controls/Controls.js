@@ -69,16 +69,42 @@ const Controls = ({
 
   //To-do: Download Image from multiple canvases by putting all on a virtual canvas
   const handleDownloadImage = async () => {
-    //Select all canvases
-    let image;
-    const canvases = document.querySelectorAll(".whiteboard__layer--me");
+    
+    const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
+    let firstCanvas, firstContext, secondCanvas, secondContext; //Declare canvases and contexts
+    //Mobile view - canvas 0 and 1
     if (window.innerWidth < 768) {
-      image = canvases[0].toDataURL("image/png"); //Mobile
+      firstCanvas = canvases[0];
+      firstContext = firstCanvas.getContext("2d");
+      secondCanvas = canvases[1];
+      secondContext = secondCanvas.getContext("2d");
+      //Non-mobile view - canvas 2 and 3
     } else {
-      image = canvases[1].toDataURL("image/png"); //Non-mobile
+      firstCanvas = canvases[2];
+      firstContext = firstCanvas.getContext("2d");
+      secondCanvas = canvases[3];
+      secondContext = secondCanvas.getContext("2d");
     }
-
-    const blob = await (await fetch(image)).blob(); //Fetch canvas image from URL and convert to blob
+    //Combine canvas contexts
+    const virtualCanvas = document.createElement("canvas");
+    const virtualContext = virtualCanvas.getContext("2d");
+    virtualContext.drawImage(
+      firstCanvas,
+      0,
+      0,
+      firstCanvas.width,
+      firstCanvas.height
+    );
+    virtualContext.drawImage(
+      secondCanvas,
+      0,
+      0,
+      secondCanvas.width,
+      secondCanvas.height
+    );
+    //Convert to image
+    const virtualImage = virtualCanvas.toDataURL("image/png");
+    const blob = await (await fetch(virtualImage)).blob(); //Fetch canvas image from URL and convert to blob
     const blobURL = URL.createObjectURL(blob); //Create URL for Binary Large Object image
     const link = document.createElement("a");
     link.href = blobURL;
@@ -88,15 +114,20 @@ const Controls = ({
 
   //To-do: Screenshot
   const handleCaptureImage = () => {
+    //Check if video is on
+    if (!isVideoOn) return;
     //Toggle whiteboard if in mobile breakpoint
     if (window.innerWidth < 768 && !isWhiteboardMobile)
       handleToggleWhiteboard();
-
     //Capture image from video feed
-    console.log("captured");
-
+    let videoFeedElt = document.querySelector(".video-feed__webcam");
+    const canvases = document.querySelectorAll(".whiteboard__layer");
+    const canvasArr = [canvases[0], canvases[2]];
+    canvasArr.forEach((canvas) => {
+      let ctx = canvas.getContext("2d");
+      ctx.drawImage(videoFeedElt, 0, 0, canvas.width, canvas.height);
+    });
     //Flash/Capture animation
-    let videoFeedElt = document.querySelector(".video-feed");
     videoFeedElt.classList.add("video-feed--captured");
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");

@@ -22,6 +22,8 @@
   &__prompt {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
     align-items: center;
     position: absolute;
     left: 50%;
