@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SocketProvider } from "./utilities/contexts/SocketContext";
+// import { SocketProvider } from "./utilities/contexts/SocketContext";
 //Context
 import { RoomProvider } from "./context/roomContext";
 //Pages
-import HomePage from "./pages/HomePage/HomePage";
+// import HomePage from "./pages/HomePage/HomePage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 
