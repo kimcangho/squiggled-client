@@ -1,3 +1,4 @@
+//Styling
 import "./Whiteboard.scss";
 //React Hooks
 import { useEffect, useState, useRef } from "react";
@@ -41,7 +42,7 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
   };
 
   //Drawing Tool
-  //Start Drawing - Mouse
+  //Start Drawing
   const startDrawing = ({ nativeEvent }) => {
     if (!isDrawMode) {
       const { offsetX, offsetY } = nativeEvent;
@@ -52,7 +53,7 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
       setIsDrawing(true);
     }
   };
-  //While Drawing - Mouse
+  //While Drawing
   const drawing = ({ nativeEvent }) => {
     if (!isDrawing) return;
     myContextRef.current.lineWidth = 5;
@@ -60,7 +61,7 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
     myContextRef.current.lineTo(offsetX, offsetY);
     myContextRef.current.stroke();
   };
-  //Finish Drawing - Mouse
+  //Finish Drawing
   const finishDrawing = () => {
     if (!isDrawing) return;
     myContextRef.current.closePath();
@@ -70,7 +71,8 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
   return (
     <article
       className={`whiteboard  ${
-        isMobile && !isMobileView &&
+        isMobile &&
+        !isMobileView &&
         "whiteboard--mobile flip-stream__side flip-stream__side--back"
       } `}
     >

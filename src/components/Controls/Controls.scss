@@ -53,6 +53,14 @@
       background-color: $color-texticon-high;
     }
 
+    &--offline {
+      cursor: auto;
+      opacity: 0.2;
+      &:hover {
+        border: none;
+      }
+    }
+
     &--mobile-only {
       display: flex;
       @include tablet {

@@ -54,6 +54,16 @@ const LandingPage = () => {
     } else {
       setIsMobileView(false);
     }
+
+    const canvases = document.querySelectorAll('.whiteboard__layer')
+    canvases.forEach(canvas => {
+      console.log(canvas.width);
+      canvas.getContext('2d').width = 300
+      canvas.getContext('2d').height = 300
+      canvas.getContext('2d').scale(2,2);
+    })
+    
+
   };
 
   const handleUsernameChange = (event) => {

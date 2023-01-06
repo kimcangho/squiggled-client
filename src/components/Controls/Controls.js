@@ -1,3 +1,4 @@
+//Styling
 import "./Controls.scss";
 //React Hooks
 import FlipButton from "../FlipButton/FlipButton";
@@ -33,7 +34,6 @@ const Controls = ({
     setIsVideoOn((value) => !value);
   };
 
-  //To-do: Toggle Whiteboard - Mobile
   const handleToggleWhiteboard = () => {
     setIsWhiteboardMobile((value) => !value);
   };
@@ -49,13 +49,7 @@ const Controls = ({
 
   //Erase canvas layer
   const handleEraseWhiteboard = () => {
-    let canvas;
-    let canvases = document.querySelectorAll(".whiteboard__layer--me");
-    if (window.innerWidth < 768) {
-      canvas = canvases[0]; //Mobile
-    } else {
-      canvas = canvases[1]; //Non-mobile
-    }
+    const canvas = document.querySelector(".whiteboard__layer--me");
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
@@ -65,7 +59,7 @@ const Controls = ({
     setIsDrawModeStamp((isDrawModeStamp) => !isDrawModeStamp);
   };
 
-  //To-do: Download Image from multiple canvases by putting all on a virtual canvas
+  //To-do: Resize Downloaded Image
   const handleDownloadImage = async () => {
     //Get canvases
     const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
@@ -98,7 +92,7 @@ const Controls = ({
     link.click();
   };
 
-  //To-do: Screenshot
+  //To-do: Resize Screenshot
   const handleCaptureImage = async () => {
     //Check if video is on
     if (!isVideoOn) return;
@@ -109,9 +103,9 @@ const Controls = ({
 
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
-    let videoContainerElt = document.querySelector(
-      ".video-feed__video-container"
-    );
+    // let videoContainerElt = document.querySelector(
+    //   ".video-feed__video-container"
+    // );
     // console.log(videoContainerElt.offsetWidth);
     const canvas = document.querySelector(".whiteboard__layer");
     let ctx = canvas.getContext("2d");
@@ -230,7 +224,7 @@ const Controls = ({
           />
         </div>
         {/* Capture Screenshot */}
-        <div className="controls__button">
+        <div className={`controls__button ${!isVideoOn && "controls__button--offline"}`}>
           <img
             src={screenshotIcon}
             alt="Screenshot Icon"

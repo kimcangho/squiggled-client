@@ -6,21 +6,6 @@ import { CSSTransition } from "react-transition-group";
 const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
   const [showButtonFront, setShowButtonFront] = useState(true);
 
-  //Set state
-  useEffect((isMobile) => {
-    // if (isMobile) {
-    //   setShowButtonFront(false);
-    // } else {
-    //   setShowButtonFront(true);
-    // }
-    // window.onresize(() => {
-    //   console.log("asdl;kj");
-    //   if (window.innerWidth >= 768) {
-    //     console.log("FLip button to whiteboard");
-    //   }
-    // });
-  }, []);
-
   const handleButtonFlip = (handleTrigger) => {
     setShowButtonFront((value) => !value);
     handleTrigger();
