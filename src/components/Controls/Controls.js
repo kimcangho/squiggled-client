@@ -200,12 +200,23 @@ const Controls = ({
 
       <div className="controls__whiteboard">
         {/* Canvas/Video in Mobile */}
-        <FlipButton
-          frontButton={canvasIcon}
-          backButton={videoIcon}
-          handleTrigger={handleToggleWhiteboard}
-          isMobile={true}
-        />
+        <div className="controls__button controls__button--mobile-only">
+          {isWhiteboardMobile ? (
+            <img
+              src={videoIcon}
+              alt="Canvas Icon"
+              className="controls__icon"
+              onClick={handleToggleWhiteboard}
+            />
+          ) : (
+            <img
+              src={canvasIcon}
+              alt="Canvas Icon"
+              className="controls__icon"
+              onClick={handleToggleWhiteboard}
+            />
+          )}
+        </div>
 
         {/* Delete */}
         <div
