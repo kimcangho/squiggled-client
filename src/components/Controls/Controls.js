@@ -85,6 +85,10 @@ const Controls = ({
     //Combine canvas elements
     const virtualCanvas = document.createElement("canvas");
     const virtualContext = virtualCanvas.getContext("2d");
+    virtualCanvas.width = 480;
+    virtualCanvas.height = 480;
+    // console.log(virtualCanvas.width, virtualCanvas.height);
+    // console.log(virtualContext.width, virtualContext.height);
     virtualContext.drawImage(
       captureCanvas,
       0,
@@ -126,29 +130,33 @@ const Controls = ({
     // console.log(videoContainerElt.offsetWidth);
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
+
+    // console.log(`VideoFeedElt ${videoFeedElt.videoWidth} ${videoFeedElt.videoHeight}`);
+    // console.log(`VideoContainerElt ${videoContainerElt.offsetWidth} ${videoContainerElt.offsetHeight}`);
+    // console.log(`Context ${context.width} ${context.height}`);
+
     context.drawImage(
       videoFeedElt,
-      // 0,
-      // 0,
-      // videoFeedElt.videoWidth,
-      // videoFeedElt.videoHeight,
+      -(videoFeedElt.videoWidth / 6),
+      0,
+      videoFeedElt.videoWidth,
+      videoFeedElt.videoHeight
       // 0,
       // 0,
       // videoContainerElt.offsetWidth,
       // videoContainerElt.offsetHeight,
-      0,
-      0,
-      canvas.width,
-      canvas.height
+      // 0,
+      // 0,
+      // context.width,
+      // context.height
     );
-    // });
 
     //Shutter Animation
     videoFeedElt.classList.add("video-feed--captured");
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");
     }, 100);
-
+    //Reset states
     setScreenshotCaptured(true);
     setIsCaptureLayerActive(true);
   };

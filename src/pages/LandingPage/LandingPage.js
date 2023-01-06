@@ -40,6 +40,7 @@ const LandingPage = () => {
 
   //Initial window size useeffect
   useEffect(() => {
+    resize();
     if (window.innerWidth < 768) {
       setIsMobileView(false);
     } else {
@@ -48,6 +49,28 @@ const LandingPage = () => {
   }, []);
 
   //Functions
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const resize = () => {
+    //Window Resizing
+    const canvases = document.querySelectorAll(".whiteboard__layer");
+    canvases.forEach((canvas) => {
+      // console.log(canvas.width, canvas.height);
+      const context = canvas.getContext("2d");
+      // console.log(context.width, context.height);
+      canvas.width = 480;
+      canvas.height = 480;
+      // console.log(context.width, context.height);
+      context.width = canvas.width;
+      context.height = canvas.height;
+      // canvas.getContext('2d').scale(2,2);
+      // console.log(context.width, context.height);
+    });
+  };
+
   window.onresize = () => {
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
@@ -55,18 +78,6 @@ const LandingPage = () => {
     } else {
       setIsMobileView(false);
     }
-
-    const canvases = document.querySelectorAll(".whiteboard__layer");
-    canvases.forEach((canvas) => {
-      console.log(canvas.width);
-      // canvas.getContext("2d").width = 300;
-      // canvas.getContext("2d").height = 300;
-      // canvas.getContext("2d").scale(2, 2);
-    });
-  };
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
   };
 
   return (
@@ -104,13 +115,13 @@ const LandingPage = () => {
           {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (
-              <div className="video-feed">
-                <VideoFeed
-                  isVideoOn={isVideoOn}
-                  username="Test"
-                  stream={peer.stream}
-                />
-              </div>
+              // <div className="video-feed">
+              <VideoFeed
+                isVideoOn={isVideoOn}
+                username="Test"
+                stream={peer.stream}
+              />
+              // </div>
             );
           })}
         </div>

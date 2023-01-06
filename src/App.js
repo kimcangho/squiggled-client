@@ -13,15 +13,15 @@ const App = () => {
   return (
     <BrowserRouter>
       <RoomProvider>
-        <SocketProvider>
+        {/* <SocketProvider> */}
           <Routes>
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/landing-session/:id" element={<LandingPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/session/:id" element={<HomePage />} />
+            {/* <Route path="/" element={<HomePage />} /> */}
+            {/* <Route path="/session/:id" element={<HomePage />} /> */}
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-        </SocketProvider>
+        {/* </SocketProvider> */}
       </RoomProvider>
     </BrowserRouter>
   );

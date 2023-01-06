@@ -28,7 +28,7 @@ const StartSessionForm = ({
   const handleEndSession = (event) => {
     event.preventDefault();
     setInRoom(false);
-    navigate('/landing')
+    navigate("/landing");
   };
 
   return (
