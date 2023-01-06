@@ -1,3 +1,54 @@
-@use '../../styles/globals';
-@use '../../styles/partials/vars' as *;
-@use '../../styles/partials/mixins' as *;
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.error {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 0 auto;
+    transform: translateY(20vw);
+    @include tablet {
+      transform: translateY(40%);
+    }
+  }
+
+  &__image {
+    width: 15rem;
+    @include tablet {
+      width: 20rem;
+    }
+  }
+  &__text {
+    text-align: center;
+  }
+  &__redirect {
+    width: 100%;
+    @include tablet {
+      width: auto;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-alert-warning;
+    border: none;
+    border-radius: 8px;
+    height: 3rem;
+    &:hover {
+      background-color: $color-twin-green;
+      cursor: grab;
+    }
+  }
+
+  &__button-text {
+    font-weight: $font-semibold;
+    color: $color-surface-dark;
+    padding: 0.75rem 1rem;
+  }
+}
