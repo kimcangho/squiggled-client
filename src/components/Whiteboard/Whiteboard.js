@@ -7,7 +7,13 @@ import FlipIndicator from "../FlipIndicator/FlipIndicator";
 //Utility Functions
 import { randomNumber } from "../../utilities/utilities";
 
-const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
+const Whiteboard = ({
+  isDrawMode,
+  isMobile,
+  isMobileView,
+  setIsCaptureLayerActive,
+  setIsDrawLayerActive,
+}) => {
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState("");
@@ -38,6 +44,8 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
       myContextRef.current.arc(offsetX, offsetY, 10, 0, 2 * Math.PI);
       myContextRef.current.stroke();
       myContextRef.current.closePath();
+      setIsCaptureLayerActive(true);
+      setIsDrawLayerActive(true);
     }
   };
 
@@ -66,6 +74,8 @@ const Whiteboard = ({ isDrawMode, isMobile, isMobileView }) => {
     if (!isDrawing) return;
     myContextRef.current.closePath();
     setIsDrawing(false);
+    setIsCaptureLayerActive(true);
+    setIsDrawLayerActive(true);
   };
 
   return (

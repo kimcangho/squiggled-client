@@ -24,6 +24,12 @@ const Controls = ({
   isVideoOn,
   setIsVideoOn,
   isWhiteboardMobile,
+  isCaptureLayerActive,
+  setIsCaptureLayerActive,
+  setIsDrawLayerActive,
+  isDrawLayerActive,
+  screenshotCaptured,
+  setScreenshotCaptured
 }) => {
   //Microphone
   const handleAudioToggle = () => {
@@ -40,18 +46,28 @@ const Controls = ({
 
   //Clear entire whiteboard
   const handleClearWhiteboard = () => {
+    if (!isCaptureLayerActive && !isDrawLayerActive) return;
+
     let canvasArr = document.querySelectorAll(".whiteboard__layer");
     canvasArr.forEach((layer) => {
       let context = layer.getContext("2d");
       context.clearRect(0, 0, layer.width, layer.height);
     });
+    setIsCaptureLayerActive(false);
+    setIsDrawLayerActive(false);
   };
 
   //Erase canvas layer
   const handleEraseWhiteboard = () => {
+    if (!isDrawLayerActive) return;
+
     const canvas = document.querySelector(".whiteboard__layer--me");
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
+    setIsDrawLayerActive(false);
+    if (!screenshotCaptured) {
+      setIsCaptureLayerActive(false);
+    }
   };
 
   // Stamp/Draw Toggle
@@ -61,6 +77,7 @@ const Controls = ({
 
   //To-do: Resize Downloaded Image
   const handleDownloadImage = async () => {
+    if ((!isCaptureLayerActive && !isDrawLayerActive)) return;
     //Get canvases
     const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
     const captureCanvas = canvases[0];
@@ -131,6 +148,9 @@ const Controls = ({
     setTimeout(() => {
       videoFeedElt.classList.remove("video-feed--captured");
     }, 100);
+
+    setScreenshotCaptured(true);
+    setIsCaptureLayerActive(true);
   };
 
   return (
@@ -188,7 +208,11 @@ const Controls = ({
         />
 
         {/* Delete */}
-        <div className="controls__button">
+        <div
+          className={`controls__button ${
+            !isCaptureLayerActive && "controls__button--offline"
+          }`}
+        >
           <img
             src={deleteIcon}
             alt="Delete Icon"
@@ -197,7 +221,11 @@ const Controls = ({
           />
         </div>
         {/* Erase */}
-        <div className="controls__button">
+        <div
+          className={`controls__button ${
+            !isDrawLayerActive && "controls__button--offline"
+          }`}
+        >
           <img
             src={eraseIcon}
             alt="Erase Icon"
@@ -215,7 +243,12 @@ const Controls = ({
         />
 
         {/* Download */}
-        <div className="controls__button">
+        <div
+          className={`controls__button ${
+            (!isCaptureLayerActive && !isDrawLayerActive) &&
+            "controls__button--offline"
+          }`}
+        >
           <img
             src={downloadIcon}
             alt="Download Icon"
@@ -224,7 +257,11 @@ const Controls = ({
           />
         </div>
         {/* Capture Screenshot */}
-        <div className={`controls__button ${!isVideoOn && "controls__button--offline"}`}>
+        <div
+          className={`controls__button ${
+            !isVideoOn && "controls__button--offline"
+          }`}
+        >
           <img
             src={screenshotIcon}
             alt="Screenshot Icon"

@@ -19,9 +19,11 @@ const LandingPage = () => {
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
   const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
-
-  //test mobile view
   const [isMobileView, setIsMobileView] = useState(true);
+  //Active layers
+  const [isCaptureLayerActive, setIsCaptureLayerActive] = useState(false);
+  const [isDrawLayerActive, setIsDrawLayerActive] = useState(false);
+  const [screenshotCaptured, setScreenshotCaptured] = useState(false);
 
   //Room parameters
   const { id } = useParams();
@@ -40,7 +42,6 @@ const LandingPage = () => {
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsMobileView(false);
-      
     } else {
       setIsMobileView(true);
     }
@@ -55,15 +56,13 @@ const LandingPage = () => {
       setIsMobileView(false);
     }
 
-    const canvases = document.querySelectorAll('.whiteboard__layer')
-    canvases.forEach(canvas => {
+    const canvases = document.querySelectorAll(".whiteboard__layer");
+    canvases.forEach((canvas) => {
       console.log(canvas.width);
-      canvas.getContext('2d').width = 300
-      canvas.getContext('2d').height = 300
-      canvas.getContext('2d').scale(2,2);
-    })
-    
-
+      canvas.getContext("2d").width = 300;
+      canvas.getContext("2d").height = 300;
+      canvas.getContext("2d").scale(2, 2);
+    });
   };
 
   const handleUsernameChange = (event) => {
@@ -93,6 +92,8 @@ const LandingPage = () => {
                     isDrawMode={isDrawMode}
                     isMobile={true}
                     isMobileView={isMobileView}
+                    setIsCaptureLayerActive={setIsCaptureLayerActive}
+                    setIsDrawLayerActive={setIsDrawLayerActive}
                   />
                 </div>
               </CSSTransition>
@@ -122,6 +123,12 @@ const LandingPage = () => {
           setIsAudioOn={setIsAudioOn}
           isVideoOn={isVideoOn}
           setIsVideoOn={setIsVideoOn}
+          isCaptureLayerActive={isCaptureLayerActive}
+          setIsCaptureLayerActive={setIsCaptureLayerActive}
+          setIsDrawLayerActive={setIsDrawLayerActive}
+          isDrawLayerActive={isDrawLayerActive}
+          screenshotCaptured={screenshotCaptured}
+          setScreenshotCaptured={setScreenshotCaptured}
         />
 
         <StartSessionForm
