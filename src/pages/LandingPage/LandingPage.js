@@ -59,9 +59,9 @@ const LandingPage = () => {
     const canvases = document.querySelectorAll(".whiteboard__layer");
     canvases.forEach((canvas) => {
       console.log(canvas.width);
-      canvas.getContext("2d").width = 300;
-      canvas.getContext("2d").height = 300;
-      canvas.getContext("2d").scale(2, 2);
+      // canvas.getContext("2d").width = 300;
+      // canvas.getContext("2d").height = 300;
+      // canvas.getContext("2d").scale(2, 2);
     });
   };
 
@@ -125,8 +125,8 @@ const LandingPage = () => {
           setIsVideoOn={setIsVideoOn}
           isCaptureLayerActive={isCaptureLayerActive}
           setIsCaptureLayerActive={setIsCaptureLayerActive}
-          setIsDrawLayerActive={setIsDrawLayerActive}
           isDrawLayerActive={isDrawLayerActive}
+          setIsDrawLayerActive={setIsDrawLayerActive}
           screenshotCaptured={screenshotCaptured}
           setScreenshotCaptured={setScreenshotCaptured}
         />

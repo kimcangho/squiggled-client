@@ -29,7 +29,7 @@ const Controls = ({
   setIsDrawLayerActive,
   isDrawLayerActive,
   screenshotCaptured,
-  setScreenshotCaptured
+  setScreenshotCaptured,
 }) => {
   //Microphone
   const handleAudioToggle = () => {
@@ -65,7 +65,7 @@ const Controls = ({
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     setIsDrawLayerActive(false);
-    if (!screenshotCaptured) {
+    if (screenshotCaptured && !isCaptureLayerActive) {
       setIsCaptureLayerActive(false);
     }
   };
@@ -77,7 +77,7 @@ const Controls = ({
 
   //To-do: Resize Downloaded Image
   const handleDownloadImage = async () => {
-    if ((!isCaptureLayerActive && !isDrawLayerActive)) return;
+    if (!isCaptureLayerActive && !isDrawLayerActive) return;
     //Get canvases
     const canvases = document.querySelectorAll(".whiteboard__layer"); //Select all canvases
     const captureCanvas = canvases[0];
@@ -125,13 +125,13 @@ const Controls = ({
     // );
     // console.log(videoContainerElt.offsetWidth);
     const canvas = document.querySelector(".whiteboard__layer");
-    let ctx = canvas.getContext("2d");
-    ctx.drawImage(
+    let context = canvas.getContext("2d");
+    context.drawImage(
       videoFeedElt,
-      0,
-      0,
-      videoFeedElt.videoWidth,
-      videoFeedElt.videoHeight,
+      // 0,
+      // 0,
+      // videoFeedElt.videoWidth,
+      // videoFeedElt.videoHeight,
       // 0,
       // 0,
       // videoContainerElt.offsetWidth,
@@ -245,7 +245,8 @@ const Controls = ({
         {/* Download */}
         <div
           className={`controls__button ${
-            (!isCaptureLayerActive && !isDrawLayerActive) &&
+            !isCaptureLayerActive &&
+            !isDrawLayerActive &&
             "controls__button--offline"
           }`}
         >
