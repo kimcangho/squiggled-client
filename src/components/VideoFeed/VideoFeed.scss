@@ -13,6 +13,7 @@
   aspect-ratio: 1;
   border-radius: 16px;
   position: relative;
+  pointer-events: none;
 
   @include tablet {
     width: 100%;
