@@ -15,20 +15,24 @@ const ErrorPage = () => {
   }, [navigate]);
 
   const handleRedirect = () => {
-    navigate("/landing");
+    
+    document.querySelector(".error").classList.add("error--exit");
+    setTimeout(() => {
+      navigate("/");
+    }, 750);
   };
 
   return (
     <main className="error">
       <div className="error__container">
-        <h1 className="error__title">Ope, sorry!</h1>
-        <h2 className="error__text">Looks like we found a 404 error, eh?</h2>
+        <h1 className="error__title">Oopsies!</h1>
+        <p className="error__text">Got caught in the 404 error undertow!</p>
         <img
           className="error__image"
           src={squidIcon}
           alt="Squiggled Error Icon"
         />
-        <h2 className="error__text">Let's get ya back on home now, bud!</h2>
+        <p className="error__text">Let's get ya back on home now, bud!</p>
         <button className="error__button">
           <h2
             className="error__button-text"

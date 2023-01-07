@@ -3,21 +3,31 @@
 @use "../../styles/partials/mixins" as *;
 
 .error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: swimUpIn 0.75s ease-in-out;
+
+  &--exit {
+    animation: swimUpOut 0.75s ease-in-out forwards;
+  }
+
   &__container {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;
     margin: 0 auto;
-    transform: translateY(20vw);
-    @include tablet {
-      transform: translateY(40%);
-    }
   }
 
   &__image {
     width: 15rem;
+    pointer-events: none;
+    animation: float 10s ease-in-out infinite;
     @include tablet {
       width: 20rem;
     }
@@ -36,7 +46,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $color-alert-warning;
+    background-color: $color-twin-orange;
     border: none;
     border-radius: 8px;
     height: 3rem;
@@ -48,7 +58,7 @@
 
   &__button-text {
     font-weight: $font-semibold;
-    color: $color-surface-dark;
+    color: $color-texticon-high;
     padding: 0.75rem 1rem;
   }
 }
