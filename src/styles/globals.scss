@@ -1,5 +1,6 @@
 @use "./partials/vars" as *;
 @use "./partials/mixins" as *;
+@use './partials/animations' as *;
 
 //Border-box, margin and padding resets
 * {

@@ -1,0 +1,53 @@
+//Home Page Logo Animation
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-20px) rotateY(30deg);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+//Session Page Logo Animation
+@keyframes inflate {
+  0% {
+  }
+  50% {
+    transform: rotateY(30deg);
+  }
+  100% {
+  }
+}
+//Page Transition Up From Outside Screen
+@keyframes swimUpIn {
+  0% {
+    opacity: 0;
+    transform: translatey(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translatey(0%);
+  }
+}
+//Page Transition Up To Outside Screen
+@keyframes swimUpOut {
+  0% {
+    opacity: 1;
+    transform: translatey(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translatey(-100%);
+  }
+}
+//Video Feed Screenshot Capture
+@keyframes captureShutter {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
