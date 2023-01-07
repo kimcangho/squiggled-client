@@ -26,31 +26,24 @@
     margin: 0 auto;
   }
 
-  &__title {
-    order: -1;
-    font-size: 4rem;
-    color: $color-texticon-high;
-    align-self: flex-start;
-    margin: 1rem 0;
-  }
-
   &__container {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 16px;
-    background-color: $color-surface-light;
+
     gap: 1.5rem;
     margin: 0 auto;
     padding: 1.5rem;
     width: 100%;
     max-width: $desktop-breakpoint;
 
+    perspective: 10000px;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-
-    // animation: fliptest 10s ease-in-out infinite;
 
     @include tablet {
       width: 80%;
@@ -62,13 +55,46 @@
     }
   }
 
+  &__card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-surface-light;
+    position: relative;
+    transform-style: preserve-3d;
+    user-select: none;
+    transition: transform 300ms;
+    border-radius: 16px;
+  }
+
+  &__side {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    padding: 1.5rem;
+
+    &--back {
+      gap: 2rem;
+      transform: rotateY(180deg);
+    }
+  }
+
   &__logo {
     width: 80%;
     animation: float 10s ease-in-out infinite;
+    pointer-events: none;
 
     @include tablet {
       order: 0;
-      width: 40%;
+      width: 50%;
     }
   }
 
@@ -79,11 +105,10 @@
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
 
     @include tablet {
-      // gap: 2.25rem;
-      margin-bottom: 2.25rem;
+      margin: 2.25rem 0;
     }
   }
 
@@ -104,31 +129,109 @@
     }
 
     &--join {
+      background-color: $color-twin-purple;
+      &:hover {
+        background-color: $color-twin-orange;
+      }
+    }
+
+    &--back {
+      background-color: $color-alert-error;
       &:hover {
         background-color: $color-twin-orange;
       }
     }
 
     @include tablet {
-      width: 15rem;
+      width: 20rem;
       height: 3rem;
     }
   }
 
   &__text {
     color: $color-texticon-high;
+
+    @include tablet {
+      margin: 2.25rem 0;
+    }
+
+    &--back {
+      margin: 1.5rem 0;
+    }
+  }
+
+  &__title {
+    order: -1;
+    font-size: 4rem;
+    color: $color-texticon-high;
+    align-self: flex-start;
+    margin: 1rem 0;
+  }
+
+  &__prompt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__input {
+    background-color: $color-border-light;
+    color: $color-texticon-high;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    padding: 0.75rem 1rem;
+    text-align: center;
+
+    @include tablet {
+      width: 20rem;
+    }
+
+    &:focus {
+      outline: $color-primary-default solid 4px;
+    }
+  }
+
+  //Animation start at front end at back
+  &__flip-enter {
+    transform: rotateY(180deg);
+
+    &-active {
+      transform: rotateY(0deg);
+      transition: transform 300ms;
+    }
+
+    &-done {
+      transform: rotateY(0deg);
+    }
+  }
+  //Animation start at back end at front
+  &__flip-exit {
+    transform: rotateY(0deg);
+
+    &-active {
+      transform: rotateY(180deg);
+      transition: transform 300ms;
+    }
+
+    &-done {
+      transform: rotateY(180deg);
+    }
   }
 }
 
 @keyframes inflate {
   0% {
-    
   }
   50% {
     transform: rotateY(30deg);
   }
   100% {
-    
   }
 }
 
