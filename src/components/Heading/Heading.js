@@ -2,14 +2,17 @@ import "./Heading.scss";
 import { useNavigate } from "react-router";
 //Assets
 import squiggledLogo from "../../assets/images/logos/squiggled-logo.svg";
-// import userIcon from "../../assets/images/icons/user.svg";
+import userIcon from "../../assets/images/icons/user.svg";
 
 const Heading = ({ inRoom, setInRoom }) => {
   const navigate = useNavigate();
 
   const handleRedirect = () => {
     setInRoom(false);
-    navigate("/landing");
+    document.querySelector(".landing").classList.add("landing--exit");
+    setTimeout(() => {
+      navigate("/");
+    }, 750);
   };
 
   return (
@@ -30,13 +33,13 @@ const Heading = ({ inRoom, setInRoom }) => {
           </>
         )}
       </div>
-      {/* <div className="heading__avatar">
+      <div className="heading__avatar">
         <img
           src={userIcon}
           alt="Avatar Icon"
           className="heading__avatar-icon"
         />
-      </div> */}
+      </div>
     </div>
   );
 };

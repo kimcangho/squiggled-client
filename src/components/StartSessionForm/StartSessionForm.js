@@ -19,14 +19,12 @@ const StartSessionForm = ({
     ws.emit("create-room");
   };
 
-  const handleStartSession = (event) => {
-    event.preventDefault();
+  const handleStartSession = () => {
     createRoom();
   };
 
   //To-do: End session function with button
-  const handleEndSession = (event) => {
-    event.preventDefault();
+  const handleEndSession = () => {
     setInRoom(false);
     navigate("/landing");
   };
@@ -43,22 +41,22 @@ const StartSessionForm = ({
             className="startSessionForm__input"
           ></input>
           {/* Create Session Button */}
-          <button
+          <div
             className="startSessionForm__join"
             type="submit"
             onClick={handleStartSession}
           >
             <p className="startSessionForm__button-text">New Session</p>
-          </button>
+          </div>
         </form>
       ) : (
-        <button
+        <div
           className="startSessionForm__join startSessionForm__join--end"
           type="submit"
           onClick={handleEndSession}
         >
           <p className="startSessionForm__button-text">End Session</p>
-        </button>
+        </div>
       )}
     </>
   );

@@ -76,6 +76,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: swimUpIn 0.75s ease-in-out;
+
+  &--exit {
+    animation: swimUpOut 0.75s ease-in-out forwards;
+  }
 
   @include tablet {
     padding: 2.25rem;
