@@ -32,6 +32,8 @@ const Whiteboard = ({
     );
   }, []);
 
+  //To-do: Send drawing/stamps to peer
+
   //Stamping Tool
   const handleStamp = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;

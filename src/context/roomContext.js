@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useReducer } from "react";
+import { createContext, useEffect, useState, useReducer, useRef } from "react";
 import { useNavigate } from "react-router";
 import socketIOClient from "socket.io-client";
 import Peer from "peerjs";
@@ -16,13 +16,13 @@ const ws = socketIOClient(WS);
 const RoomContext = createContext();
 
 const RoomProvider = ({ children }) => {
+
   //Navigation
   const navigate = useNavigate();
   //   User state
   const [me, setMe] = useState(null);
   const [stream, setStream] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
-  
   const [inRoom, setInRoom] = useState(false);
 
   //Enter Room
@@ -37,7 +37,6 @@ const RoomProvider = ({ children }) => {
   };
 
   //Redirect if room is full
-  //To-do: Create error page
   const redirectHome = ({ roomId }) => {
     console.log(`${roomId} is full`);
     setInRoom(false);
@@ -48,6 +47,10 @@ const RoomProvider = ({ children }) => {
     dispatch(removePeerAction(peerId));
   };
 
+  const shutDownStream = () => {
+    setStream(null);
+  };
+
   useEffect(() => {
     //Create peer object for user
     const myId = uuidV4();
@@ -55,16 +58,19 @@ const RoomProvider = ({ children }) => {
     console.log(peer.id);
     setMe(peer);
 
-    try {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-          setStream(stream);
+    const getMedia = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
         });
-    } catch (error) {
-      console.log(error);
-    }
+        setStream(stream);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    getMedia();
     //Websocket Listeners
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -96,7 +102,17 @@ const RoomProvider = ({ children }) => {
   }, [me, stream]);
 
   return (
-    <RoomContext.Provider value={{ ws, me, stream, peers, inRoom, setInRoom }}>
+    <RoomContext.Provider
+      value={{
+        ws,
+        me,
+        stream,
+        peers,
+        inRoom,
+        setInRoom,
+        shutDownStream,
+      }}
+    >
       {children}
     </RoomContext.Provider>
   );

@@ -1,6 +1,9 @@
 //Styling
 import "./Controls.scss";
 //React Hooks
+import { useContext } from "react";
+import { RoomContext } from "../../context/roomContext";
+//Component
 import FlipButton from "../FlipButton/FlipButton";
 //Assets
 import micOnIcon from "../../assets/images/icons/mic.svg";
@@ -31,17 +34,21 @@ const Controls = ({
   screenshotCaptured,
   setScreenshotCaptured,
 }) => {
+  const { shutDownStream } = useContext(RoomContext);
+
   //Microphone
   const handleAudioToggle = () => {
-    setIsAudioOn((value) => !value);
+    if (isVideoOn) setIsAudioOn((value) => !value);
   };
   //Camera
   const handleVideoToggle = () => {
     setIsVideoOn((value) => !value);
+    if (isAudioOn) setIsAudioOn(false);
   };
 
   const handleToggleWhiteboard = () => {
     setIsWhiteboardMobile((value) => !value);
+    // shutDownStream();
   };
 
   //Clear entire whiteboard
@@ -175,7 +182,11 @@ const Controls = ({
             />
           </div>
         ) : (
-          <div className="controls__button controls__button--disabled">
+          <div
+            className={`controls__button controls__button--disabled ${
+              !isVideoOn && "controls__button--offline"
+            }`}
+          >
             <img
               src={micOffIcon}
               alt="Microphone Off Icon"

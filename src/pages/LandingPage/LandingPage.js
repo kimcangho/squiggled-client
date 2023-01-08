@@ -38,7 +38,7 @@ const LandingPage = () => {
     }
   }, [id, me, ws]);
 
-  //Initial window size useeffect
+  //Initial window size useEffect
   useEffect(() => {
     resize();
     if (window.innerWidth < 768) {
@@ -49,7 +49,6 @@ const LandingPage = () => {
   }, []);
 
   //Functions
-
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -94,11 +93,15 @@ const LandingPage = () => {
                 classNames="flip-stream__flip"
               >
                 <div className="flip-stream__card">
+                  {/* Broadcasting Feed from Host */}
                   <VideoFeed
                     isVideoOn={isVideoOn}
+                    isAudioOn={isAudioOn}
                     username={username}
                     stream={stream}
                   />
+                  {/* Viewer Feed from Host */}
+                  {/* Shared Whiteboard */}
                   <Whiteboard
                     isDrawMode={isDrawMode}
                     isMobile={true}
@@ -112,7 +115,7 @@ const LandingPage = () => {
           </div>
 
           {/* To-do: Set Peer Video Feed if viewing */}
-          {Object.values(peers).map((peer) => {
+          {/* {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (
               // <div className="video-feed">
@@ -123,7 +126,7 @@ const LandingPage = () => {
               />
               // </div>
             );
-          })}
+          })} */}
         </div>
 
         <Controls

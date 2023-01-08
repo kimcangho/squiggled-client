@@ -15,12 +15,14 @@ const StartSessionForm = ({
 
   //Peer-to-peer rooms
   const { ws } = useContext(RoomContext);
-  const createRoom = () => {
-    ws.emit("create-room");
+  const createRoom = (name) => {
+    console.log('my name again is ' + name);
+    ws.emit("create-room", name); //Sends name to server by emitting create-room event
   };
 
-  const handleStartSession = () => {
-    createRoom();
+  const handleStartSession = (name) => {
+    createRoom(name);
+    console.log('my name is ' + name);
   };
 
   //To-do: End session function with button
@@ -44,7 +46,7 @@ const StartSessionForm = ({
           <div
             className="startSessionForm__join"
             type="submit"
-            onClick={handleStartSession}
+            onClick={() => handleStartSession(username)}
           >
             <p className="startSessionForm__button-text">New Session</p>
           </div>
