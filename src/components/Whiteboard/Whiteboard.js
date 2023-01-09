@@ -14,7 +14,7 @@ const Whiteboard = ({
   isMobileView,
   setIsDrawLayerActive,
 }) => {
-  const { handleSendWhiteboard } = useContext(RoomContext);
+  const { ws, roomId } = useContext(RoomContext);
 
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
@@ -34,6 +34,15 @@ const Whiteboard = ({
       `rgb(${randomNumber(255)}, ${randomNumber(255)}, ${randomNumber(255)})`
     );
   }, []);
+
+  //Send Whiteboard to peer
+  const handleSendWhiteboard = () => {
+    if (roomId) {
+      const canvas = document.querySelector(".whiteboard__layer--me");
+      const sketchedImage = canvas.toDataURL("image/png");
+      ws.emit("send-whiteboard", roomId, sketchedImage);
+    }
+  };
 
   //Stamping Tool
   const handleStamp = ({ nativeEvent }) => {

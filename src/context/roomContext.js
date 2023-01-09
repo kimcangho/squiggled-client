@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useReducer, useRef } from "react";
+import { createContext, useEffect, useState, useReducer } from "react";
 import { useNavigate } from "react-router";
 import socketIOClient from "socket.io-client";
 import Peer from "peerjs";
@@ -18,12 +18,11 @@ const RoomContext = createContext();
 const RoomProvider = ({ children }) => {
   //Navigation
   const navigate = useNavigate();
-  //   User state
+  //State
   const [me, setMe] = useState(null);
   const [stream, setStream] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
   const [inRoom, setInRoom] = useState(false);
-  //Room Id
   const [roomId, setRoomId] = useState(false);
 
   //Enter Room
@@ -51,16 +50,6 @@ const RoomProvider = ({ children }) => {
     setRoomId(null);
   };
 
-  const handleSendWhiteboard = () => {
-    if (roomId) {
-      const canvas = document.querySelector(".whiteboard__layer--me");
-      const sketchedImage = canvas.toDataURL("image/png");
-      ws.emit("send-whiteboard", roomId, sketchedImage);
-    } else {
-      console.log("nah");
-    }
-  };
-
   useEffect(() => {
     //Create peer object for user
     const myId = uuidV4();
@@ -68,6 +57,7 @@ const RoomProvider = ({ children }) => {
     console.log(peer.id);
     setMe(peer);
 
+    //Get Video Stream
     const getMedia = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -79,8 +69,8 @@ const RoomProvider = ({ children }) => {
         console.log(error);
       }
     };
-
     getMedia();
+
     //Websocket Listeners
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -120,8 +110,7 @@ const RoomProvider = ({ children }) => {
         peers,
         inRoom,
         setInRoom,
-        roomId,
-        handleSendWhiteboard
+        roomId
       }}
     >
       {children}
