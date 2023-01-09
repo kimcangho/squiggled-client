@@ -5,7 +5,7 @@ import { useRef, useEffect } from "react";
 //Assets
 import userIcon from "../../assets/images/icons/user.svg";
 
-const VideoFeed = ({ isVideoOn, isAudioOn, username, stream }) => {
+const VideoFeed = ({ isVideoOn, isAudioOn, myUsername, stream }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const VideoFeed = ({ isVideoOn, isAudioOn, username, stream }) => {
             playsInline
           />
           <p className="video-feed__overlay">
-            {username ? username : "Type your name below!"}
+            {myUsername ? myUsername : "Type your name below!"}
           </p>
         </div>
       ) : (
@@ -39,7 +39,7 @@ const VideoFeed = ({ isVideoOn, isAudioOn, username, stream }) => {
             />
           </div>
           <p className="video-feed__username">
-            {username ? username : "Type your name below!"}
+            {myUsername ? myUsername : "Type your name below!"}
           </p>
         </>
       )}

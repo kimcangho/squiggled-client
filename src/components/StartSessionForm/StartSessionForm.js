@@ -30,7 +30,7 @@ const StartSessionForm = ({
   const handleEndSession = () => {
     setInRoom(false);
     navigate("/setup");
-
+    console.log('Emptying room ' + roomId);
     ws.emit("empty-room", roomId);
   };
 

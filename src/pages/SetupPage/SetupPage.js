@@ -27,7 +27,16 @@ const SetupPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws, me, myUsername, setMyUsername, stream, peers, inRoom, setInRoom } = useContext(RoomContext);
+  const {
+    ws,
+    me,
+    myUsername,
+    setMyUsername,
+    stream,
+    peers,
+    inRoom,
+    setInRoom,
+  } = useContext(RoomContext);
 
   //Join Room Useeffect
   useEffect(() => {
@@ -100,7 +109,7 @@ const SetupPage = () => {
                   <VideoFeed
                     isVideoOn={isVideoOn}
                     isAudioOn={isAudioOn}
-                    username={myUsername}
+                    myUsername={myUsername}
                     stream={stream}
                   />
                   {/* Viewer Feed from Host */}
@@ -118,7 +127,7 @@ const SetupPage = () => {
           </div>
 
           {/* To-do: Set Peer Video Feed if viewing */}
-          {/* {Object.values(peers).map((peer) => {
+          {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (
             
@@ -130,7 +139,7 @@ const SetupPage = () => {
               />
               </div>
             );
-          })} */}
+          })}
         </div>
 
         <Controls

@@ -21,6 +21,7 @@ const RoomProvider = ({ children }) => {
   //State
   const [me, setMe] = useState(null);
   const [myUsername, setMyUsername] = useState('');
+  const [peerUsername, setPeerUsername] = useState('');
   const [stream, setStream] = useState(null);
   const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState(null);
@@ -53,6 +54,14 @@ const RoomProvider = ({ children }) => {
     navigate('/setup')
   };
 
+  //Empty Room
+  const emptyRoom = () => {
+    setInRoom(false);
+    setRoomId(null);
+    console.log('ALl users out!');
+    navigate('/setup');
+  }
+
   useEffect(() => {
     //Create peer object for user
     const myId = uuidV4();
@@ -72,6 +81,7 @@ const RoomProvider = ({ children }) => {
         console.log(error);
       }
     };
+
     getMedia();
 
     //Websocket Listeners
@@ -79,6 +89,7 @@ const RoomProvider = ({ children }) => {
     ws.on("get-users", getUsers);
     ws.on("room-full", redirectHome);
     ws.on("user-disconnected", removePeer);
+    ws.on('empty-room', emptyRoom)
 
   }, []);
 
