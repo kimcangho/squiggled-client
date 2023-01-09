@@ -31,9 +31,12 @@ const LandingPage = () => {
 
   //Join Room Useeffect
   useEffect(() => {
+    console.log(id);
     //Check for room id and user state
     if (id && me) {
       //Join room with roomId and peerId
+      console.log("joining room " + id);
+      setInRoom(true);
       ws.emit("join-room", { roomId: id, peerId: me.id });
     }
   }, [id, me, ws]);
@@ -118,13 +121,14 @@ const LandingPage = () => {
           {/* {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (
-              // <div className="video-feed">
+            
+              <div className="video-feed">
               <VideoFeed
                 isVideoOn={isVideoOn}
                 username="Test"
                 stream={peer.stream}
               />
-              // </div>
+              </div>
             );
           })} */}
         </div>

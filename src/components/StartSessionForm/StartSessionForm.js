@@ -14,7 +14,8 @@ const StartSessionForm = ({
   const navigate = useNavigate();
 
   //Peer-to-peer rooms
-  const { ws } = useContext(RoomContext);
+  const { ws, roomId } = useContext(RoomContext);
+
   const createRoom = (name) => {
     console.log('my name again is ' + name);
     ws.emit("create-room", name); //Sends name to server by emitting create-room event
@@ -29,6 +30,8 @@ const StartSessionForm = ({
   const handleEndSession = () => {
     setInRoom(false);
     navigate("/landing");
+
+    ws.emit('empty-room', roomId);
   };
 
   return (

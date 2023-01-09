@@ -23,13 +23,13 @@ const RoomProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
   const [inRoom, setInRoom] = useState(false);
-  const [roomId, setRoomId] = useState(false);
+  const [roomId, setRoomId] = useState(null);
 
   //Enter Room
   const enterRoom = ({ roomId }) => {
-    console.log(`entering room ${roomId}`);
     setInRoom(true);
     setRoomId(roomId);
+    console.log('ROom Id is ' + roomId)
     navigate(`/landing-session/${roomId}`);
   };
   //Get Users
@@ -41,13 +41,15 @@ const RoomProvider = ({ children }) => {
   const redirectHome = ({ roomId }) => {
     console.log(`${roomId} is full`);
     setInRoom(false);
-    setRoomId(false);
+    setRoomId(null);
     navigate("/error");
   };
 
   const removePeer = ({ peerId }) => {
     dispatch(removePeerAction(peerId));
+    setInRoom(false);
     setRoomId(null);
+    navigate('/landing')
   };
 
   useEffect(() => {
@@ -76,6 +78,7 @@ const RoomProvider = ({ children }) => {
     ws.on("get-users", getUsers);
     ws.on("room-full", redirectHome);
     ws.on("user-disconnected", removePeer);
+
   }, []);
 
   useEffect(() => {
@@ -83,7 +86,8 @@ const RoomProvider = ({ children }) => {
     if (!me || !stream) return;
 
     //User joined room listener where you initiate call
-    ws.on("user-joined", ({ peerId }) => {
+    ws.on("user-joined", ({ peerId, roomId }) => {
+      console.log(roomId);
       //Create call for every new joined user
       const call = me.call(peerId, stream); //Call user with peerId and pass our stream
       call.on("stream", (peerStream) => {

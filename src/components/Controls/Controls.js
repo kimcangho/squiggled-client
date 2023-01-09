@@ -186,6 +186,7 @@ const Controls = ({
       const drawnImage = canvas.toDataURL("image/png");
       ws.emit("send-screenshot", roomId, drawnImage);
     } else {
+      console.log(roomId);
       console.log("nah");
     }
 

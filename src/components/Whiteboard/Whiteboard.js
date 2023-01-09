@@ -14,6 +14,8 @@ const Whiteboard = ({
   isMobileView,
   setIsDrawLayerActive,
 }) => {
+
+  //Room Context
   const { ws, roomId } = useContext(RoomContext);
 
   //State variable
