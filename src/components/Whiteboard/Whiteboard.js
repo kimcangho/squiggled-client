@@ -1,7 +1,8 @@
 //Styling
 import "./Whiteboard.scss";
 //React Hooks
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import { RoomContext } from "../../context/roomContext";
 //Components
 import FlipIndicator from "../FlipIndicator/FlipIndicator";
 //Utility Functions
@@ -13,6 +14,8 @@ const Whiteboard = ({
   isMobileView,
   setIsDrawLayerActive,
 }) => {
+  const { handleSendWhiteboard } = useContext(RoomContext);
+
   //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState("");
@@ -32,8 +35,6 @@ const Whiteboard = ({
     );
   }, []);
 
-  //To-do: Send drawing/stamps to peer
-
   //Stamping Tool
   const handleStamp = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
@@ -46,6 +47,7 @@ const Whiteboard = ({
       myContextRef.current.stroke();
       myContextRef.current.closePath();
       setIsDrawLayerActive(true);
+      handleSendWhiteboard();
     }
   };
 
@@ -75,6 +77,7 @@ const Whiteboard = ({
     myContextRef.current.closePath();
     setIsDrawing(false);
     setIsDrawLayerActive(true);
+    handleSendWhiteboard();
   };
 
   return (

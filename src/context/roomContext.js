@@ -16,7 +16,6 @@ const ws = socketIOClient(WS);
 const RoomContext = createContext();
 
 const RoomProvider = ({ children }) => {
-
   //Navigation
   const navigate = useNavigate();
   //   User state
@@ -24,11 +23,14 @@ const RoomProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
   const [inRoom, setInRoom] = useState(false);
+  //Room Id
+  const [roomId, setRoomId] = useState(false);
 
   //Enter Room
   const enterRoom = ({ roomId }) => {
     console.log(`entering room ${roomId}`);
     setInRoom(true);
+    setRoomId(roomId);
     navigate(`/landing-session/${roomId}`);
   };
   //Get Users
@@ -40,15 +42,23 @@ const RoomProvider = ({ children }) => {
   const redirectHome = ({ roomId }) => {
     console.log(`${roomId} is full`);
     setInRoom(false);
+    setRoomId(false);
     navigate("/error");
   };
 
   const removePeer = ({ peerId }) => {
     dispatch(removePeerAction(peerId));
+    setRoomId(null);
   };
 
-  const shutDownStream = () => {
-    setStream(null);
+  const handleSendWhiteboard = () => {
+    if (roomId) {
+      const canvas = document.querySelector(".whiteboard__layer--me");
+      const sketchedImage = canvas.toDataURL("image/png");
+      ws.emit("send-whiteboard", roomId, sketchedImage);
+    } else {
+      console.log("nah");
+    }
   };
 
   useEffect(() => {
@@ -110,7 +120,8 @@ const RoomProvider = ({ children }) => {
         peers,
         inRoom,
         setInRoom,
-        shutDownStream,
+        roomId,
+        handleSendWhiteboard
       }}
     >
       {children}

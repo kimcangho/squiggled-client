@@ -34,7 +34,40 @@ const Controls = ({
   screenshotCaptured,
   setScreenshotCaptured,
 }) => {
-  const { shutDownStream } = useContext(RoomContext);
+  const { ws, roomId } = useContext(RoomContext);
+
+  //Receive screenshot
+  const transmitScreenshot = (data) => {
+    let newImg = new Image();
+    newImg.addEventListener(
+      "load",
+      () => {
+        const canvas = document.querySelector(".whiteboard__layer");
+        let context = canvas.getContext("2d");
+        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
+      },
+      false
+    );
+    newImg.src = data;
+
+    setIsCaptureLayerActive(true);
+  };
+  //Receive whiteboard
+  const transmitWhiteboard = (data) => {
+    let newImg = new Image();
+    newImg.addEventListener(
+      "load",
+      () => {
+        const canvas = document.querySelector(".whiteboard__layer--me");
+        let context = canvas.getContext("2d");
+        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
+      },
+      false
+    );
+    newImg.src = data;
+
+    setIsDrawLayerActive(true);
+  }
 
   //Microphone
   const handleAudioToggle = () => {
@@ -48,7 +81,6 @@ const Controls = ({
 
   const handleToggleWhiteboard = () => {
     setIsWhiteboardMobile((value) => !value);
-    // shutDownStream();
   };
 
   //Clear entire whiteboard
@@ -62,6 +94,11 @@ const Controls = ({
     });
     setIsCaptureLayerActive(false);
     setIsDrawLayerActive(false);
+
+    if (roomId) {
+      console.log("clearing in room " + roomId);
+      ws.emit("send-clear", roomId);
+    }
   };
 
   //Erase canvas layer
@@ -74,6 +111,9 @@ const Controls = ({
     setIsDrawLayerActive(false);
     if (screenshotCaptured && !isCaptureLayerActive) {
       setIsCaptureLayerActive(false);
+    }
+    if (roomId) {
+      ws.emit("send-erase", roomId);
     }
   };
 
@@ -94,8 +134,6 @@ const Controls = ({
     const virtualContext = virtualCanvas.getContext("2d");
     virtualCanvas.width = 480;
     virtualCanvas.height = 480;
-    // console.log(virtualCanvas.width, virtualCanvas.height);
-    // console.log(virtualContext.width, virtualContext.height);
     virtualContext.drawImage(
       captureCanvas,
       0,
@@ -131,16 +169,8 @@ const Controls = ({
 
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
-    // let videoContainerElt = document.querySelector(
-    //   ".video-feed__video-container"
-    // );
-    // console.log(videoContainerElt.offsetWidth);
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
-
-    // console.log(`VideoFeedElt ${videoFeedElt.videoWidth} ${videoFeedElt.videoHeight}`);
-    // console.log(`VideoContainerElt ${videoContainerElt.offsetWidth} ${videoContainerElt.offsetHeight}`);
-    // console.log(`Context ${context.width} ${context.height}`);
 
     context.drawImage(
       videoFeedElt,
@@ -148,15 +178,16 @@ const Controls = ({
       0,
       videoFeedElt.videoWidth,
       videoFeedElt.videoHeight
-      // 0,
-      // 0,
-      // videoContainerElt.offsetWidth,
-      // videoContainerElt.offsetHeight,
-      // 0,
-      // 0,
-      // context.width,
-      // context.height
     );
+
+    //Emit event to peer
+    if (roomId) {
+      console.log(roomId);
+      const drawnImage = canvas.toDataURL("image/png");
+      ws.emit("send-screenshot", roomId, drawnImage);
+    } else {
+      console.log("nah");
+    }
 
     //Shutter Animation
     videoFeedElt.classList.add("video-feed--captured");
@@ -167,6 +198,18 @@ const Controls = ({
     setScreenshotCaptured(true);
     setIsCaptureLayerActive(true);
   };
+
+  //Socket Listeners
+  ws.on("transmit-erase", () => {
+    console.log("erasing");
+    handleEraseWhiteboard();
+  });
+  ws.on("transmit-clear", () => {
+    console.log("clearing");
+    handleClearWhiteboard();
+  });
+  ws.on("transmit-screenshot", transmitScreenshot);
+  ws.on("transmit-whiteboard", transmitWhiteboard);
 
   return (
     <article className="controls">
