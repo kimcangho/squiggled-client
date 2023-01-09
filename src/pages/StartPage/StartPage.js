@@ -1,12 +1,21 @@
+//Styling
 import "./StartPage.scss";
-import React, { useState } from "react";
+//React Hooks
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+//Context
+import { RoomContext } from "../../context/roomContext";
+//Asset
 import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
 
 const StartPage = () => {
+
+  //Context
+  const { myUsername, setMyUsername } = useContext(RoomContext);
+
+  //States
   const [flipped, setFlipped] = useState(false);
-  const [peerName, setPeerName] = useState("");
   const [roomName, setRoomName] = useState("");
 
   const navigate = useNavigate();
@@ -27,8 +36,9 @@ const StartPage = () => {
     setFlipped((value) => !value);
   };
 
-  const handlePeerNameChange = (event) => {
-    setPeerName(event.target.value);
+  const handleUsernameChange = (event) => {
+    setMyUsername(event.target.value);
+    console.log(myUsername, event.target.value);
   };
 
   const handleRoomNameChange = (event) => {
@@ -70,8 +80,8 @@ const StartPage = () => {
                 <input
                   type="text"
                   placeholder="Type your name"
-                  value={peerName}
-                  onChange={handlePeerNameChange}
+                  value={myUsername}
+                  onChange={handleUsernameChange}
                   className="start__input"
                 ></input>
                 <p className="start__body">Enter room name to join</p>

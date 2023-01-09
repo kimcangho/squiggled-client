@@ -20,10 +20,11 @@ const RoomProvider = ({ children }) => {
   const navigate = useNavigate();
   //State
   const [me, setMe] = useState(null);
+  const [myUsername, setMyUsername] = useState('');
   const [stream, setStream] = useState(null);
-  const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
   const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState(null);
+  const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
 
   //Enter Room
   const enterRoom = ({ roomId }) => {
@@ -110,6 +111,8 @@ const RoomProvider = ({ children }) => {
       value={{
         ws,
         me,
+        myUsername, 
+        setMyUsername,
         stream,
         peers,
         inRoom,

@@ -202,11 +202,9 @@ const Controls = ({
 
   //Socket Listeners
   ws.on("transmit-erase", () => {
-    console.log("erasing");
     handleEraseWhiteboard();
   });
   ws.on("transmit-clear", () => {
-    console.log("clearing");
     handleClearWhiteboard();
   });
   ws.on("transmit-screenshot", transmitScreenshot);

@@ -4,6 +4,7 @@ import "./SetupPage.scss";
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+//Context
 import { RoomContext } from "../../context/roomContext";
 //Components
 import Heading from "../../components/Heading/Heading";
@@ -14,7 +15,6 @@ import StartSessionForm from "../../components/StartSessionForm/StartSessionForm
 
 const SetupPage = () => {
   //State Variables
-  const [username, setUsername] = useState("");
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
   const [isAudioOn, setIsAudioOn] = useState(false);
@@ -27,7 +27,7 @@ const SetupPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws, me, stream, peers, inRoom, setInRoom } = useContext(RoomContext);
+  const { ws, me, myUsername, setMyUsername, stream, peers, inRoom, setInRoom } = useContext(RoomContext);
 
   //Join Room Useeffect
   useEffect(() => {
@@ -53,7 +53,7 @@ const SetupPage = () => {
 
   //Functions
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setMyUsername(event.target.value);
   };
 
   const resize = () => {
@@ -100,7 +100,7 @@ const SetupPage = () => {
                   <VideoFeed
                     isVideoOn={isVideoOn}
                     isAudioOn={isAudioOn}
-                    username={username}
+                    username={myUsername}
                     stream={stream}
                   />
                   {/* Viewer Feed from Host */}
@@ -125,7 +125,7 @@ const SetupPage = () => {
               <div className="video-feed">
               <VideoFeed
                 isVideoOn={isVideoOn}
-                username="Test"
+                myUsername="Test"
                 stream={peer.stream}
               />
               </div>
@@ -150,7 +150,7 @@ const SetupPage = () => {
         />
 
         <StartSessionForm
-          username={username}
+          myUsername={myUsername}
           handleUsernameChange={handleUsernameChange}
           inRoom={inRoom}
           setInRoom={setInRoom}

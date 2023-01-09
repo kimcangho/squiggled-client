@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../../context/roomContext";
 
 const StartSessionForm = ({
-  username,
+  myUsername,
   handleUsernameChange,
   inRoom,
   setInRoom,
@@ -41,7 +41,7 @@ const StartSessionForm = ({
           <input
             type="text"
             placeholder="Type your name"
-            value={username}
+            value={myUsername}
             onChange={handleUsernameChange}
             className="startSessionForm__input"
           ></input>
@@ -49,7 +49,7 @@ const StartSessionForm = ({
           <div
             className="startSessionForm__join"
             type="submit"
-            onClick={() => handleStartSession(username)}
+            onClick={() => handleStartSession(myUsername)}
           >
             <p className="startSessionForm__button-text">New Session</p>
           </div>
