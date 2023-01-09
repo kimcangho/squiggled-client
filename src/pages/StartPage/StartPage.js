@@ -11,14 +11,19 @@ const StartPage = () => {
 
   const navigate = useNavigate();
 
-  const handleSetupSession = () => {
+  const handleStartSession = () => {
     document.querySelector(".start").classList.add("start--exit");
     setTimeout(() => {
-      navigate("/landing");
+      navigate("/setup");
     }, 750);
   };
 
   const handleJoinSession = () => {
+    console.log(roomName);
+    navigate(`/session/${roomName}`)
+  }
+
+  const handleToggleJoin = () => {
     setFlipped((value) => !value);
   };
 
@@ -43,13 +48,13 @@ const StartPage = () => {
                 alt="Squiggled Logo"
               />
               <div className="start__panel">
-                <div className="start__button" onClick={handleSetupSession}>
+                <div className="start__button" onClick={handleStartSession}>
                   <h2 className="start__text">Start</h2>
                 </div>
 
                 <div
                   className="start__button start__button--join"
-                  onClick={handleJoinSession}
+                  onClick={handleToggleJoin}
                 >
                   <h2 className="start__text">Join</h2>
                 </div>
@@ -78,14 +83,14 @@ const StartPage = () => {
                   className="start__input"
                 ></input>
                 <div className="start__panel">
-                  <div className="start__button" onClick={handleSetupSession}>
-                    <h2 className="start__text">Get Started</h2>
+                  <div className="start__button" onClick={handleJoinSession}>
+                    <h2 className="start__text">Join Session</h2>
                   </div>
                   <div
                     className="start__button start__button--back"
-                    onClick={handleJoinSession}
+                    onClick={handleToggleJoin}
                   >
-                    <h2 className="start__text">Go Back Out</h2>
+                    <h2 className="start__text">Back to Home</h2>
                   </div>
                 </div>
               </form>

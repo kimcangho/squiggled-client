@@ -9,7 +9,7 @@ const Heading = ({ inRoom, setInRoom }) => {
 
   const handleRedirect = () => {
     setInRoom(false);
-    document.querySelector(".landing").classList.add("landing--exit");
+    document.querySelector(".setup").classList.add("setup--exit");
     setTimeout(() => {
       navigate("/");
     }, 750);

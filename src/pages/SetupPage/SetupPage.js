@@ -1,5 +1,5 @@
 //Styling
-import "./LandingPage.scss";
+import "./SetupPage.scss";
 //React Hooks
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -12,7 +12,7 @@ import Whiteboard from "../../components/Whiteboard/Whiteboard";
 import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
 
-const LandingPage = () => {
+const SetupPage = () => {
   //State Variables
   const [username, setUsername] = useState("");
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
@@ -83,11 +83,11 @@ const LandingPage = () => {
   };
 
   return (
-    <section className="landing">
-      <main className="landing__main">
+    <section className="setup">
+      <main className="setup__main">
         <Heading inRoom={inRoom} setInRoom={setInRoom} />
         {/* To-do: Set My Video Feed if broadcasting */}
-        <div className="landing__container">
+        <div className="setup__container">
           <div className="flip-stream">
             <div className="flip-stream__container">
               <CSSTransition
@@ -160,4 +160,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default SetupPage;

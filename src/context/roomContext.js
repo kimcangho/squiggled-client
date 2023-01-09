@@ -30,7 +30,7 @@ const RoomProvider = ({ children }) => {
     setInRoom(true);
     setRoomId(roomId);
     console.log('ROom Id is ' + roomId)
-    navigate(`/landing-session/${roomId}`);
+    navigate(`/session/${roomId}`);
   };
   //Get Users
   const getUsers = ({ participants }) => {
@@ -49,7 +49,7 @@ const RoomProvider = ({ children }) => {
     dispatch(removePeerAction(peerId));
     setInRoom(false);
     setRoomId(null);
-    navigate('/landing')
+    navigate('/setup')
   };
 
   useEffect(() => {

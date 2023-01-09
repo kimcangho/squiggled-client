@@ -17,21 +17,21 @@ const StartSessionForm = ({
   const { ws, roomId } = useContext(RoomContext);
 
   const createRoom = (name) => {
-    console.log('my name again is ' + name);
+    console.log("my name again is " + name);
     ws.emit("create-room", name); //Sends name to server by emitting create-room event
   };
 
   const handleStartSession = (name) => {
     createRoom(name);
-    console.log('my name is ' + name);
+    console.log("my name is " + name);
   };
 
   //To-do: End session function with button
   const handleEndSession = () => {
     setInRoom(false);
-    navigate("/landing");
+    navigate("/setup");
 
-    ws.emit('empty-room', roomId);
+    ws.emit("empty-room", roomId);
   };
 
   return (
