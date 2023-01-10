@@ -10,10 +10,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  animation: swimUpIn 0.75s ease-in-out;
+  animation: swimUpIn 0.25s ease-in-out;
 
   &--exit {
-    animation: swimUpOut 0.75s ease-in-out forwards;
+    animation: swimUpOut 0.25s ease-in-out forwards;
   }
 
   @include tablet {
@@ -81,9 +81,18 @@
     backface-visibility: hidden;
     padding: 1.5rem;
 
+    &--front {
+      animation: swimUpIn 0.25s ease-in-out;
+    }
+
     &--back {
       gap: 2rem;
-      transform: rotateY(180deg);
+      animation: swimUpIn 0.25s ease-in-out;
+      // transform: rotateY(180deg);
+    }
+
+    &--exit {
+      animation: swimUpOut 0.25s ease-in-out forwards;
     }
   }
 

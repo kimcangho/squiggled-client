@@ -34,7 +34,7 @@ const StartPage = () => {
     document.querySelector(".start").classList.add("start--exit");
     setTimeout(() => {
       navigate("/setup");
-    }, 750);
+    }, 500);
   };
 
   const handleJoinSession = () => {
@@ -82,7 +82,7 @@ const StartPage = () => {
               </div>
             </div>
           ) : (
-            <div className="start__side ">
+            <div className="start__side start__side--back">
               <form className="start__prompt">
                 <h5 className="start__text start__text--back">
                   Join right in!

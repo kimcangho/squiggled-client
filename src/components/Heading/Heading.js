@@ -19,7 +19,7 @@ const Heading = ({ inRoom, setInRoom }) => {
     document.querySelector(".setup").classList.add("setup--exit");
     setTimeout(() => {
       navigate("/");
-    }, 750);
+    }, 500);
   };
 
   const handleCopyClipboard = async () => {
