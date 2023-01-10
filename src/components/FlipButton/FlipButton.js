@@ -1,6 +1,6 @@
 import "./FlipButton.scss";
 //React Libraries
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
 const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {

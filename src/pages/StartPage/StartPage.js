@@ -3,7 +3,7 @@ import "./StartPage.scss";
 //React Hooks
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
+// import { CSSTransition } from "react-transition-group";
 //Context
 import { RoomContext } from "../../context/roomContext";
 //Asset
@@ -28,7 +28,7 @@ const StartPage = () => {
       setFlipped(true);
       setRoomName(id);
     }
-  }, []);
+  }, [id]);
 
   const handleStartSession = () => {
     document.querySelector(".start").classList.add("start--exit");

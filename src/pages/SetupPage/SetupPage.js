@@ -33,7 +33,7 @@ const SetupPage = () => {
     myUsername,
     setMyUsername,
     stream,
-    peers,
+    // peers,
     inRoom,
     setInRoom,
   } = useContext(RoomContext);
@@ -48,7 +48,7 @@ const SetupPage = () => {
       setInRoom(true);
       ws.emit("join-room", { roomId: id, peerId: me.id });
     }
-  }, [id, me, ws]);
+  }, [id, me, ws, setInRoom]);
 
   //Initial window size useEffect
   useEffect(() => {

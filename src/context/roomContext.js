@@ -22,7 +22,7 @@ const RoomProvider = ({ children }) => {
   //State
   const [me, setMe] = useState(null);
   const [myUsername, setMyUsername] = useState("");
-  const [peerUsername, setPeerUsername] = useState("");
+  // const [peerUsername, setPeerUsername] = useState("");
   const [stream, setStream] = useState(null);
   const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState(null);
