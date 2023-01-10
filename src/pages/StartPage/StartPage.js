@@ -1,8 +1,8 @@
 //Styling
 import "./StartPage.scss";
 //React Hooks
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 //Context
 import { RoomContext } from "../../context/roomContext";
@@ -10,15 +10,25 @@ import { RoomContext } from "../../context/roomContext";
 import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
 
 const StartPage = () => {
-
   //Context
   const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
+
+  //UseParams
+  const { id } = useParams();
 
   //States
   const [flipped, setFlipped] = useState(false);
   const [roomName, setRoomName] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      setRoomName(false);
+      setFlipped(true);
+      setRoomName(id);
+    }
+  }, []);
 
   const handleStartSession = () => {
     document.querySelector(".start").classList.add("start--exit");
@@ -30,8 +40,8 @@ const StartPage = () => {
   const handleJoinSession = () => {
     console.log(roomName);
     setRoomId(roomName);
-    navigate(`/session/${roomName}`)
-  }
+    navigate(`/session/${roomName}`);
+  };
 
   const handleToggleJoin = () => {
     setFlipped((value) => !value);
@@ -49,9 +59,9 @@ const StartPage = () => {
   return (
     <main className="start">
       <div className="start__container">
-        <CSSTransition in={flipped} timeout={300} classNames="start__flip">
-          <div className="start__card">
-            {/* Front Side */}
+        {/* <CSSTransition in={flipped} timeout={300} classNames="start__flip"> */}
+        <div className="start__card">
+          {!flipped ? (
             <div className="start__side start__side--front">
               <img
                 className="start__logo"
@@ -71,8 +81,8 @@ const StartPage = () => {
                 </div>
               </div>
             </div>
-            {/* Back Side */}
-            <div className="start__side start__side--back">
+          ) : (
+            <div className="start__side ">
               <form className="start__prompt">
                 <h5 className="start__text start__text--back">
                   Join right in!
@@ -106,8 +116,12 @@ const StartPage = () => {
                 </div>
               </form>
             </div>
-          </div>
-        </CSSTransition>
+          )}
+          {/* Front Side */}
+
+          {/* Back Side */}
+        </div>
+        {/* </CSSTransition> */}
       </div>
     </main>
   );

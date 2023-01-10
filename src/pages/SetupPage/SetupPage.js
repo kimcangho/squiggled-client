@@ -127,7 +127,7 @@ const SetupPage = () => {
           </div>
 
           {/* To-do: Set Peer Video Feed if viewing */}
-          {Object.values(peers).map((peer) => {
+          {/* {Object.values(peers).map((peer) => {
             console.log(peers.participants);
             return (
             
@@ -139,7 +139,7 @@ const SetupPage = () => {
               />
               </div>
             );
-          })}
+          })} */}
         </div>
 
         <Controls

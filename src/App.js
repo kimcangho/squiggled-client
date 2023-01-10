@@ -13,6 +13,7 @@ const App = () => {
       <RoomProvider>
         <Routes>
           <Route path="/" element={<StartPage />} />
+          <Route path="/:id" element={<StartPage />} />
           <Route path="/setup" element={<SetupPage />} />
           <Route path="/session/:id" element={<SetupPage />} />
           <Route path="*" element={<ErrorPage />} />

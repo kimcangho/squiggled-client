@@ -9,13 +9,12 @@ const StartSessionForm = ({
   handleUsernameChange,
   inRoom,
   setInRoom,
-  setRoomId
 }) => {
   //Navigation Hook
   const navigate = useNavigate();
 
   //Peer-to-peer rooms
-  const { ws, roomId } = useContext(RoomContext);
+  const { ws, roomId, setRoomId } = useContext(RoomContext);
 
   const createRoom = (name) => {
     console.log("my name again is " + name);
@@ -32,7 +31,7 @@ const StartSessionForm = ({
     setInRoom(false);
     setRoomId(null);
     navigate("/setup");
-    console.log('Emptying room ' + roomId);
+    console.log("Emptying room " + roomId);
     ws.emit("empty-room", roomId);
   };
 
