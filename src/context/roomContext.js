@@ -20,8 +20,8 @@ const RoomProvider = ({ children }) => {
   const navigate = useNavigate();
   //State
   const [me, setMe] = useState(null);
-  const [myUsername, setMyUsername] = useState('');
-  const [peerUsername, setPeerUsername] = useState('');
+  const [myUsername, setMyUsername] = useState("");
+  const [peerUsername, setPeerUsername] = useState("");
   const [stream, setStream] = useState(null);
   const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState(null);
@@ -31,7 +31,7 @@ const RoomProvider = ({ children }) => {
   const enterRoom = ({ roomId }) => {
     setInRoom(true);
     setRoomId(roomId);
-    console.log('ROom Id is ' + roomId)
+    console.log("ROom Id is " + roomId);
     navigate(`/session/${roomId}`);
   };
   //Get Users
@@ -51,16 +51,16 @@ const RoomProvider = ({ children }) => {
     dispatch(removePeerAction(peerId));
     setInRoom(false);
     setRoomId(null);
-    navigate('/setup')
+    navigate("/setup");
   };
 
   //Empty Room
   const emptyRoom = () => {
     setInRoom(false);
     setRoomId(null);
-    console.log('ALl users out!');
-    navigate('/setup');
-  }
+    console.log("ALl users out!");
+    navigate("/setup");
+  };
 
   useEffect(() => {
     //Create peer object for user
@@ -89,8 +89,7 @@ const RoomProvider = ({ children }) => {
     ws.on("get-users", getUsers);
     ws.on("room-full", redirectHome);
     ws.on("user-disconnected", removePeer);
-    ws.on('empty-room', emptyRoom)
-
+    ws.on("empty-room", emptyRoom);
   }, []);
 
   useEffect(() => {
@@ -122,13 +121,14 @@ const RoomProvider = ({ children }) => {
       value={{
         ws,
         me,
-        myUsername, 
+        myUsername,
         setMyUsername,
         stream,
         peers,
         inRoom,
         setInRoom,
-        roomId
+        roomId,
+        setRoomId,
       }}
     >
       {children}

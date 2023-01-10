@@ -12,7 +12,7 @@ import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
 const StartPage = () => {
 
   //Context
-  const { myUsername, setMyUsername } = useContext(RoomContext);
+  const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
 
   //States
   const [flipped, setFlipped] = useState(false);
@@ -29,6 +29,7 @@ const StartPage = () => {
 
   const handleJoinSession = () => {
     console.log(roomName);
+    setRoomId(roomName);
     navigate(`/session/${roomName}`)
   }
 

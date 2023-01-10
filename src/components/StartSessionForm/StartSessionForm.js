@@ -9,6 +9,7 @@ const StartSessionForm = ({
   handleUsernameChange,
   inRoom,
   setInRoom,
+  setRoomId
 }) => {
   //Navigation Hook
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const StartSessionForm = ({
   //To-do: End session function with button
   const handleEndSession = () => {
     setInRoom(false);
+    setRoomId(null);
     navigate("/setup");
     console.log('Emptying room ' + roomId);
     ws.emit("empty-room", roomId);
