@@ -7,8 +7,8 @@ import { peersReducer } from "./peerReducer";
 import { addPeerAction, removePeerAction } from "./peerActions";
 
 //Server URL
-// const WS = "http://localhost:8000/";
-const WS="https://squiggled-server.herokuapp.com/";
+const WS = "http://localhost:8000/";
+// const WS="https://squiggled-server.herokuapp.com/";
 
 //Web Signaling server
 const ws = socketIOClient(WS);
@@ -70,20 +70,15 @@ const RoomProvider = ({ children }) => {
     console.log(peer.id);
     setMe(peer);
 
-    //Get Video Stream
-    const getMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
-        setStream(stream);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    getMedia();
+    //Get devices
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      console.log(devices);
+      const videoDevices = devices.filter(device => {
+        return device.kind === 'videoinput'
+      })
+      videoDevices.forEach(device => console.log(device.deviceId));
+    })
 
     //Websocket Listeners
     ws.on("room-created", enterRoom);
@@ -125,6 +120,7 @@ const RoomProvider = ({ children }) => {
         myUsername,
         setMyUsername,
         stream,
+        setStream,
         peers,
         inRoom,
         setInRoom,

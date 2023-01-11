@@ -34,7 +34,7 @@ const Controls = ({
   screenshotCaptured,
   setScreenshotCaptured,
 }) => {
-  const { ws, roomId } = useContext(RoomContext);
+  const { ws, roomId, stream, setStream } = useContext(RoomContext);
 
   //Receive screenshot
   const transmitScreenshot = (data) => {
@@ -67,7 +67,7 @@ const Controls = ({
     newImg.src = data;
 
     setIsDrawLayerActive(true);
-  }
+  };
 
   //Microphone
   const handleAudioToggle = () => {
@@ -75,6 +75,30 @@ const Controls = ({
   };
   //Camera
   const handleVideoToggle = () => {
+    if (!isVideoOn) {
+      // Get Video Stream
+      const getMedia = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+          // console.log(stream.getTracks());
+          setStream(stream);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      getMedia();
+    } else {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        console.log(track);
+        track.stop();
+      });
+    }
+
     setIsVideoOn((value) => !value);
     if (isAudioOn) setIsAudioOn(false);
   };
@@ -172,7 +196,7 @@ const Controls = ({
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
 
-    context.drawImage(
+    await context.drawImage(
       videoFeedElt,
       -(videoFeedElt.videoWidth / 6),
       0,
@@ -183,7 +207,8 @@ const Controls = ({
     //Emit event to peer
     if (roomId) {
       console.log(roomId);
-      const drawnImage = canvas.toDataURL("image/png");
+      const drawnImage = await canvas.toDataURL("image/png");
+      // const drawnImage = canvas.toDataURL("image/png");
       ws.emit("send-screenshot", roomId, drawnImage);
     } else {
       console.log(roomId);
@@ -198,6 +223,34 @@ const Controls = ({
     //Reset states
     setScreenshotCaptured(true);
     setIsCaptureLayerActive(true);
+  };
+
+  const handleGetTracks = async () => {
+    let tracks = stream.getTracks();
+    // console.log(tracks[0]);
+    tracks.forEach((track) => {
+      console.log(track);
+      track.stop();
+    });
+    // videoTracks[0].stop();
+    // console.log(stream);
+    // setStream(null);
+
+    // Get Video Stream
+    const getMedia = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false,
+        });
+        // console.log(stream.getTracks());
+        setStream(stream);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // getMedia();
   };
 
   //Socket Listeners
@@ -233,6 +286,7 @@ const Controls = ({
               src={micOffIcon}
               alt="Microphone Off Icon"
               className="controls__icon"
+              // onClick={handleAudioToggle}
               onClick={handleAudioToggle}
             />
           </div>
