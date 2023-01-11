@@ -13,6 +13,36 @@ const WS = "http://localhost:8000/";
 //Web Signaling server
 const ws = socketIOClient(WS);
 
+// console.log("running");
+console.log(navigator.userAgent);
+// console.log(window.navigator.userAgent);
+
+let userAgent = navigator.userAgent;
+let browserName;
+
+if (userAgent.match(/chrome|chromium|crios/i)) {
+  browserName = "Chrome";
+} else if (userAgent.match(/firefox|fxios/i)) {
+  browserName = "Firefox";
+} else if (userAgent.match(/safari/i)) {
+  browserName = "Safari";
+} else if (userAgent.match(/opr\//i)) {
+  browserName = "Opera";
+} else if (userAgent.match(/edg/i)) {
+  browserName = "Edge";
+} else if (userAgent.match(/android/i)) {
+  browserName = "Android";
+} else if (userAgent.match(/iphone/i)) {
+  browserName = "iPhone";
+} else {
+  browserName = "Unknown";
+}
+
+console.log(browserName);
+
+// document.querySelector("div.form-style h3").innerText =
+//   "You are browsing with: " + browserName + "";
+
 //Room Context
 const RoomContext = createContext();
 
@@ -59,7 +89,7 @@ const RoomProvider = ({ children }) => {
   const emptyRoom = () => {
     setInRoom(false);
     setRoomId(null);
-    setPeerUsername('');
+    setPeerUsername("");
     console.log("ALl users out!");
     navigate("/setup");
   };
@@ -70,7 +100,6 @@ const RoomProvider = ({ children }) => {
     const peer = new Peer(myId);
     console.log(peer.id);
     setMe(peer);
-
 
     // //Get devices
     // navigator.mediaDevices.enumerateDevices().then(devices => {
@@ -106,11 +135,11 @@ const RoomProvider = ({ children }) => {
     //User joined room listener where you initiate call
     ws.on("user-joined", ({ peerId, roomId }) => {
       console.log(roomId);
-      console.log('user joined');
+      console.log("user joined");
       //Create call for every new joined user
       const call = me.call(peerId, stream); //Call user with peerId and pass our stream
       call.on("stream", (peerStream) => {
-        console.log('dispatch stream')
+        console.log("dispatch stream");
         dispatch(addPeerAction(peerId, peerStream));
       });
     });
@@ -120,7 +149,7 @@ const RoomProvider = ({ children }) => {
     me.on("call", (call) => {
       call.answer(stream); //Answer call with our own stream
       call.on("stream", (peerStream) => {
-        console.log('dispatch call')
+        console.log("dispatch call");
         dispatch(addPeerAction(call.peer, peerStream));
       });
     });
