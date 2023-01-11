@@ -137,7 +137,9 @@ const Controls = ({
       setIsCaptureLayerActive(false);
     }
     if (roomId) {
+      console.log("erasing in room " + roomId);
       ws.emit("send-erase", roomId);
+      return;
     }
   };
 
@@ -223,34 +225,6 @@ const Controls = ({
     //Reset states
     setScreenshotCaptured(true);
     setIsCaptureLayerActive(true);
-  };
-
-  const handleGetTracks = async () => {
-    let tracks = stream.getTracks();
-    // console.log(tracks[0]);
-    tracks.forEach((track) => {
-      console.log(track);
-      track.stop();
-    });
-    // videoTracks[0].stop();
-    // console.log(stream);
-    // setStream(null);
-
-    // Get Video Stream
-    const getMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: false,
-        });
-        // console.log(stream.getTracks());
-        setStream(stream);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    // getMedia();
   };
 
   //Socket Listeners
