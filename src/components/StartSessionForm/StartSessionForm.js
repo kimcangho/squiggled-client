@@ -22,8 +22,11 @@ const StartSessionForm = ({
   };
 
   const handleStartSession = (name) => {
+    if (name.length === 0) {
+      document.querySelector('.startSessionForm__input').classList.add('startSessionForm__input--error');
+      return;
+    }
     createRoom(name);
-    console.log("my name is " + name);
   };
 
   //To-do: End session function with button

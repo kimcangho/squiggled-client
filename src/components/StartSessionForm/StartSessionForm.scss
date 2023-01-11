@@ -21,6 +21,10 @@
     &:focus {
      outline: $color-primary-default solid 4px;
     }
+
+    &--error {
+      outline: $color-alert-error solid 4px;
+    }
   }
   &__join {
     display: flex;

@@ -62,6 +62,11 @@ const SetupPage = () => {
 
   //Functions
   const handleUsernameChange = (event) => {
+    if (event.target.value.length > 0) {
+      document
+        .querySelector(".startSessionForm__input")
+        .classList.remove("startSessionForm__input--error");
+    }
     setMyUsername(event.target.value);
   };
 
