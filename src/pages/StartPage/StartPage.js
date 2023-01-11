@@ -11,7 +11,7 @@ import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
 
 const StartPage = () => {
   //Context
-  const { ws, myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
+  const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
 
   //UseParams
   const { id } = useParams();
@@ -23,13 +23,10 @@ const StartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     if (id) {
       setRoomName(false);
       setFlipped(true);
       setRoomName(id);
-    } else {
-      console.log(roomName);
     }
   }, [id]);
 
@@ -41,12 +38,26 @@ const StartPage = () => {
   };
 
   const handleJoinSession = async () => {
-    console.log(roomName);
-    console.log(id);
+
     await setRoomId(roomName);
 
-    if (roomName) {
-      console.log('okok');
+    //Both fields invalid
+    if (myUsername.length === 0 && roomName.length !== 36) {
+      const fieldsArr = document.querySelectorAll(".start__input");
+      fieldsArr.forEach((field) => field.classList.add("start__input--error"));
+      return;
+    }
+    //Username empty
+    if (myUsername.length === 0) {
+      const fieldsArr = document.querySelectorAll(".start__input");
+      fieldsArr[0].classList.add("start__input--error");
+      return;
+    }
+    //Room name not 36 characters
+    if (roomName.length !== 36) {
+      const fieldsArr = document.querySelectorAll(".start__input");
+      fieldsArr[1].classList.add("start__input--error");
+      return;
     }
 
     // if (id) {
@@ -58,18 +69,24 @@ const StartPage = () => {
   };
 
   const handleToggleJoin = () => {
-    if (!flipped) navigate('/join')
-    else navigate('/')
+    if (!flipped) navigate("/join");
+    else navigate("/");
     setFlipped((value) => !value);
   };
 
   const handleUsernameChange = (event) => {
+    if (event.target.value.length !== 0) {
+      const fieldsArr = document.querySelectorAll(".start__input");
+      fieldsArr[0].classList.remove("start__input--error");
+    }
     setMyUsername(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleRoomNameChange = (event) => {
-    console.log(event.target.value)
+    if (event.target.value.length === 36) {
+      const fieldsArr = document.querySelectorAll(".start__input");
+      fieldsArr[1].classList.remove("start__input--error");
+    }
     setRoomName(event.target.value);
   };
 
