@@ -11,7 +11,7 @@ import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
 
 const StartPage = () => {
   //Context
-  const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
+  const { ws, myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
 
   //UseParams
   const { id } = useParams();
@@ -23,10 +23,13 @@ const StartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     if (id) {
       setRoomName(false);
       setFlipped(true);
       setRoomName(id);
+    } else {
+      console.log(roomName);
     }
   }, [id]);
 
@@ -37,22 +40,36 @@ const StartPage = () => {
     }, 500);
   };
 
-  const handleJoinSession = () => {
+  const handleJoinSession = async () => {
     console.log(roomName);
-    setRoomId(roomName);
+    console.log(id);
+    await setRoomId(roomName);
+
+    if (roomName) {
+      console.log('okok');
+    }
+
+    // if (id) {
+    //   ws.emit('peer-joining', {id, myUsername});
+    // } else {
+    //   ws.emit('peer-joining', {roomName, myUsername});
+    // }
     navigate(`/session/${roomName}`);
   };
 
   const handleToggleJoin = () => {
+    if (!flipped) navigate('/join')
+    else navigate('/')
     setFlipped((value) => !value);
   };
 
   const handleUsernameChange = (event) => {
     setMyUsername(event.target.value);
-    console.log(myUsername, event.target.value);
+    console.log(event.target.value);
   };
 
   const handleRoomNameChange = (event) => {
+    console.log(event.target.value)
     setRoomName(event.target.value);
   };
 

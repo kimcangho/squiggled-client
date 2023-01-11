@@ -27,7 +27,7 @@ const Heading = ({ inRoom, setInRoom }) => {
 
     try {
       await navigator.clipboard.writeText(
-        `${window.location.origin}/${roomId}`
+        `${window.location.origin}/join/${roomId}`
       );
     } catch (error) {
       console.error("Could not write to clipboard", error);
@@ -55,6 +55,7 @@ const Heading = ({ inRoom, setInRoom }) => {
             <p className="heading__body">Setup your audio and video</p>
           </>
         )}
+        {/* <p>Peer Id: {peerUsername}</p> */}
       </div>
       {/* Copy to Clipboard */}
       <div

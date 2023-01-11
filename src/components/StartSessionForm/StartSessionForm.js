@@ -31,6 +31,7 @@ const StartSessionForm = ({
     setInRoom(false);
     setRoomId(null);
     navigate("/setup");
+    // setPeerUsername('');
     console.log("Emptying room " + roomId);
     ws.emit("empty-room", roomId);
   };

@@ -22,17 +22,17 @@ const RoomProvider = ({ children }) => {
   //State
   const [me, setMe] = useState(null);
   const [myUsername, setMyUsername] = useState("");
-  // const [peerUsername, setPeerUsername] = useState("");
+  const [peerUsername, setPeerUsername] = useState("");
   const [stream, setStream] = useState(null);
   const [inRoom, setInRoom] = useState(false);
   const [roomId, setRoomId] = useState(null);
   const [peers, dispatch] = useReducer(peersReducer, {}); //useReducer
 
   //Enter Room
-  const enterRoom = ({ roomId }) => {
+  const enterRoom = ({ roomId, name }) => {
     setInRoom(true);
     setRoomId(roomId);
-    console.log("ROom Id is " + roomId);
+    console.log(`User ${name} has created room with id ${roomId}`);
     navigate(`/session/${roomId}`);
   };
   //Get Users
@@ -59,6 +59,7 @@ const RoomProvider = ({ children }) => {
   const emptyRoom = () => {
     setInRoom(false);
     setRoomId(null);
+    setPeerUsername('');
     console.log("ALl users out!");
     navigate("/setup");
   };
@@ -71,14 +72,14 @@ const RoomProvider = ({ children }) => {
     setMe(peer);
 
 
-    //Get devices
-    navigator.mediaDevices.enumerateDevices().then(devices => {
-      console.log(devices);
-      const videoDevices = devices.filter(device => {
-        return device.kind === 'videoinput'
-      })
-      videoDevices.forEach(device => console.log(device.deviceId));
-    })
+    // //Get devices
+    // navigator.mediaDevices.enumerateDevices().then(devices => {
+    //   console.log(devices);
+    //   const videoDevices = devices.filter(device => {
+    //     return device.kind === 'videoinput'
+    //   })
+    //   videoDevices.forEach(device => console.log(device.deviceId));
+    // })
 
     //Websocket Listeners
     ws.on("room-created", enterRoom);
@@ -86,6 +87,16 @@ const RoomProvider = ({ children }) => {
     ws.on("room-full", redirectHome);
     ws.on("user-disconnected", removePeer);
     ws.on("empty-room", emptyRoom);
+
+    // //Peer
+    // ws.on('transmit-peer-joining', (name, roomId) => {
+    //   console.log(`My friend is ${name}`);
+    //   setPeerUsername(name);
+    //   console.log(`letting them know what's good`)
+    //   console.log(roomId)
+    //   console.log(myUsername);
+    //   ws.emit('set-host-username', 'Host Name');
+    // })
   }, []);
 
   useEffect(() => {
@@ -119,6 +130,8 @@ const RoomProvider = ({ children }) => {
         me,
         myUsername,
         setMyUsername,
+        peerUsername,
+        setPeerUsername,
         stream,
         setStream,
         peers,

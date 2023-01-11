@@ -211,6 +211,7 @@ const Controls = ({
       console.log(roomId);
       const drawnImage = await canvas.toDataURL("image/png");
       // const drawnImage = canvas.toDataURL("image/png");
+      console.log('sending screens')
       ws.emit("send-screenshot", roomId, drawnImage);
     } else {
       console.log(roomId);
