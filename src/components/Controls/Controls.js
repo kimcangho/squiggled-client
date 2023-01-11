@@ -123,7 +123,6 @@ const Controls = ({
     setIsDrawLayerActive(false);
 
     if (roomId) {
-      console.log("clearing in room " + roomId);
       ws.emit("send-clear", roomId);
     }
   };
@@ -140,9 +139,7 @@ const Controls = ({
       setIsCaptureLayerActive(false);
     }
     if (roomId) {
-      console.log("erasing in room " + roomId);
       ws.emit("send-erase", roomId);
-      return;
     }
   };
 
@@ -211,14 +208,8 @@ const Controls = ({
 
     //Emit event to peer
     if (roomId) {
-      console.log(roomId);
       const drawnImage = await canvas.toDataURL("image/png");
-      // const drawnImage = canvas.toDataURL("image/png");
-      console.log("sending screens");
       ws.emit("send-screenshot", roomId, drawnImage);
-    } else {
-      console.log(roomId);
-      console.log("nah");
     }
 
     //Shutter Animation
@@ -231,13 +222,31 @@ const Controls = ({
     setIsCaptureLayerActive(true);
   };
 
+  const transmitErase = () => {
+    const canvas = document.querySelector(".whiteboard__layer--me");
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    setIsDrawLayerActive(false);
+    if (screenshotCaptured && !isCaptureLayerActive) {
+      setIsCaptureLayerActive(false);
+    }
+  };
+
+  const transmitClear = () => {
+    if (!isCaptureLayerActive && !isDrawLayerActive) return;
+
+    let canvasArr = document.querySelectorAll(".whiteboard__layer");
+    canvasArr.forEach((layer) => {
+      let context = layer.getContext("2d");
+      context.clearRect(0, 0, layer.width, layer.height);
+    });
+    setIsCaptureLayerActive(false);
+    setIsDrawLayerActive(false);
+  };
+
   //Socket Listeners
-  ws.on("transmit-erase", () => {
-    handleEraseWhiteboard();
-  });
-  ws.on("transmit-clear", () => {
-    handleClearWhiteboard();
-  });
+  ws.on("transmit-erase", transmitErase);
+  ws.on("transmit-clear", transmitClear);
   ws.on("transmit-screenshot", transmitScreenshot);
   ws.on("transmit-whiteboard", transmitWhiteboard);
 
@@ -264,7 +273,6 @@ const Controls = ({
               src={micOffIcon}
               alt="Microphone Off Icon"
               className="controls__icon"
-              // onClick={handleAudioToggle}
               onClick={handleAudioToggle}
             />
           </div>
