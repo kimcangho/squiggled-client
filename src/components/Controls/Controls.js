@@ -34,7 +34,7 @@ const Controls = ({
   screenshotCaptured,
   setScreenshotCaptured,
 }) => {
-  const { ws, roomId, stream, setStream } = useContext(RoomContext);
+  const { ws, roomId, stream, setStream, peers } = useContext(RoomContext);
 
   //Receive screenshot
   const transmitScreenshot = (data) => {
@@ -72,6 +72,7 @@ const Controls = ({
   //Microphone
   const handleAudioToggle = () => {
     if (isVideoOn) setIsAudioOn((value) => !value);
+    console.log(peers);
   };
   //Camera
   const handleVideoToggle = () => {

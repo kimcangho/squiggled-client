@@ -33,7 +33,7 @@ const SetupPage = () => {
     myUsername,
     setMyUsername,
     stream,
-    // peers,
+    peers,
     inRoom,
     setInRoom,
   } = useContext(RoomContext);

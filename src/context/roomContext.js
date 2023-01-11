@@ -106,9 +106,11 @@ const RoomProvider = ({ children }) => {
     //User joined room listener where you initiate call
     ws.on("user-joined", ({ peerId, roomId }) => {
       console.log(roomId);
+      console.log('user joined');
       //Create call for every new joined user
       const call = me.call(peerId, stream); //Call user with peerId and pass our stream
       call.on("stream", (peerStream) => {
+        console.log('dispatch stream')
         dispatch(addPeerAction(peerId, peerStream));
       });
     });
@@ -118,6 +120,7 @@ const RoomProvider = ({ children }) => {
     me.on("call", (call) => {
       call.answer(stream); //Answer call with our own stream
       call.on("stream", (peerStream) => {
+        console.log('dispatch call')
         dispatch(addPeerAction(call.peer, peerStream));
       });
     });
