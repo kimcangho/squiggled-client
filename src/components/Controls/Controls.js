@@ -143,17 +143,15 @@ const Controls = ({
     //Toggle whiteboard if in mobile breakpoint
     if (window.innerWidth < 768 && !isWhiteboardMobile) {
       handleToggleWhiteboard();
+
+      setIsVideoOn((value) => !value);
+
     }
 
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
-    console.log(videoFeedElt.offsetWidth);
-    console.log(videoFeedElt.offsetHeight);
-    
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
-
-    console.log(canvas.offsetWidth)
 
     await context.drawImage(
       videoFeedElt,
