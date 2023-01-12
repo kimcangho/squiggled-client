@@ -100,6 +100,9 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
 }
