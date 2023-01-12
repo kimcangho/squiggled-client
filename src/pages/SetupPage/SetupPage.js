@@ -26,24 +26,14 @@ const SetupPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const {
-    ws,
-    me,
-    myUsername,
-    setMyUsername,
-    stream,
-    peers,
-    inRoom,
-    setInRoom,
-  } = useContext(RoomContext);
+  const { ws, me, myUsername, setMyUsername, stream, inRoom, setInRoom } =
+    useContext(RoomContext);
 
   //Join Room Useeffect
   useEffect(() => {
-    console.log(id);
     //Check for room id and user state
     if (id && me) {
       //Join room with roomId and peerId
-      console.log("joining room " + id);
       setInRoom(true);
       ws.emit("join-room", { roomId: id, peerId: me.id });
     }
@@ -51,7 +41,6 @@ const SetupPage = () => {
 
   //Initial window size useEffect
   useEffect(() => {
-
     //Draw original image back
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
@@ -60,14 +49,13 @@ const SetupPage = () => {
       setIsMobileView(false);
     }
 
-    const vid = document.querySelector('.video-feed');
+    //Set initial canvas dimensions
+    const vid = document.querySelector(".video-feed");
     const canvases = document.querySelectorAll(".whiteboard__layer");
-    canvases.forEach(canvas => {
+    canvases.forEach((canvas) => {
       canvas.width = vid.offsetWidth;
       canvas.height = vid.offsetHeight;
-    })
-
-    // resize();
+    });
 
     if (window.innerWidth < 768) {
       setIsMobileView(false);
@@ -90,27 +78,17 @@ const SetupPage = () => {
     //Window Resizing
     const canvases = document.querySelectorAll(".whiteboard__layer");
 
-    console.log('resizing...')
     canvases.forEach((canvas) => {
-      console.log(canvas.width, canvas.height);
-      console.log(canvas.offsetWidth, canvas.offsetHeight);
-      
       const context = canvas.getContext("2d");
-      console.log(context.width, context.height)
-      // console.log(context.width, context.height);
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
-      // console.log(context.width, context.height);
       context.width = canvas.offsetWidth;
       context.height = canvas.offsetHeight;
-      // canvas.getContext('2d').scale(2,2);
-      // console.log(context.width, context.height);
     });
   };
 
   window.onresize = async () => {
     resize();
-    //Draw original image back
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
       setIsMobileView(true);
@@ -123,7 +101,6 @@ const SetupPage = () => {
     <section className="setup">
       <main className="setup__main">
         <Heading inRoom={inRoom} setInRoom={setInRoom} />
-        {/* To-do: Set My Video Feed if broadcasting */}
         <div className="setup__container">
           <div className="flip-stream">
             <div className="flip-stream__container">
@@ -133,13 +110,12 @@ const SetupPage = () => {
                 classNames="flip-stream__flip"
               >
                 <div className="flip-stream__card">
-                  {/* Broadcasting Feed from Host */}
+                  {/* Video Feed */}
                   <VideoFeed
                     isVideoOn={isVideoOn}
                     myUsername={myUsername}
                     stream={stream}
                   />
-                  {/* Viewer Feed from Host */}
                   {/* Shared Whiteboard */}
                   <Whiteboard
                     isDrawMode={isDrawMode}
@@ -152,21 +128,6 @@ const SetupPage = () => {
               </CSSTransition>
             </div>
           </div>
-
-          {/* To-do: Set Peer Video Feed if viewing */}
-          {/* {Object.values(peers).map((peer) => {
-            console.log(peers.participants);
-            return (
-            
-              <div className="video-feed">
-              <VideoFeed
-                isVideoOn={isVideoOn}
-                myUsername="Test"
-                stream={peer.stream}
-              />
-              </div>
-            );
-          })} */}
         </div>
 
         <Controls

@@ -30,7 +30,7 @@ const Controls = ({
   screenshotCaptured,
   setScreenshotCaptured,
 }) => {
-  const { ws, roomId, stream, setStream, peers } = useContext(RoomContext);
+  const { ws, roomId, stream, setStream } = useContext(RoomContext);
 
   //Camera
   const handleVideoToggle = () => {
@@ -42,7 +42,6 @@ const Controls = ({
             video: true,
             audio: false,
           });
-          // console.log(stream.getTracks());
           setStream(stream);
         } catch (error) {
           console.log(error);
@@ -53,13 +52,11 @@ const Controls = ({
     } else {
       const tracks = stream.getTracks();
       tracks.forEach((track) => {
-        console.log(track);
         track.stop();
       });
     }
 
     setIsVideoOn((value) => !value);
-
   };
   //Whiteboard
   const handleToggleWhiteboard = () => {
@@ -145,7 +142,6 @@ const Controls = ({
       handleToggleWhiteboard();
 
       setIsVideoOn((value) => !value);
-
     }
 
     //Capture image from video feed
@@ -241,7 +237,6 @@ const Controls = ({
   return (
     <article className="controls">
       <div className="controls__tracks">
- 
         {/* Video */}
         {isVideoOn ? (
           <div className="controls__button">

@@ -1,10 +1,11 @@
+//Styling
 import "./Heading.scss";
+//React Hooks
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { RoomContext } from "../../context/roomContext";
-
+//External Library
 import Tippy from "@tippyjs/react";
-
 //Assets
 import squiggledLogo from "../../assets/images/logos/squiggled-logo.svg";
 import clipboardIcon from "../../assets/images/icons/clipboard.svg";

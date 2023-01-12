@@ -1,3 +1,4 @@
+//Styling
 import "./StartSessionForm.scss";
 //React Hooks
 import { useContext } from "react";
@@ -17,7 +18,6 @@ const StartSessionForm = ({
   const { ws, roomId, setRoomId } = useContext(RoomContext);
 
   const createRoom = (name) => {
-    console.log("my name again is " + name);
     ws.emit("create-room", name); //Sends name to server by emitting create-room event
   };
 
@@ -34,8 +34,6 @@ const StartSessionForm = ({
     setInRoom(false);
     setRoomId(null);
     navigate("/setup");
-    // setPeerUsername('');
-    console.log("Emptying room " + roomId);
     ws.emit("empty-room", roomId);
   };
 

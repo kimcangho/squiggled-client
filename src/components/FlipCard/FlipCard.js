@@ -1,3 +1,4 @@
+//Styling
 import "./FlipCard.scss";
 //React Libraries
 import { useState } from "react";

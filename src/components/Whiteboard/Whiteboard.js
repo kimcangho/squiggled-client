@@ -14,7 +14,6 @@ const Whiteboard = ({
   isMobileView,
   setIsDrawLayerActive,
 }) => {
-
   //Room Context
   const { ws, roomId } = useContext(RoomContext);
 
@@ -50,7 +49,6 @@ const Whiteboard = ({
   const handleStamp = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
     if (isDrawMode) {
-      console.log(offsetX, offsetY);
       myContextRef.current.strokeStyle = strokeColor;
       myContextRef.current.beginPath();
       myContextRef.current.lineWidth = 5;
@@ -67,7 +65,6 @@ const Whiteboard = ({
   const startDrawing = ({ nativeEvent }) => {
     if (!isDrawMode) {
       const { offsetX, offsetY } = nativeEvent;
-      console.log(offsetX, offsetY);
       myContextRef.current.beginPath();
       myContextRef.current.moveTo(offsetX, offsetY);
       myContextRef.current.strokeStyle = strokeColor;

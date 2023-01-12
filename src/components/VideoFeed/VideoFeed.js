@@ -10,7 +10,7 @@ const VideoFeed = ({ isVideoOn, myUsername, stream }) => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.srcObject = stream;  //To-do: shut this off if we want to remove light
+      videoRef.current.srcObject = stream;
     }
   });
 
@@ -25,7 +25,7 @@ const VideoFeed = ({ isVideoOn, myUsername, stream }) => {
             muted
             playsInline
           />
-          <p className="video-feed__overlay" >
+          <p className="video-feed__overlay">
             {myUsername ? myUsername : "Type your name below!"}
           </p>
         </div>

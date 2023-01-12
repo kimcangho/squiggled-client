@@ -3,7 +3,6 @@ import "./StartPage.scss";
 //React Hooks
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { CSSTransition } from "react-transition-group";
 //Context
 import { RoomContext } from "../../context/roomContext";
 //Asset
@@ -60,11 +59,6 @@ const StartPage = () => {
       return;
     }
 
-    // if (id) {
-    //   ws.emit('peer-joining', {id, myUsername});
-    // } else {
-    //   ws.emit('peer-joining', {roomName, myUsername});
-    // }
     navigate(`/session/${roomName}`);
   };
 
@@ -93,7 +87,6 @@ const StartPage = () => {
   return (
     <main className="start">
       <div className="start__container">
-        {/* <CSSTransition in={flipped} timeout={300} classNames="start__flip"> */}
         <div className="start__card">
           {!flipped ? (
             <div className="start__side start__side--front">
@@ -151,11 +144,7 @@ const StartPage = () => {
               </form>
             </div>
           )}
-          {/* Front Side */}
-
-          {/* Back Side */}
         </div>
-        {/* </CSSTransition> */}
       </div>
     </main>
   );

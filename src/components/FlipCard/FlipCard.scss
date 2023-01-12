@@ -60,11 +60,7 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 
-    &--front {
-      // background-color: $color-twin-cyan;
-    }
     &--back {
-      // background-color: $color-twin-orange;
       transform: rotateY(180deg);
     }
   }
@@ -125,11 +121,7 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 
-    &--front {
-      // background-color: $color-twin-cyan;
-    }
     &--back {
-      // background-color: $color-twin-orange;
       transform: rotateY(180deg);
     }
   }
