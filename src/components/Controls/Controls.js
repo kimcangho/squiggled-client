@@ -149,20 +149,22 @@ const Controls = ({
     let videoFeedElt = document.querySelector(".video-feed__webcam");
     console.log(videoFeedElt.offsetWidth);
     console.log(videoFeedElt.offsetHeight);
+    
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
 
+    console.log(canvas.offsetWidth)
+
     await context.drawImage(
       videoFeedElt,
-      // (videoFeedElt.videoWidth / 3),
       0,
       0,
       videoFeedElt.videoWidth,
       videoFeedElt.videoHeight,
       0,
       0,
-      canvas.width,
-      canvas.height
+      canvas.offsetWidth,
+      canvas.offsetHeight
     );
 
     //Emit event to peer
