@@ -5,7 +5,7 @@ import { useRef, useEffect } from "react";
 //Assets
 import userIcon from "../../assets/images/icons/user.svg";
 
-const VideoFeed = ({ isVideoOn, isAudioOn, myUsername, stream }) => {
+const VideoFeed = ({ isVideoOn, myUsername, stream }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const VideoFeed = ({ isVideoOn, isAudioOn, myUsername, stream }) => {
             className="video-feed__webcam"
             ref={videoRef}
             autoPlay={isVideoOn}
-            muted={!isAudioOn}
+            muted
             playsInline
           />
           <p className="video-feed__overlay" >

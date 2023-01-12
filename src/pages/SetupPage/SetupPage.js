@@ -17,7 +17,6 @@ const SetupPage = () => {
   //State Variables
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
-  const [isAudioOn, setIsAudioOn] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
   const [isMobileView, setIsMobileView] = useState(true);
   //Active layers
@@ -121,7 +120,6 @@ const SetupPage = () => {
                   {/* Broadcasting Feed from Host */}
                   <VideoFeed
                     isVideoOn={isVideoOn}
-                    isAudioOn={isAudioOn}
                     myUsername={myUsername}
                     stream={stream}
                   />
@@ -159,8 +157,6 @@ const SetupPage = () => {
           setIsDrawModeStamp={setIsDrawModeStamp}
           isWhiteboardMobile={isWhiteboardMobile}
           setIsWhiteboardMobile={setIsWhiteboardMobile}
-          isAudioOn={isAudioOn}
-          setIsAudioOn={setIsAudioOn}
           isVideoOn={isVideoOn}
           setIsVideoOn={setIsVideoOn}
           isCaptureLayerActive={isCaptureLayerActive}

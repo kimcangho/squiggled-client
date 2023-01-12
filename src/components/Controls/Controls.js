@@ -6,8 +6,6 @@ import { RoomContext } from "../../context/roomContext";
 //Component
 import FlipButton from "../FlipButton/FlipButton";
 //Assets
-import micOnIcon from "../../assets/images/icons/mic.svg";
-import micOffIcon from "../../assets/images/icons/mic-off.svg";
 import cameraOnIcon from "../../assets/images/icons/camera-fill.svg";
 import cameraOffIcon from "../../assets/images/icons/camera-off.svg";
 import screenshotIcon from "../../assets/images/icons/screenshot.svg";
@@ -22,8 +20,6 @@ import videoIcon from "../../assets/images/icons/video.svg";
 const Controls = ({
   setIsDrawModeStamp,
   setIsWhiteboardMobile,
-  isAudioOn,
-  setIsAudioOn,
   isVideoOn,
   setIsVideoOn,
   isWhiteboardMobile,
@@ -36,13 +32,6 @@ const Controls = ({
 }) => {
   const { ws, roomId, stream, setStream, peers } = useContext(RoomContext);
 
-  //Microphone
-  const handleAudioToggle = () => {
-    if (isVideoOn) setIsAudioOn((value) => !value);
-    Object.values(peers).forEach((peer) => {
-      console.log(peer);
-    });
-  };
   //Camera
   const handleVideoToggle = () => {
     if (!isVideoOn) {
@@ -70,7 +59,7 @@ const Controls = ({
     }
 
     setIsVideoOn((value) => !value);
-    if (isAudioOn) setIsAudioOn(false);
+
   };
   //Whiteboard
   const handleToggleWhiteboard = () => {
@@ -252,30 +241,7 @@ const Controls = ({
   return (
     <article className="controls">
       <div className="controls__tracks">
-        {/* Audio */}
-        {isAudioOn ? (
-          <div className="controls__button">
-            <img
-              src={micOnIcon}
-              alt="Microphone On Icon"
-              className="controls__icon"
-              onClick={handleAudioToggle}
-            />
-          </div>
-        ) : (
-          <div
-            className={`controls__button controls__button--disabled ${
-              !isVideoOn && "controls__button--offline"
-            }`}
-          >
-            <img
-              src={micOffIcon}
-              alt="Microphone Off Icon"
-              className="controls__icon"
-              onClick={handleAudioToggle}
-            />
-          </div>
-        )}
+ 
         {/* Video */}
         {isVideoOn ? (
           <div className="controls__button">
