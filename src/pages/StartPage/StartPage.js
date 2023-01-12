@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 //Context
 import { RoomContext } from "../../context/roomContext";
 //Asset
-import squidLogo from "../../assets/images/logos/squiggled-logo.svg";
+import squidLogo from "../../assets/images/logos/squid.png";
 
 const StartPage = () => {
   //Context
