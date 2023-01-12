@@ -3,6 +3,7 @@ import "./Controls.scss";
 //React Hooks
 import { useContext } from "react";
 import { RoomContext } from "../../context/roomContext";
+import Tippy from "@tippyjs/react";
 //Component
 import FlipButton from "../FlipButton/FlipButton";
 //Assets
@@ -39,7 +40,7 @@ const Controls = ({
       const getMedia = async () => {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: {facingMode: 'environment'},
+            video: { facingMode: "environment" },
             audio: false,
           });
           setStream(stream);
@@ -239,23 +240,39 @@ const Controls = ({
       <div className="controls__tracks">
         {/* Video */}
         {isVideoOn ? (
-          <div className="controls__button">
-            <img
-              src={cameraOnIcon}
-              alt="Video On Icon"
-              className="controls__icon"
-              onClick={handleVideoToggle}
-            />
-          </div>
+          <Tippy
+            content="Turn Video Off"
+            trigger="mouseenter focus"
+            placement="top"
+            duration="0"
+            disabled={!isVideoOn}
+          >
+            <div className="controls__button">
+              <img
+                src={cameraOnIcon}
+                alt="Video On Icon"
+                className="controls__icon"
+                onClick={handleVideoToggle}
+              />
+            </div>
+          </Tippy>
         ) : (
-          <div className="controls__button controls__button--disabled">
-            <img
-              src={cameraOffIcon}
-              alt="Video Off Icon"
-              className="controls__icon"
-              onClick={handleVideoToggle}
-            />
-          </div>
+          <Tippy
+            content="Turn Video On"
+            trigger="mouseenter focus"
+            placement="top"
+            duration="0"
+            disabled={isVideoOn}
+          >
+            <div className="controls__button controls__button--disabled">
+              <img
+                src={cameraOffIcon}
+                alt="Video Off Icon"
+                className="controls__icon"
+                onClick={handleVideoToggle}
+              />
+            </div>
+          </Tippy>
         )}
       </div>
 
@@ -280,31 +297,47 @@ const Controls = ({
         </div>
 
         {/* Delete */}
-        <div
-          className={`controls__button ${
-            !isCaptureLayerActive && "controls__button--offline"
-          }`}
+        <Tippy
+          content="Clear Screenshot"
+          trigger="mouseenter focus"
+          placement="top"
+          duration="0"
+          disabled={!isCaptureLayerActive}
         >
-          <img
-            src={deleteIcon}
-            alt="Delete Icon"
-            className="controls__icon"
-            onClick={handleClearWhiteboard}
-          />
-        </div>
+          <div
+            className={`controls__button ${
+              !isCaptureLayerActive && "controls__button--offline"
+            }`}
+          >
+            <img
+              src={deleteIcon}
+              alt="Delete Icon"
+              className="controls__icon"
+              onClick={handleClearWhiteboard}
+            />
+          </div>
+        </Tippy>
         {/* Erase */}
-        <div
-          className={`controls__button ${
-            !isDrawLayerActive && "controls__button--offline"
-          }`}
+        <Tippy
+          content="Erase Drawing"
+          trigger="mouseenter focus"
+          placement="top"
+          duration="0"
+          disabled={!isDrawLayerActive}
         >
-          <img
-            src={eraseIcon}
-            alt="Erase Icon"
-            className="controls__icon"
-            onClick={handleEraseWhiteboard}
-          />
-        </div>
+          <div
+            className={`controls__button ${
+              !isDrawLayerActive && "controls__button--offline"
+            }`}
+          >
+            <img
+              src={eraseIcon}
+              alt="Erase Icon"
+              className="controls__icon"
+              onClick={handleEraseWhiteboard}
+            />
+          </div>
+        </Tippy>
 
         {/* Toggle Stamp/Draw */}
         <FlipButton
@@ -315,33 +348,49 @@ const Controls = ({
         />
 
         {/* Download */}
-        <div
-          className={`controls__button ${
-            !isCaptureLayerActive &&
-            !isDrawLayerActive &&
-            "controls__button--offline"
-          }`}
+        <Tippy
+          content="Download Whiteboard"
+          trigger="mouseenter focus"
+          placement="top"
+          duration="0"
+          disabled={!isCaptureLayerActive && !isDrawLayerActive}
         >
-          <img
-            src={downloadIcon}
-            alt="Download Icon"
-            className="controls__icon"
-            onClick={handleDownloadImage}
-          />
-        </div>
+          <div
+            className={`controls__button ${
+              !isCaptureLayerActive &&
+              !isDrawLayerActive &&
+              "controls__button--offline"
+            }`}
+          >
+            <img
+              src={downloadIcon}
+              alt="Download Icon"
+              className="controls__icon"
+              onClick={handleDownloadImage}
+            />
+          </div>
+        </Tippy>
         {/* Capture Screenshot */}
-        <div
-          className={`controls__button ${
-            !isVideoOn && "controls__button--offline"
-          }`}
+        <Tippy
+          content="Take Screenshot"
+          trigger="mouseenter focus"
+          placement="top"
+          duration="0"
+          disabled={!isVideoOn}
         >
-          <img
-            src={screenshotIcon}
-            alt="Screenshot Icon"
-            className="controls__icon"
-            onClick={handleCaptureImage}
-          />
-        </div>
+          <div
+            className={`controls__button ${
+              !isVideoOn && "controls__button--offline"
+            }`}
+          >
+            <img
+              src={screenshotIcon}
+              alt="Screenshot Icon"
+              className="controls__icon"
+              onClick={handleCaptureImage}
+            />
+          </div>
+        </Tippy>
       </div>
     </article>
   );

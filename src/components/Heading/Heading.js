@@ -37,12 +37,19 @@ const Heading = ({ inRoom, setInRoom }) => {
 
   return (
     <div className="heading">
-      <img
-        src={squiggledLogo}
-        alt="Squiggled Logo"
-        className="heading__logo"
-        onClick={handleRedirect}
-      />
+      <Tippy
+        content="Take Me Home!"
+        trigger="mouseenter focus"
+        placement="top"
+        duration="0"
+      >
+        <img
+          src={squiggledLogo}
+          alt="Squiggled Logo"
+          className="heading__logo"
+          onClick={handleRedirect}
+        />
+      </Tippy>
 
       <div className="heading__prompt">
         {inRoom ? (
@@ -58,27 +65,34 @@ const Heading = ({ inRoom, setInRoom }) => {
         )}
       </div>
       {/* Copy to Clipboard */}
-      <div
-        className={`controls__button ${
-          inRoom ? "" : "controls__button--offline"
-        }`}
+      <Tippy
+        content="Copy Session Link"
+        trigger="mouseenter focus"
+        placement="top"
+        duration="0"
+        disabled={!inRoom}
       >
-        <Tippy
-          content="Link Copied!"
-          className="heading__tooltip"
-          trigger="click"
-          placement="left"
-          duration="[300,250]"
-          disabled={!inRoom}
+        <div
+          className={`controls__button ${
+            inRoom ? "" : "controls__button--offline"
+          }`}
         >
-          <img
-            src={clipboardIcon}
-            alt="Clipboard Icon"
-            className="controls__icon "
-            onClick={handleCopyClipboard}
-          />
-        </Tippy>
-      </div>
+          <Tippy
+            content="Link Copied!"
+            className="heading__tooltip"
+            trigger="click"
+            placement="left"
+            disabled={!inRoom}
+          >
+            <img
+              src={clipboardIcon}
+              alt="Clipboard Icon"
+              className="controls__icon "
+              onClick={handleCopyClipboard}
+            />
+          </Tippy>
+        </div>
+      </Tippy>
     </div>
   );
 };
