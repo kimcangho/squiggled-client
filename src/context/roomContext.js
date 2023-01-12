@@ -37,13 +37,6 @@ const RoomProvider = ({ children }) => {
     navigate(`/session/${roomId}`);
   };
 
-  //Redirect if room is full
-  const redirectHome = () => {
-    setInRoom(false);
-    setRoomId(null);
-    navigate("/error");
-  };
-
   const removePeer = ({ peerId }) => {
     dispatch(removePeerAction(peerId));
     setInRoom(false);
@@ -67,7 +60,6 @@ const RoomProvider = ({ children }) => {
 
     //Websocket Listeners
     ws.on("room-created", enterRoom);
-    ws.on("room-full", redirectHome);
     ws.on("user-disconnected", removePeer);
     ws.on("empty-room", emptyRoom);
   }, []);
