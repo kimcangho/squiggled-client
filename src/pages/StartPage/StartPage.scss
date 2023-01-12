@@ -88,7 +88,6 @@
     &--back {
       gap: 2rem;
       animation: swimUpIn 0.25s ease-in-out;
-      // transform: rotateY(180deg);
     }
 
     &--exit {
@@ -98,11 +97,10 @@
 
   &__logo {
     width: 80%;
-    animation: float 10s ease-in-out infinite;
+    // animation: float 10s ease-in-out infinite;
     pointer-events: none;
 
     @include tablet {
-      order: 0;
       width: 50%;
     }
   }
