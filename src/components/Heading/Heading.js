@@ -42,6 +42,7 @@ const Heading = ({ inRoom, setInRoom }) => {
         trigger="mouseenter focus"
         placement="top"
         duration="0"
+        touch="hold"
       >
         <img
           src={squiggledLogo}
@@ -60,7 +61,7 @@ const Heading = ({ inRoom, setInRoom }) => {
         ) : (
           <>
             <h5 className="heading__title">Get Started</h5>
-            <p className="heading__body">Setup your video</p>
+            <p className="heading__body">Setup video and draw!</p>
           </>
         )}
       </div>
@@ -68,6 +69,7 @@ const Heading = ({ inRoom, setInRoom }) => {
       <Tippy
         content="Copy Session Link"
         trigger="mouseenter focus"
+        touch="hold"
         placement="top"
         duration="0"
         disabled={!inRoom}

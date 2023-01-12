@@ -243,6 +243,7 @@ const Controls = ({
           <Tippy
             content="Turn Video Off"
             trigger="mouseenter focus"
+            touch="hold"
             placement="top"
             duration="0"
             disabled={!isVideoOn}
@@ -260,6 +261,7 @@ const Controls = ({
           <Tippy
             content="Turn Video On"
             trigger="mouseenter focus"
+            touch="hold"
             placement="top"
             duration="0"
             disabled={isVideoOn}
@@ -280,19 +282,39 @@ const Controls = ({
         {/* Canvas/Video in Mobile */}
         <div className="controls__button controls__button--mobile-only">
           {isWhiteboardMobile ? (
-            <img
-              src={videoIcon}
-              alt="Canvas Icon"
-              className="controls__icon"
-              onClick={handleToggleWhiteboard}
-            />
+            <Tippy
+              content="Switch To Video"
+              trigger="mouseenter focus"
+              touch="hold"
+              className="flipbutton__tooltip"
+              placement="top"
+              duration="0"
+              disabled={!isWhiteboardMobile}
+            >
+              <img
+                src={videoIcon}
+                alt="Canvas Icon"
+                className="controls__icon"
+                onClick={handleToggleWhiteboard}
+              />
+            </Tippy>
           ) : (
-            <img
-              src={canvasIcon}
-              alt="Canvas Icon"
-              className="controls__icon"
-              onClick={handleToggleWhiteboard}
-            />
+            <Tippy
+              content="Switch To Whiteboard"
+              trigger="mouseenter focus"
+              touch="hold"
+              className="flipbutton__tooltip"
+              placement="top"
+              duration="0"
+              disabled={isWhiteboardMobile}
+            >
+              <img
+                src={canvasIcon}
+                alt="Canvas Icon"
+                className="controls__icon"
+                onClick={handleToggleWhiteboard}
+              />
+            </Tippy>
           )}
         </div>
 
@@ -300,6 +322,7 @@ const Controls = ({
         <Tippy
           content="Clear Screenshot"
           trigger="mouseenter focus"
+          touch="hold"
           placement="top"
           duration="0"
           disabled={!isCaptureLayerActive}
@@ -321,6 +344,7 @@ const Controls = ({
         <Tippy
           content="Erase Drawing"
           trigger="mouseenter focus"
+          touch="hold"
           placement="top"
           duration="0"
           disabled={!isDrawLayerActive}
@@ -351,6 +375,7 @@ const Controls = ({
         <Tippy
           content="Download Whiteboard"
           trigger="mouseenter focus"
+          touch="hold"
           placement="top"
           duration="0"
           disabled={!isCaptureLayerActive && !isDrawLayerActive}
@@ -374,6 +399,7 @@ const Controls = ({
         <Tippy
           content="Take Screenshot"
           trigger="mouseenter focus"
+          touch="hold"
           placement="top"
           duration="0"
           disabled={!isVideoOn}

@@ -30,6 +30,7 @@ const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
             <Tippy
               content="Toggle Freehand"
               trigger="mouseenter focus"
+              touch="hold"
               className="flipbutton__tooltip"
               placement="top"
               duration="0"
@@ -44,6 +45,8 @@ const FlipButton = ({ frontButton, backButton, handleTrigger, isMobile }) => {
             <Tippy
               content="Toggle Stamp"
               trigger="mouseenter focus"
+              touch="hold"
+              className="flipbutton__tooltip"
               placement="top"
               duration="0"
               disabled={!showButtonFront}
