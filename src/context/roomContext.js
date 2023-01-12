@@ -7,8 +7,8 @@ import { peersReducer } from "./peerReducer";
 import { addPeerAction, removePeerAction } from "./peerActions";
 
 //Server URL
-const WS = "http://localhost:8000/";
-// const WS="https://squiggled-server.herokuapp.com/";
+// const WS = "http://localhost:8000/";
+const WS="https://squiggled-server.herokuapp.com/";
 
 //Web Signaling server
 const ws = socketIOClient(WS);

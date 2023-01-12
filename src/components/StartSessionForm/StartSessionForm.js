@@ -42,7 +42,7 @@ const StartSessionForm = ({
   return (
     <>
       {!inRoom ? (
-        <form className="startSessionForm">
+        <div className="startSessionForm">
           <input
             type="text"
             placeholder="Type your name"
@@ -58,7 +58,7 @@ const StartSessionForm = ({
           >
             <p className="startSessionForm__button-text">New Session</p>
           </div>
-        </form>
+        </div>
       ) : (
         <div
           className="startSessionForm__join startSessionForm__join--end"
