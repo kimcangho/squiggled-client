@@ -52,7 +52,9 @@ const SetupPage = () => {
 
   //Initial window size useEffect
   useEffect(() => {
+
     resize();
+
     if (window.innerWidth < 768) {
       setIsMobileView(false);
     } else {
@@ -73,12 +75,16 @@ const SetupPage = () => {
   const resize = () => {
     //Window Resizing
     const canvases = document.querySelectorAll(".whiteboard__layer");
+
     canvases.forEach((canvas) => {
-      // console.log(canvas.width, canvas.height);
+      console.log(canvas.width, canvas.height);
+      console.log(canvas.offsetWidth, canvas.offsetHeight);
+      
       const context = canvas.getContext("2d");
+      console.log(context.width, context.height)
       // console.log(context.width, context.height);
-      canvas.width = 480;
-      canvas.height = 480;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
       // console.log(context.width, context.height);
       context.width = canvas.width;
       context.height = canvas.height;
@@ -87,7 +93,9 @@ const SetupPage = () => {
     });
   };
 
-  window.onresize = () => {
+  window.onresize = async () => {
+    resize();
+    //Draw original image back
     if (window.innerWidth >= 768) {
       setIsWhiteboardMobile(false);
       setIsMobileView(true);

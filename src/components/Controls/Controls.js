@@ -36,39 +36,6 @@ const Controls = ({
 }) => {
   const { ws, roomId, stream, setStream, peers } = useContext(RoomContext);
 
-  //Receive screenshot
-  const transmitScreenshot = (data) => {
-    let newImg = new Image();
-    newImg.addEventListener(
-      "load",
-      () => {
-        const canvas = document.querySelector(".whiteboard__layer");
-        let context = canvas.getContext("2d");
-        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
-      },
-      false
-    );
-    newImg.src = data;
-
-    setIsCaptureLayerActive(true);
-  };
-  //Receive whiteboard
-  const transmitWhiteboard = (data) => {
-    let newImg = new Image();
-    newImg.addEventListener(
-      "load",
-      () => {
-        const canvas = document.querySelector(".whiteboard__layer--me");
-        let context = canvas.getContext("2d");
-        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
-      },
-      false
-    );
-    newImg.src = data;
-
-    setIsDrawLayerActive(true);
-  };
-
   //Microphone
   const handleAudioToggle = () => {
     if (isVideoOn) setIsAudioOn((value) => !value);
@@ -105,11 +72,10 @@ const Controls = ({
     setIsVideoOn((value) => !value);
     if (isAudioOn) setIsAudioOn(false);
   };
-
+  //Whiteboard
   const handleToggleWhiteboard = () => {
     setIsWhiteboardMobile((value) => !value);
   };
-
   //Clear entire whiteboard
   const handleClearWhiteboard = () => {
     if (!isCaptureLayerActive && !isDrawLayerActive) return;
@@ -126,7 +92,6 @@ const Controls = ({
       ws.emit("send-clear", roomId);
     }
   };
-
   //Erase canvas layer
   const handleEraseWhiteboard = () => {
     if (!isDrawLayerActive) return;
@@ -142,13 +107,11 @@ const Controls = ({
       ws.emit("send-erase", roomId);
     }
   };
-
   // Stamp/Draw Toggle
   const handleToggleDrawMode = () => {
     setIsDrawModeStamp((isDrawModeStamp) => !isDrawModeStamp);
   };
-
-  //To-do: Resize Downloaded Image
+  //Download Whiteboard Image
   const handleDownloadImage = async () => {
     if (!isCaptureLayerActive && !isDrawLayerActive) return;
     //Get canvases
@@ -158,8 +121,8 @@ const Controls = ({
     //Combine canvas elements
     const virtualCanvas = document.createElement("canvas");
     const virtualContext = virtualCanvas.getContext("2d");
-    virtualCanvas.width = 480;
-    virtualCanvas.height = 480;
+    virtualCanvas.width = captureCanvas.offsetWidth;
+    virtualCanvas.height = captureCanvas.offsetHeight;
     virtualContext.drawImage(
       captureCanvas,
       0,
@@ -195,15 +158,22 @@ const Controls = ({
 
     //Capture image from video feed
     let videoFeedElt = document.querySelector(".video-feed__webcam");
+    console.log(videoFeedElt.offsetWidth);
+    console.log(videoFeedElt.offsetHeight);
     const canvas = document.querySelector(".whiteboard__layer");
     let context = canvas.getContext("2d");
 
     await context.drawImage(
       videoFeedElt,
-      -(videoFeedElt.videoWidth / 6),
+      // (videoFeedElt.videoWidth / 3),
+      0,
       0,
       videoFeedElt.videoWidth,
-      videoFeedElt.videoHeight
+      videoFeedElt.videoHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height
     );
 
     //Emit event to peer
@@ -222,6 +192,7 @@ const Controls = ({
     setIsCaptureLayerActive(true);
   };
 
+  //Socket Listener Functions
   const transmitErase = () => {
     const canvas = document.querySelector(".whiteboard__layer--me");
     const context = canvas.getContext("2d");
@@ -231,7 +202,6 @@ const Controls = ({
       setIsCaptureLayerActive(false);
     }
   };
-
   const transmitClear = () => {
     if (!isCaptureLayerActive && !isDrawLayerActive) return;
 
@@ -243,7 +213,36 @@ const Controls = ({
     setIsCaptureLayerActive(false);
     setIsDrawLayerActive(false);
   };
+  const transmitScreenshot = (data) => {
+    let newImg = new Image();
+    newImg.addEventListener(
+      "load",
+      () => {
+        const canvas = document.querySelector(".whiteboard__layer");
+        let context = canvas.getContext("2d");
+        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
+      },
+      false
+    );
+    newImg.src = data;
 
+    setIsCaptureLayerActive(true);
+  };
+  const transmitWhiteboard = (data) => {
+    let newImg = new Image();
+    newImg.addEventListener(
+      "load",
+      () => {
+        const canvas = document.querySelector(".whiteboard__layer--me");
+        let context = canvas.getContext("2d");
+        context.drawImage(newImg, 0, 0, canvas.width, canvas.height);
+      },
+      false
+    );
+    newImg.src = data;
+
+    setIsDrawLayerActive(true);
+  };
   //Socket Listeners
   ws.on("transmit-erase", transmitErase);
   ws.on("transmit-clear", transmitClear);
