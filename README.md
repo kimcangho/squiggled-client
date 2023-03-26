@@ -6,6 +6,7 @@
 
 Squiggled is a whiteboarding application that enables users to capture, annotate, share and download screenshots from their device camera to other users in real-time.
 
+Check out the server in this repository (https://github.com/kimcangho/squiggled-server).
 
 ## Demo
 
@@ -21,24 +22,54 @@ Some additional details:
 
 ## Screenshots
 
-Landing Page
+### Landing Page
 ![Landing Page Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679868693/squiggled-landing_lo5oze.png)
 
-Join Page
+### Join Page
 ![Join Page Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679866922/squiggled-join_dxcc4u.png)
 
-Setup Page
+### Setup Page
 ![Setup Page Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679866921/squiggled-setup_cc4mcn.png)
 
-Setup Page - Camera Active
+### Setup Page - Camera Active
 ![Setup Page Active Camera Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679866923/squiggled-camera_nqzvgj.png)
 
-Setup Page - Screenshot with annotations
+### Setup Page - Screenshot with annotations
 ![Setup Page Annotation Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679866924/squiggled-annotation_e3cglb.png)
 
-Setup Page - Active Session
+### Setup Page - Active Session
 ![Setup Page Session Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679866925/squiggled-active-session_ejvxvo.png)
 
+### Error Page
+![Error Page Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679871806/squiggled-error_ax3b0i.png)
+
+## Run Locally
+
+Clone the project
+
+To deploy this locally project run:
+
+```bash
+  git clone git@github.com:kimcangho/squiggled-client.git
+```
+
+Go to the project directory
+
+```bash
+  cd squiggled-client
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm start
+```
 
 ## Lessons Learned
 
