@@ -43,9 +43,62 @@ Some additional details:
 ### Error Page
 ![Error Page Screenshot](https://res.cloudinary.com/di7kiyj3y/image/upload/v1679871806/squiggled-error_ax3b0i.png)
 
+
+## Usage/Examples
+
+### Landing Page
+
+- Start - Redirect to Setup Page.
+
+- Join - Redirect to Join Page.
+
+### Join Page
+
+Input user name and room name into form fields.
+
+- Join Session - Join existing room.
+
+- Back to Home - Redirect to Setup Page.
+
+### Setup Page
+
+Note: Tool tips visible on hover.
+
+#### Header Controls
+
+- Squiggled Logo - Redirect to Landing Page.
+
+- Copy Session Link - Add URL to clipboard in format: https://squiggled.netlify.app/join/:roomId.
+
+#### Control Bar Buttons
+
+- Turn Video On/Off - Toggle device camera on/off.
+
+- Take Screenshot - Capture frame from video and print to whiteboard.
+
+- Clear Screenshot - Clear entire whiteboard.
+
+- Toggle Stamp/Freehand - Switch between circle stamp and freehand drawing tool for whiteboard annotations.
+
+- Erase Drawing - Clear annotations only.
+
+- Download Whiteboard - Download local copy of whiteboard (screenshot and annotations).
+
+#### Session Start form
+
+- Input user name before starting a new session.
+
+- New Session - Create new session with unique room ID (displayed in header).
+
+- End Session - End session and remove all session users from room.
+
+### Error Page
+
+- Take Me Home - Redirect back to Landing Page.
+
 ## Run Locally
 
-Clone the project
+Clone the project.
 
 To deploy this locally project run:
 
@@ -53,19 +106,19 @@ To deploy this locally project run:
   git clone git@github.com:kimcangho/squiggled-client.git
 ```
 
-Go to the project directory
+Go to the project directory:
 
 ```bash
   cd squiggled-client
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
   npm install
 ```
 
-Start the server
+Start the server:
 
 ```bash
   npm start
@@ -81,7 +134,7 @@ Several key takeaways during the process of building this application include:
 
 - Underestimating the complexity of picking up a new technologies/concepts within the allotted time given. Much of the first week was spent figuring out how to integrate WebSockets, WebRTC, networking, canvas,  and media devices into the application. The initial attempt included WebRTC and other libraries to establish video calling, but were removed from the final build.
 
-- Developing for mobile use. The inherent nature of this application needed to establish a connection between two different devices and intended that a user may be able to use the application on a mobile device. For user interaction, click events were converted into pointer events for user 
+- Developing for mobile use. The inherent nature of this application needed to establish a connection between two different devices and intended that a user may be able to use the application on a mobile device. For user interaction, click events were converted into pointer events for user.
 
 - Adding buffer time for deployment and testing. The developer was adamant to have a working prototype functional across different devices. One blocker involved a security constraint required that application be hosted on a secure server to enable access to a given device's camera. Ngrok tunneling was used to expose a local development server under an https:// connection prior to deployment.
 ## Roadmap
@@ -98,10 +151,10 @@ Given additional opportunity to revisit this project, the following may be explo
   - Implement framer-motion React library for streamlined animations (e.g. card flipping).
 
 - Integrating a database to scaffold the following features:
-    - tracking active rooms
-    - backend input validation
-    - enable user authentication/authorization
-    - caller identification
+    - Tracking active rooms.
+    - Backend input validation.
+    - Enable user authentication/authorization.
+    - Caller identification.
 
 
 ## Authors
