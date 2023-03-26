@@ -1,17 +1,5 @@
-//Font Styles
-$font-fam: "Avenir Next";
-$backup-fonts: Arial, Helvetica, sans-serif;
-$font-reg: 400;
-$font-bold: 700;
-
-//Colors
-$color-text: #363732;
-$color-active: #BCEDF6;
-$color-background: #AF9164;
-$color-accent: #A53F2B;
-$color-invert-text: #F4F4F8;
-$color-success: #00DC54;
-$color-error: #DD2D2D;
+@import "./colors";
+@import "./fonts";
 
 //Breakpoints
 $tablet-breakpoint: 48rem;

@@ -1,0 +1,105 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.video-feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-surface-default;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  position: relative;
+  pointer-events: none;
+
+  @include tablet {
+    width: 100%;
+    align-items: center;
+  }
+
+  &--captured {
+    animation: captureShutter 0.2s ease-in;
+  }
+
+  &__user {
+    background-color: $color-twin-purple;
+    width: 52.75%;
+    height: 52.75%;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3.75rem 0;
+
+    @include desktop {
+      width: 19.375rem;
+      height: 19.375rem;
+    }
+  }
+
+  &__user-icon {
+    width: 40%;
+    height: 40%;
+    @include tablet {
+      width: 50%;
+      height: 50%;
+    }
+    @include desktop {
+      width: 9.625rem;
+      height: 9.625rem;
+    }
+  }
+
+  &__username {
+    position: absolute;
+    top: 80%;
+    left: 50% - width;
+
+    @include tablet {
+      top: 85%;
+      font-size: 1rem;
+    }
+    @include desktop {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-radius: 16px;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background-color: $color-surface-default;
+    font-size: 1rem;
+
+    @include desktop {
+      top: 1rem;
+      left: 1rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__webcam {
+    left: 50%;
+    height: 100%;
+    min-width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+}

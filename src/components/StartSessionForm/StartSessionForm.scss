@@ -1,0 +1,57 @@
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.startSessionForm {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+
+  &__input {
+    background-color: $color-border-light;
+    color: $color-texticon-high;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    height: 3rem;
+    padding: 0.75rem 1rem;
+
+    &:focus {
+     outline: $color-primary-default solid 4px;
+    }
+
+    &--error {
+      outline: $color-alert-error solid 4px;
+    }
+  }
+  &__join {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-primary-default;
+    border: none;
+    border-radius: 8px;
+    height: 3rem;
+    &:hover {
+      background-color: $color-twin-green;
+      cursor: grab;
+    }
+    &--end {
+      background-color: $color-alert-error;
+      width: 100%;
+
+      &:hover {
+        background-color: $color-twin-orange;
+        cursor: grab;
+      }
+    }
+  }
+  &__button-text {
+    font-weight: $font-semibold;
+    color: $color-texticon-high;
+    padding: 0.75rem 1rem;
+    width: 7.5rem;
+  }
+}

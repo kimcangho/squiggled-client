@@ -1,5 +1,6 @@
 @use "./partials/vars" as *;
 @use "./partials/mixins" as *;
+@use './partials/animations' as *;
 
 //Border-box, margin and padding resets
 * {
@@ -11,6 +12,17 @@
 //Global Font
 body {
   font-family: $font-fam, $backup-fonts;
+  background: $color-background-default;
+  color: $color-texticon-high;
+}
+
+h5 {
+  font-size: $font-mobile-h5;
+  font-weight: $font-semibold;
+}
+
+p {
+  font-size: $font-body-2;
 }
 
 //Unordered Lists
@@ -38,9 +50,9 @@ a {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: $color-invert-text;
+  background: $color-texticon-high;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: $color-invert-text;
+  background: $color-texticon-high;
 }

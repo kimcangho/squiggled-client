@@ -1,3 +1,64 @@
-@use '../../styles/globals';
-@use '../../styles/partials/vars' as *;
-@use '../../styles/partials/mixins' as *;
+@use "../../styles/globals";
+@use "../../styles/partials/vars" as *;
+@use "../../styles/partials/mixins" as *;
+
+.error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: swimUpIn 0.75s ease-in-out;
+
+  &--exit {
+    animation: swimUpOut 0.75s ease-in-out forwards;
+  }
+
+  &__container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 0 auto;
+  }
+
+  &__image {
+    width: 15rem;
+    pointer-events: none;
+    animation: float 10s ease-in-out infinite;
+    @include tablet {
+      width: 20rem;
+    }
+  }
+  &__text {
+    text-align: center;
+  }
+  &__redirect {
+    width: 100%;
+    @include tablet {
+      width: auto;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-twin-orange;
+    border: none;
+    border-radius: 8px;
+    height: 3rem;
+    &:hover {
+      background-color: $color-twin-green;
+      cursor: grab;
+    }
+  }
+
+  &__button-text {
+    font-weight: $font-semibold;
+    color: $color-texticon-high;
+    padding: 0.75rem 1rem;
+  }
+}

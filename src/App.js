@@ -1,20 +1,26 @@
+//React
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SocketProvider } from "./utilities/contexts/SocketContext";
-
-import HomePage from "./pages/HomePage/HomePage";
+//Context
+import { RoomProvider } from "./context/roomContext";
+//Pages
+import StartPage from "./pages/StartPage/StartPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import SetupPage from "./pages/SetupPage/SetupPage";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <SocketProvider>
+      <RoomProvider>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/session/:id" element={<HomePage />} />
+          <Route path="/" element={<StartPage />} />
+          <Route path="/join/" element={<StartPage />} />
+          <Route path="/join/:id" element={<StartPage />} />
+          <Route path="/setup" element={<SetupPage />} />
+          <Route path="/session/:id" element={<SetupPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </SocketProvider>
+      </RoomProvider>
     </BrowserRouter>
   );
 };
