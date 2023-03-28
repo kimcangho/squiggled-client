@@ -6,6 +6,8 @@
 
 Squiggled is a whiteboarding application that enables users to capture, annotate, share and download screenshots from their device camera to other users in real-time.
 
+Written in React, styled in SASS with socket.io / Tippy / 
+
 Check out the server in this repository (https://github.com/kimcangho/squiggled-server).
 
 ## Demo
