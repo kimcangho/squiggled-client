@@ -1,12 +1,12 @@
-//Styling
 import "./Controls.scss";
-//React Hooks
+
 import { useContext } from "react";
 import { RoomContext } from "../../context/roomContext";
+
 import Tippy from "@tippyjs/react";
-//Component
+
 import FlipButton from "../FlipButton/FlipButton";
-//Assets
+
 import cameraOnIcon from "../../assets/images/icons/camera-fill.svg";
 import cameraOffIcon from "../../assets/images/icons/camera-off.svg";
 import screenshotIcon from "../../assets/images/icons/screenshot.svg";
@@ -59,10 +59,12 @@ const Controls = ({
 
     setIsVideoOn((value) => !value);
   };
+  
   //Whiteboard
   const handleToggleWhiteboard = () => {
     setIsWhiteboardMobile((value) => !value);
   };
+
   //Clear entire whiteboard
   const handleClearWhiteboard = () => {
     if (!isCaptureLayerActive && !isDrawLayerActive) return;
@@ -79,6 +81,7 @@ const Controls = ({
       ws.emit("send-clear", roomId);
     }
   };
+
   //Erase canvas layer
   const handleEraseWhiteboard = () => {
     if (!isDrawLayerActive) return;
@@ -94,10 +97,12 @@ const Controls = ({
       ws.emit("send-erase", roomId);
     }
   };
+
   // Stamp/Draw Toggle
   const handleToggleDrawMode = () => {
     setIsDrawModeStamp((isDrawModeStamp) => !isDrawModeStamp);
   };
+
   //Download Whiteboard Image
   const handleDownloadImage = async () => {
     if (!isCaptureLayerActive && !isDrawLayerActive) return;
@@ -229,6 +234,7 @@ const Controls = ({
 
     setIsDrawLayerActive(true);
   };
+  
   //Socket Listeners
   ws.on("transmit-erase", transmitErase);
   ws.on("transmit-clear", transmitClear);

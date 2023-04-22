@@ -1,7 +1,7 @@
 import "./FlipIndicator.scss";
-//React Library
+
 import { CSSTransition } from "react-transition-group";
-//Assets
+
 import drawIcon from "../../assets/images/icons/draw.svg";
 import stampIcon from "../../assets/images/icons/focus.svg";
 

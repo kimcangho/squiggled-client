@@ -1,9 +1,7 @@
-//React
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-//Context
+
 import { RoomProvider } from "./context/roomContext";
-//Pages
+
 import StartPage from "./pages/StartPage/StartPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SetupPage from "./pages/SetupPage/SetupPage";

@@ -1,21 +1,18 @@
-//Styling
 import "./StartPage.scss";
-//React Hooks
-import React, { useState, useContext, useEffect } from "react";
+
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-//Context
+
 import { RoomContext } from "../../context/roomContext";
-//Asset
+
 import squidLogo from "../../assets/images/logos/squid.png";
 
 const StartPage = () => {
-  //Context
+  
   const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
 
-  //UseParams
   const { id } = useParams();
 
-  //States
   const [flipped, setFlipped] = useState(false);
   const [roomName, setRoomName] = useState("");
 
@@ -37,7 +34,6 @@ const StartPage = () => {
   };
 
   const handleJoinSession = async () => {
-
     await setRoomId(roomName);
 
     //Both fields invalid

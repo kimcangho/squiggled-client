@@ -2,14 +2,12 @@
 @use "./partials/mixins" as *;
 @use './partials/animations' as *;
 
-//Border-box, margin and padding resets
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-//Global Font
 body {
   font-family: $font-fam, $backup-fonts;
   background: $color-background-default;
@@ -25,11 +23,10 @@ p {
   font-size: $font-body-2;
 }
 
-//Unordered Lists
 ul {
   @include null-list;
 }
-//Anchor Tags
+
 a {
   text-decoration: none;
 }

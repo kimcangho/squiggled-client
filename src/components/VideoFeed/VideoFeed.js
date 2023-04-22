@@ -1,8 +1,7 @@
-//Styling
 import "./VideoFeed.scss";
-//React Hooks
+
 import { useRef, useEffect } from "react";
-//Assets
+
 import userIcon from "../../assets/images/icons/user.svg";
 
 const VideoFeed = ({ isVideoOn, myUsername, stream }) => {

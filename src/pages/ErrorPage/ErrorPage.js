@@ -1,15 +1,13 @@
-//Styling
 import "./ErrorPage.scss";
-//React Hooks
-import React, { useEffect } from "react";
+
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//Assets
+
 import squidIcon from "../../assets/images/logos/squiggled-logo-blob.svg";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
 
-  //Redirect to error URL
   useEffect(() => {
     navigate("/error");
   }, [navigate]);

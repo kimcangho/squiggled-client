@@ -1,12 +1,10 @@
-//Styling
 import "./Whiteboard.scss";
-//React Hooks
+
 import { useEffect, useState, useRef, useContext } from "react";
 import { RoomContext } from "../../context/roomContext";
-//Components
-import FlipIndicator from "../FlipIndicator/FlipIndicator";
-//Utility Functions
 import { randomNumber } from "../../utilities/utilities";
+
+import FlipIndicator from "../FlipIndicator/FlipIndicator";
 
 const Whiteboard = ({
   isDrawMode,
@@ -14,13 +12,12 @@ const Whiteboard = ({
   isMobileView,
   setIsDrawLayerActive,
 }) => {
-  //Room Context
+  
   const { ws, roomId } = useContext(RoomContext);
 
-  //State variable
   const [isDrawing, setIsDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState("");
-  //useRef variables
+  
   const captureCanvasRef = useRef(null);
   const captureContextRef = useRef(null);
   const myCanvasRef = useRef(null);

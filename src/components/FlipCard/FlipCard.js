@@ -1,10 +1,8 @@
-//Styling
 import "./FlipCard.scss";
-//React Libraries
+
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 
-//Components
 import VideoFeed from "../VideoFeed/VideoFeed";
 import Whiteboard from "../Whiteboard/Whiteboard";
 

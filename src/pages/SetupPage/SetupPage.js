@@ -26,18 +26,18 @@ const SetupPage = () => {
 
   //Room parameters
   const { id } = useParams();
-  const { ws, me, myUsername, setMyUsername, stream, inRoom, setInRoom } =
+  const { ws, myUsername, setMyUsername, stream, inRoom, setInRoom } =
     useContext(RoomContext);
 
   //Join Room Useeffect
   useEffect(() => {
     //Check for room id and user state
-    if (id && me) {
+    if (id) { //me
       //Join room with roomId and peerId
       setInRoom(true);
-      ws.emit("join-room", { roomId: id, peerId: me.id });
+      ws.emit("join-room", { roomId: id });
     }
-  }, [id, me, ws, setInRoom]);
+  }, [id, ws, setInRoom]);
 
   //Initial window size useEffect
   useEffect(() => {

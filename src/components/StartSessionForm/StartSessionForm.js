@@ -1,6 +1,5 @@
-//Styling
 import "./StartSessionForm.scss";
-//React Hooks
+
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../../context/roomContext";
@@ -11,10 +10,9 @@ const StartSessionForm = ({
   inRoom,
   setInRoom,
 }) => {
-  //Navigation Hook
+  
   const navigate = useNavigate();
 
-  //Peer-to-peer rooms
   const { ws, roomId, setRoomId } = useContext(RoomContext);
 
   const createRoom = (name) => {
