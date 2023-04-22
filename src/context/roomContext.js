@@ -10,7 +10,8 @@ import { peersReducer } from "./peerReducer";
 import { addPeerAction, removePeerAction } from "./peerActions";
 
 //Server URL
-const WS = "https://squiggled-server.herokuapp.com/";
+// const WS = "https://squiggled-server.herokuapp.com/";
+const WS = process.env.REACT_APP_SERVER_URL;
 
 //Web Signaling server
 const ws = socketIOClient(WS);
