@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 import { RoomProvider } from "./context/roomContext";
 
@@ -7,9 +7,10 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import SetupPage from "./pages/SetupPage/SetupPage";
 
 const App = () => {
+
   return (
     <BrowserRouter>
-      <RoomProvider>
+      <RoomProvider>a
         <Routes>
           <Route path="/" element={<StartPage />} />
           <Route path="/join/" element={<StartPage />} />

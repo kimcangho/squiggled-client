@@ -100,7 +100,6 @@
     pointer-events: none;
 
     @include tablet {
-      animation: float 10s ease-in-out infinite;
       width: 50%;
     }
   }

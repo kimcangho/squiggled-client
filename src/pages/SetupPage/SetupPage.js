@@ -1,12 +1,11 @@
-//Styling
 import "./SetupPage.scss";
-//React Hooks
+
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-//Context
+
 import { RoomContext } from "../../context/roomContext";
-//Components
+
 import Heading from "../../components/Heading/Heading";
 import VideoFeed from "../../components/VideoFeed/VideoFeed";
 import Whiteboard from "../../components/Whiteboard/Whiteboard";
@@ -14,12 +13,12 @@ import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
 
 const SetupPage = () => {
-  //State Variables
+  
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
   const [isMobileView, setIsMobileView] = useState(true);
-  //Active layers
+  
   const [isCaptureLayerActive, setIsCaptureLayerActive] = useState(false);
   const [isDrawLayerActive, setIsDrawLayerActive] = useState(false);
   const [screenshotCaptured, setScreenshotCaptured] = useState(false);
@@ -32,7 +31,8 @@ const SetupPage = () => {
   //Join Room Useeffect
   useEffect(() => {
     //Check for room id and user state
-    if (id) { //me
+    if (id) {
+      //me
       //Join room with roomId and peerId
       setInRoom(true);
       ws.emit("join-room", { roomId: id });

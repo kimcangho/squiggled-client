@@ -2,13 +2,13 @@ import "./StartPage.scss";
 
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { RoomContext } from "../../context/roomContext";
 
 import squidLogo from "../../assets/images/logos/squid.png";
 
 const StartPage = () => {
-  
   const { myUsername, setMyUsername, setRoomId } = useContext(RoomContext);
 
   const { id } = useParams();
@@ -86,10 +86,19 @@ const StartPage = () => {
         <div className="start__card">
           {!flipped ? (
             <div className="start__side start__side--front">
-              <img
+              <motion.img
                 className="start__logo"
                 src={squidLogo}
                 alt="Squiggled Logo"
+                animate={{
+                  rotateY: [0, 30, 0, 30, 0],
+                  y: [0, 20, 0, -20, 0],
+                  transition: {
+                    repeat: Infinity,
+                    duration: 20,
+                    ease: "easeInOut",
+                  },
+                }}
               />
               <div className="start__panel">
                 <div className="start__button" onClick={handleStartSession}>

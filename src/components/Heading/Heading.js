@@ -2,6 +2,7 @@ import "./Heading.scss";
 
 import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
 import { RoomContext } from "../../context/roomContext";
 
 import Tippy from "@tippyjs/react";
@@ -43,10 +44,18 @@ const Heading = ({ inRoom, setInRoom }) => {
         duration="0"
         touch="hold"
       >
-        <img
+        <motion.img
           src={squiggledLogo}
           alt="Squiggled Logo"
           className="heading__logo"
+          animate={{
+            rotateY: [0, 30, 0],
+            transition: {
+              repeat: Infinity,
+              duration: 10,
+              ease: "easeInOut",
+            },
+          }}
           onClick={handleRedirect}
         />
       </Tippy>

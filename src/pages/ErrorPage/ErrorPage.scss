@@ -27,7 +27,6 @@
   &__image {
     width: 15rem;
     pointer-events: none;
-    animation: float 10s ease-in-out infinite;
     @include tablet {
       width: 20rem;
     }
