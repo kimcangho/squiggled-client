@@ -1,9 +1,9 @@
 import "./SetupPage.scss";
 
 import { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-
+import { AnimatePresence, motion } from "framer-motion";
 import { RoomContext } from "../../context/roomContext";
 
 import Heading from "../../components/Heading/Heading";
@@ -13,18 +13,20 @@ import Controls from "../../components/Controls/Controls";
 import StartSessionForm from "../../components/StartSessionForm/StartSessionForm";
 
 const SetupPage = () => {
-  
+  const [inSetup, setInSetup] = useState(true);
+
   const [isDrawMode, setIsDrawModeStamp] = useState(false);
   const [isWhiteboardMobile, setIsWhiteboardMobile] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(false);
   const [isMobileView, setIsMobileView] = useState(true);
-  
+
   const [isCaptureLayerActive, setIsCaptureLayerActive] = useState(false);
   const [isDrawLayerActive, setIsDrawLayerActive] = useState(false);
   const [screenshotCaptured, setScreenshotCaptured] = useState(false);
 
   //Room parameters
   const { id } = useParams();
+  const navigate = useNavigate();
   const { ws, myUsername, setMyUsername, stream, inRoom, setInRoom } =
     useContext(RoomContext);
 
@@ -32,7 +34,6 @@ const SetupPage = () => {
   useEffect(() => {
     //Check for room id and user state
     if (id) {
-      //me
       //Join room with roomId and peerId
       setInRoom(true);
       ws.emit("join-room", { roomId: id });
@@ -65,6 +66,14 @@ const SetupPage = () => {
   }, []);
 
   //Functions
+  const handleRedirect = () => {
+    setInSetup(false);
+    setInRoom(false);
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
+
   const handleUsernameChange = (event) => {
     if (event.target.value.length > 0) {
       document
@@ -98,60 +107,79 @@ const SetupPage = () => {
   };
 
   return (
-    <section className="setup">
-      <main className="setup__main">
-        <Heading inRoom={inRoom} setInRoom={setInRoom} />
-        <div className="setup__container">
-          <div className="flip-stream">
-            <div className="flip-stream__container">
-              <CSSTransition
-                in={!isWhiteboardMobile}
-                timeout={300}
-                classNames="flip-stream__flip"
-              >
-                <div className="flip-stream__card">
-                  {/* Video Feed */}
-                  <VideoFeed
-                    isVideoOn={isVideoOn}
-                    myUsername={myUsername}
-                    stream={stream}
-                  />
-                  {/* Shared Whiteboard */}
-                  <Whiteboard
-                    isDrawMode={isDrawMode}
-                    isMobile={true}
-                    isMobileView={isMobileView}
-                    setIsCaptureLayerActive={setIsCaptureLayerActive}
-                    setIsDrawLayerActive={setIsDrawLayerActive}
-                  />
+    <AnimatePresence>
+      {inSetup && (
+        <motion.section
+          className="setup"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: 0.75,
+            },
+          }}
+          exit={{
+            opacity: 0,
+            transition: {
+              duration: 0.75,
+            },
+          }}
+        >
+          <main className="setup__main">
+            <Heading inRoom={inRoom} handleRedirect={handleRedirect} />
+            <div className="setup__container">
+              <div className="flip-stream">
+                <div className="flip-stream__container">
+                  <CSSTransition
+                    in={!isWhiteboardMobile}
+                    timeout={300}
+                    classNames="flip-stream__flip"
+                  >
+                    <div className="flip-stream__card">
+                      {/* Video Feed */}
+                      <VideoFeed
+                        isVideoOn={isVideoOn}
+                        myUsername={myUsername}
+                        stream={stream}
+                      />
+                      {/* Shared Whiteboard */}
+                      <Whiteboard
+                        isDrawMode={isDrawMode}
+                        isMobile={true}
+                        isMobileView={isMobileView}
+                        setIsCaptureLayerActive={setIsCaptureLayerActive}
+                        setIsDrawLayerActive={setIsDrawLayerActive}
+                      />
+                    </div>
+                  </CSSTransition>
                 </div>
-              </CSSTransition>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <Controls
-          setIsDrawModeStamp={setIsDrawModeStamp}
-          isWhiteboardMobile={isWhiteboardMobile}
-          setIsWhiteboardMobile={setIsWhiteboardMobile}
-          isVideoOn={isVideoOn}
-          setIsVideoOn={setIsVideoOn}
-          isCaptureLayerActive={isCaptureLayerActive}
-          setIsCaptureLayerActive={setIsCaptureLayerActive}
-          isDrawLayerActive={isDrawLayerActive}
-          setIsDrawLayerActive={setIsDrawLayerActive}
-          screenshotCaptured={screenshotCaptured}
-          setScreenshotCaptured={setScreenshotCaptured}
-        />
+            <Controls
+              setIsDrawModeStamp={setIsDrawModeStamp}
+              isWhiteboardMobile={isWhiteboardMobile}
+              setIsWhiteboardMobile={setIsWhiteboardMobile}
+              isVideoOn={isVideoOn}
+              setIsVideoOn={setIsVideoOn}
+              isCaptureLayerActive={isCaptureLayerActive}
+              setIsCaptureLayerActive={setIsCaptureLayerActive}
+              isDrawLayerActive={isDrawLayerActive}
+              setIsDrawLayerActive={setIsDrawLayerActive}
+              screenshotCaptured={screenshotCaptured}
+              setScreenshotCaptured={setScreenshotCaptured}
+            />
 
-        <StartSessionForm
-          myUsername={myUsername}
-          handleUsernameChange={handleUsernameChange}
-          inRoom={inRoom}
-          setInRoom={setInRoom}
-        />
-      </main>
-    </section>
+            <StartSessionForm
+              myUsername={myUsername}
+              handleUsernameChange={handleUsernameChange}
+              inRoom={inRoom}
+              setInRoom={setInRoom}
+            />
+          </main>
+        </motion.section>
+      )}
+    </AnimatePresence>
   );
 };
 

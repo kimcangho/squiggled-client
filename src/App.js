@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes, Route} from "react-router-dom";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RoomProvider } from "./context/roomContext";
 
 import StartPage from "./pages/StartPage/StartPage";
@@ -10,15 +9,17 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <RoomProvider>a
-        <Routes>
-          <Route path="/" element={<StartPage />} />
-          <Route path="/join/" element={<StartPage />} />
-          <Route path="/join/:id" element={<StartPage />} />
-          <Route path="/setup" element={<SetupPage />} />
-          <Route path="/session/:id" element={<SetupPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+      <RoomProvider>
+          <Routes>
+            <Route path="/" element={<StartPage />} />
+            <Route path="/join">
+              <Route index element={<StartPage />} />
+              <Route path=":id" element={<StartPage />} />
+            </Route>
+            <Route path="/setup" element={<SetupPage />} />
+            <Route path="/session/:id" element={<SetupPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
       </RoomProvider>
     </BrowserRouter>
   );

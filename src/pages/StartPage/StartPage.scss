@@ -10,11 +10,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  animation: swimUpIn 0.25s ease-in-out;
-
-  &--exit {
-    animation: swimUpOut 0.25s ease-in-out forwards;
-  }
 
   @include tablet {
     padding: 2.25rem;
@@ -34,16 +29,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 16px;
-
+    background-color: $color-surface-light;
     gap: 1.5rem;
-    margin: 0 auto;
-    padding: 1.5rem;
     width: 100%;
     max-width: $desktop-breakpoint;
-
-    perspective: 10000px;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
 
     @include tablet {
       width: 80%;
@@ -57,42 +46,10 @@
 
   &__card {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: $color-surface-light;
-    position: relative;
-    transform-style: preserve-3d;
-    user-select: none;
-    transition: transform 300ms;
-    border-radius: 16px;
-  }
-
-  &__side {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    padding: 1.5rem;
-
-    &--front {
-      animation: swimUpIn 0.25s ease-in-out;
-    }
-
-    &--back {
-      gap: 2rem;
-      animation: swimUpIn 0.25s ease-in-out;
-    }
-
-    &--exit {
-      animation: swimUpOut 0.25s ease-in-out forwards;
-    }
   }
 
   &__logo {
@@ -160,10 +117,6 @@
     @include tablet {
       margin: 2.25rem 0;
     }
-
-    &--back {
-      margin: 1.5rem 0;
-    }
   }
 
   &__title {
@@ -204,33 +157,6 @@
 
     &--error {
       outline: $color-alert-error solid 4px;
-    }
-  }
-
-  //Animation start at front end at back
-  &__flip-enter {
-    transform: rotateY(180deg);
-
-    &-active {
-      transform: rotateY(0deg);
-      transition: transform 300ms;
-    }
-
-    &-done {
-      transform: rotateY(0deg);
-    }
-  }
-  //Animation start at back end at front
-  &__flip-exit {
-    transform: rotateY(0deg);
-
-    &-active {
-      transform: rotateY(180deg);
-      transition: transform 300ms;
-    }
-
-    &-done {
-      transform: rotateY(180deg);
     }
   }
 }

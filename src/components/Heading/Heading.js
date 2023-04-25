@@ -1,7 +1,6 @@
 import "./Heading.scss";
 
 import { useContext } from "react";
-import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { RoomContext } from "../../context/roomContext";
 
@@ -10,18 +9,8 @@ import Tippy from "@tippyjs/react";
 import squiggledLogo from "../../assets/images/logos/squiggled-logo.svg";
 import clipboardIcon from "../../assets/images/icons/clipboard.svg";
 
-const Heading = ({ inRoom, setInRoom }) => {
+const Heading = ({ inRoom, handleRedirect }) => {
   const { roomId } = useContext(RoomContext);
-
-  const navigate = useNavigate();
-
-  const handleRedirect = () => {
-    setInRoom(false);
-    document.querySelector(".setup").classList.add("setup--exit");
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
-  };
 
   const handleCopyClipboard = async () => {
     if (!inRoom || !navigator.clipboard.writeText) return;

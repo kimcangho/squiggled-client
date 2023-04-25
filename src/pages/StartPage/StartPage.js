@@ -2,7 +2,7 @@ import "./StartPage.scss";
 
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { RoomContext } from "../../context/roomContext";
 
@@ -13,24 +13,26 @@ const StartPage = () => {
 
   const { id } = useParams();
 
-  const [flipped, setFlipped] = useState(false);
+  const [isJoining, setIsJoining] = useState(false);
   const [roomName, setRoomName] = useState("");
+  const [showContainer, setShowContainer] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      setRoomName(false);
-      setFlipped(true);
+      setIsJoining(true);
       setRoomName(id);
+    } else {
+      navigate("/");
     }
-  }, [id]);
+  }, [navigate, id]);
 
   const handleStartSession = () => {
-    document.querySelector(".start").classList.add("start--exit");
+    setShowContainer(false);
     setTimeout(() => {
       navigate("/setup");
-    }, 500);
+    }, 1000);
   };
 
   const handleJoinSession = async () => {
@@ -55,13 +57,14 @@ const StartPage = () => {
       return;
     }
 
-    navigate(`/session/${roomName}`);
+    setShowContainer(false);
+    setTimeout(() => {
+      navigate(`/session/${roomName}`);
+    }, 1000);
   };
 
   const handleToggleJoin = () => {
-    if (!flipped) navigate("/join");
-    else navigate("/");
-    setFlipped((value) => !value);
+    setIsJoining((value) => !value);
   };
 
   const handleUsernameChange = (event) => {
@@ -80,77 +83,105 @@ const StartPage = () => {
     setRoomName(event.target.value);
   };
 
+  // animation: swimUpIn 0.25s ease-in-out;
+
+  // &--exit {
+  //   animation: swimUpOut 0.25s ease-in-out forwards;
+  // }
+
   return (
     <main className="start">
-      <div className="start__container">
-        <div className="start__card">
-          {!flipped ? (
-            <div className="start__side start__side--front">
-              <motion.img
-                className="start__logo"
-                src={squidLogo}
-                alt="Squiggled Logo"
-                animate={{
-                  rotateY: [0, 30, 0, 30, 0],
-                  y: [0, 20, 0, -20, 0],
-                  transition: {
-                    repeat: Infinity,
-                    duration: 20,
-                    ease: "easeInOut",
-                  },
-                }}
-              />
-              <div className="start__panel">
-                <div className="start__button" onClick={handleStartSession}>
-                  <h2 className="start__text">Start</h2>
-                </div>
-
-                <div
-                  className="start__button start__button--join"
-                  onClick={handleToggleJoin}
-                >
-                  <h2 className="start__text">Join</h2>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="start__side start__side--back">
-              <form className="start__prompt">
-                <h5 className="start__text start__text--back">
-                  Join right in!
-                </h5>
-                <p className="start__body">Enter your name to join</p>
-                <input
-                  type="text"
-                  placeholder="Type your name"
-                  value={myUsername}
-                  onChange={handleUsernameChange}
-                  className="start__input"
-                ></input>
-                <p className="start__body">Enter room name to join</p>
-                <input
-                  type="text"
-                  placeholder="Input Room Name"
-                  value={roomName}
-                  onChange={handleRoomNameChange}
-                  className="start__input"
-                ></input>
+      <AnimatePresence>
+        {showContainer && (
+          <motion.div
+            className="start__container"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: {
+                duration: 0.75,
+              },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.75,
+              },
+            }}
+          >
+            {!isJoining ? (
+              <motion.div
+                className="start__card"
+                // initial={{ opacity: 0 }}
+                // animate={{ opacity: 1, transition: { duration: 2 } }}
+                // exit={{ opacity: 0.5, transition: { duration: 2 } }}
+              >
+                <motion.img
+                  className="start__logo"
+                  src={squidLogo}
+                  alt="Squiggled Logo"
+                  animate={{
+                    rotateY: [0, 30, 0, 30, 0],
+                    y: [0, 20, 0, -20, 0],
+                    transition: {
+                      repeat: Infinity,
+                      duration: 20,
+                      ease: "easeInOut",
+                    },
+                  }}
+                />
                 <div className="start__panel">
-                  <div className="start__button" onClick={handleJoinSession}>
-                    <h2 className="start__text">Join Session</h2>
+                  <div className="start__button" onClick={handleStartSession}>
+                    <h2 className="start__text">Start</h2>
                   </div>
+
                   <div
-                    className="start__button start__button--back"
+                    className="start__button start__button--join"
                     onClick={handleToggleJoin}
                   >
-                    <h2 className="start__text">Back to Home</h2>
+                    <h2 className="start__text">Join</h2>
                   </div>
                 </div>
-              </form>
-            </div>
-          )}
-        </div>
-      </div>
+              </motion.div>
+            ) 
+            : (
+              <motion.div className="start__card">
+                <form className="start__prompt">
+                  <h5 className="start__text">Join right in!</h5>
+                  <p className="start__body">Enter your name to join</p>
+                  <input
+                    type="text"
+                    placeholder="Type your name"
+                    value={myUsername}
+                    onChange={handleUsernameChange}
+                    className="start__input"
+                  ></input>
+                  <p className="start__body">Enter room name to join</p>
+                  <input
+                    type="text"
+                    placeholder="Input Room Name"
+                    value={roomName}
+                    onChange={handleRoomNameChange}
+                    className="start__input"
+                  ></input>
+                  <div className="start__panel">
+                    <div className="start__button" onClick={handleJoinSession}>
+                      <h2 className="start__text">Join Session</h2>
+                    </div>
+                    <div
+                      className="start__button start__button--back"
+                      onClick={handleToggleJoin}
+                    >
+                      <h2 className="start__text">Back to Home</h2>
+                    </div>
+                  </div>
+                </form>
+              </motion.div>
+            )
+            }
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 };

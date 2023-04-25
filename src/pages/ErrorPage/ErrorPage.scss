@@ -8,11 +8,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: swimUpIn 0.75s ease-in-out;
+  // animation: swimUpIn 0.75s ease-in-out;
 
-  &--exit {
-    animation: swimUpOut 0.75s ease-in-out forwards;
-  }
+  // &--exit {
+  //   animation: swimUpOut 0.75s ease-in-out forwards;
+  // }
 
   &__container {
 
